@@ -1,17 +1,17 @@
 ![tp2](https://github.com/fiuba/algo3_proyecto_base_tp2/actions/workflows/build.yml/badge.svg) [![codecov](https://codecov.io/gh/fiuba/algo3_proyecto_base_tp2/branch/master/graph/badge.svg)](https://codecov.io/gh/fiuba/algo3_proyecto_base_tp2)
 
-# TP2 Algoritmos 3: {nombre} 
+# TP2 Algoritmos 3: Balastro
 
 Trabajo Práctico número 2 de la materia Algoritmos y Programación III de FIUBA
 
-## Grupo {N}
+## Grupo 4
 
 * **Integrante 1** - [Federico Gabriel Honda](https://github.com/federicohonda)
 * **Integrante 2** - [Bruno Pezman](https://github.com/bruno_pez)
 * **Integrante 3** - [Camila Aleksandra Kotelchuk](https://github.com/c4miluchi)
 * **Integrante 4** - [Franco Bustos](https://github.com/FranBustos1508)
 
-Corrector: **{Corrector}**
+Corrector: **Joaquin Gomez y Bruno Grassano**
 
 ## Aplicación
 
