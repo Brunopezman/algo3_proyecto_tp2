@@ -6,10 +6,10 @@ Trabajo Práctico número 2 de la materia Algoritmos y Programación III de FIUB
 
 ## Grupo {N}
 
-* **Integrante 1** - [integrante1](https://github.com/integrante1)
-* **Integrante 2** - [integrante2](https://github.com/integrante2)
-* **Integrante 3** - [integrante3](https://github.com/integrante3)
-* **Integrante 4** - [integrante4](https://github.com/integrante4)
+* **Integrante 1** - [Federico Gabriel Honda](https://github.com/federicohonda)
+* **Integrante 2** - [Bruno Pezman](https://github.com/bruno_pez)
+* **Integrante 3** - [Camila Aleksandra Kotelchuk](https://github.com/c4miluchi)
+* **Integrante 4** - [Franco Bustos](https://github.com/FranBustos1508)
 
 Corrector: **{Corrector}**
 
