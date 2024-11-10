@@ -1,6 +1,8 @@
 package edu.fiuba.algo3.entrega_1;
 
 import edu.fiuba.algo3.modelo.Mazo;
+import edu.fiuba.algo3.modelo.Jugador;
+import edu.fiuba.algo3.modelo.Carta;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -19,20 +21,19 @@ public class CasosDeUsoTest {
         assertEquals(esperado, obtenido);
     }
 
-//    @Test
-//    public void testJugadorRecibe8CartasDeMazo() {
-//        "arrange"
-//        Jugador jugador = new Jugador();
-//        Mazo mazo = new Mazo();
-//        int esperado = 8;
-//
-//        "act"
-//        List<Carta> cartas = jugador.recibirCartas(mazo);
-//        int obtenido = cartas.size();
-//
-//        "assert"
-//        assertEquals(obtenido, esperado);
-//    }
+    @Test
+    public void testJugadorRecibe8CartasDeMazo() {
+        "arrange"
+        Jugador jugador = new Jugador("Franco");
+        Mazo mazo = new Mazo();
+        int esperado = 8;
+
+        "act"
+        jugador.recibirCartas(mazo);
+
+        "assert"
+        assertEquals(obtenido, esperado);
+    }
 
     @Test
     public void testSePuedeJugarManoDeUnMazo() {
