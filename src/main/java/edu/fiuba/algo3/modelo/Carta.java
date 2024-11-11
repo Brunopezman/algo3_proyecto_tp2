@@ -24,6 +24,10 @@ public class Carta {
     }
 
     public String getValor() {
-        return valor;
+        return this.valor;
     }
+
+    public String getPalo() { return this.palo; }
+
+    public int getPuntaje() { return this.puntaje; }
 }

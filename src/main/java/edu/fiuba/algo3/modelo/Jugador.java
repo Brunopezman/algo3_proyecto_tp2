@@ -12,11 +12,17 @@ public class Jugador {
         this.nombre = nombre;
         this.cartasActuales = new ArrayList<>();
     }
-    public int recibirCartas(Mazo mazo) {
-        this.cartasActuales.add(mazo.darCartas(8));
-        return this.cartasActuales;
+
+    public List<Carta> recibirCartas(Mazo mazo) {
+        List<Carta> cartasRecibidas = mazo.darCartas(8);
+        this.setCartasActuales(cartasRecibidas);
+        return cartasRecibidas;
     }
 
-    public obtenerCartas()
+    private void setCartasActuales(List<Carta> cartas) {
+        this.cartasActuales = cartas;
+    }
+
+
 
 }
