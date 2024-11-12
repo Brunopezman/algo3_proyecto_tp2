@@ -29,4 +29,14 @@ public class OnePair extends ContablePorValor implements Mano{
     public int calcularPuntaje(int valor) {
         return 0;
     }
+
+    @Override
+    public void setMultiplicador(int multiplicador) {
+        this.multiplicador = multiplicador;
+    }
+
+    @Override
+    public int getMultiplicador() {
+        return multiplicador;
+    }
 }

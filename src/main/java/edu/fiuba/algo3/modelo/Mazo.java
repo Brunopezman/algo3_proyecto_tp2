@@ -39,4 +39,7 @@ public class Mazo {
     public int cartasRestantes() {
         return cartas.size();
     }
+
+    public List<Carta> getCartas() { return this.cartas; }
+
 }

@@ -7,6 +7,7 @@ public class Jugador {
 
     private String nombre;
     private List<Carta> cartasActuales;
+    private Comodin comodin;
 
     public Jugador(String nombre) {
         this.nombre = nombre;
@@ -23,12 +24,12 @@ public class Jugador {
         this.cartasActuales = cartas;
     }
 
-    public int jugarMano(List<Carta> cartas, Mano mano) {
-
-        int valor = 0;
-        for (Carta carta : cartas) {
-            valor += carta.getPuntaje();
-        }
-        return mano.calcularPuntaje(valor);
+    public int jugarMano(int sumatoria, Mano mano) {
+//        int valor = 0;
+//        for (Carta carta : cartas) {
+//            valor += carta.getPuntaje();
+//        }
+        // comodin.agregarvalor(sumatoria de las cartas)
+        return mano.calcularPuntaje(sumatoria);
     }
 }

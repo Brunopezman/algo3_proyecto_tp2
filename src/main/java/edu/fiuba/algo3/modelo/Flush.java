@@ -31,4 +31,13 @@ public class Flush extends ContablePorPalo implements Mano{
         return (this.puntaje + valor)*this.multiplicador;
     }
 
+    @Override
+    public void setMultiplicador(int nuevoMultiplicador) {
+        this.multiplicador = nuevoMultiplicador;
+    }
+
+    @Override
+    public int getMultiplicador() {
+        return this.multiplicador;
+    }
 }

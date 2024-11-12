@@ -7,7 +7,7 @@ public class Comodin {
         this.adicional = valor;
     }
 
-    public modificarValor(int valor) {
+    public int modificarValor(int valor) {
         return valor + this.adicional;
     }
 }

@@ -23,6 +23,8 @@ public class Carta {
         }
     }
 
+    public void setPuntaje(int valor) { this.puntaje = valor; }
+
     public String getValor() {
         return this.valor;
     }
