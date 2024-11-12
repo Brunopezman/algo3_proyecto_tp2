@@ -3,7 +3,7 @@ package edu.fiuba.algo3.modelo;
 import java.util.*;
 
 
-public class StraightFlush implements Mano{
+public class StraightFlush extends Mano{
     private int puntaje;
     private int multiplicador;
 

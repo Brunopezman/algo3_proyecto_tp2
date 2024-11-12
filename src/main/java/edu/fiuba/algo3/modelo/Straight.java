@@ -3,7 +3,7 @@ package edu.fiuba.algo3.modelo;
 import java.util.List;
 import java.util.Collections;
 
-public class Straight implements Mano{
+public class Straight extends Mano{
     private int puntaje;
     private int multiplicador;
 

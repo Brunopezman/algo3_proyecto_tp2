@@ -3,7 +3,7 @@ package edu.fiuba.algo3.modelo;
 import java.util.List;
 import java.util.Map;
 
-public class Flush extends ContablePorPalo implements Mano{
+public class Flush extends Mano{
     private int puntaje;
     private int multiplicador;
 

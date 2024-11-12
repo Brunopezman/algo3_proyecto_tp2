@@ -3,7 +3,7 @@ package edu.fiuba.algo3.modelo;
 import java.util.List;
 import java.util.Map;
 
-public class FullHouse extends ContablePorValor implements Mano {
+public class FullHouse extends Mano {
     private int puntaje;
     private int multiplicador;
 

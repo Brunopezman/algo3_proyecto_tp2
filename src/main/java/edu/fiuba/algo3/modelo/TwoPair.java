@@ -3,7 +3,7 @@ package edu.fiuba.algo3.modelo;
 import java.util.List;
 import java.util.Map;
 
-public class TwoPair extends ContablePorValor implements Mano{
+public class TwoPair extends Mano{
     private int puntaje;
     private int multiplicador;
 

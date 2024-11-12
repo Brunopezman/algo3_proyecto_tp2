@@ -4,7 +4,7 @@ import java.util.stream.Collectors;
 import java.util.List;
 import java.util.Map;
 
-public class RoyalFlush implements Mano{
+public class RoyalFlush extends Mano{
     private int puntaje;
     private int multiplicador;
 

@@ -31,9 +31,6 @@ public class CasosDeUsoTest {
         int esperado = 8;
         //act
         List<Carta> obtenido = jugador.recibirCartas(mazo);
-        //DESCOMENTEN SI QUIEREN PROBAR EJEMPLO QUE FUNCIONA
-        //Carta ejemplo = obtenido.get(0);
-        //System.out.printf("Carta 0 => Palo: %s Valor: %s Puntaje: %d", ejemplo.getPalo(), ejemplo.getValor(), ejemplo.getPuntaje());
         //assert
         assertEquals(esperado, obtenido.size());
     }
@@ -43,17 +40,16 @@ public class CasosDeUsoTest {
         //arrange
         Jugador jugador = new Jugador("Bruno");
         Mazo mazo = new Mazo();
-        Turno turno = new Turno();
         //act
         List<Carta> cartas = jugador.recibirCartas(mazo);
-        boolean respuesta = turno.existeManoJugable(cartas);
+        boolean respuesta = jugador.pudeJugarAlgunaMano();
         //assert
         assert(respuesta);
     }
 
     @Test
     public void testJugarManoAplicaValorCorrespondiente() {
-
+        //arrange
         Jugador jugador = new Jugador("Migliore");
         List<Carta> cartas = new ArrayList();
         Flush flush = new Flush();
@@ -71,13 +67,14 @@ public class CasosDeUsoTest {
     }
 
     @Test
-    public void testImportaOrdenDeCartas() {
-        Jugador jugador1 = new Jugador("Migliore");
+    public void testImportaOrdenDePuntuacionDeCartas() {
+        //arrange
+        Jugador jugador1 = new Jugador("Riquelme");
         Jugador jugador2 = new Jugador("Palermo");
-        Comodin1 comodin1 = new Comodin1();
-        Comodin2 comodin2 = new Comodin2();
+        ComodinSuma comodin1 = new ComodinSuma(10);
+        ComodinMultiplicacion comodin2 = new ComodinMultiplicacion(2);
         List<Carta> cartas = new ArrayList();
-        Flush flush = new Flush();
+        Mano flush = new Flush();
         Carta carta1 = new Carta("2", "Picas");
         Carta carta2 = new Carta("3", "Picas");
         Carta carta3 = new Carta("4", "Picas");
@@ -97,20 +94,26 @@ public class CasosDeUsoTest {
 
     @Test
     public void modificarCartaConTarotCambiaPuntos() {
+        //arrange
         Jugador jugador = new Jugador("Aleksandra");
         Tarot tarot = new Tarot(10);
         Mazo mazo = new Mazo();
         Carta carta = new Carta("2", "Picas");
+        //act
         carta = tarot.modificarValorCarta(mazo, carta);
+        //assert
         assertEquals(carta.getPuntaje(), 10);
     }
 
     @Test
     public void modificarCartaConTarotCambiarMultiplicador() {
+        //arrange
         Jugador jugador = new Jugador("Simon");
         Tarot tarot = new Tarot(6);
         Mano flush = new Flush();
+        //act
         flush = tarot.modificarMultiplicador(flush);
+        //assert
         assertEquals(flush.getMultiplicador(), 6);
     }
 }

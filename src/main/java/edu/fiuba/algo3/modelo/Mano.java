@@ -1,17 +1,38 @@
 package edu.fiuba.algo3.modelo;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public interface Mano {
-    boolean esJugable(List<Carta> cartas);
+public abstract class Mano {
+    abstract boolean esJugable(List<Carta> cartas);
 
-    int getMultiplicador();
+    abstract void setPuntaje(int nuevoPuntaje);
 
-    void setPuntaje(int nuevoPuntaje);
-    void setMultiplicador (int nuevoMultiplicador);
+    abstract void setMultiplicador (int nuevoMultiplicador);
 
-    int calcularPuntaje(int valor);
+    abstract int calcularPuntaje(int valor);
 
-    int getPuntaje();
+    abstract int getPuntaje();
+
+    abstract public int getMultiplicador();
+
+    public Map<String, Integer> contarPorPalo(List<Carta> cartas) {
+        Map<String, Integer> conteoPalos = new HashMap<>();
+        for (Carta carta : cartas) {
+            String palo = carta.getPalo();
+            conteoPalos.put(palo, conteoPalos.getOrDefault(palo, 0) + 1);
+        }
+        return conteoPalos;
+    }
+
+    public Map<String, Integer> contarPorValor(List<Carta> cartas) {
+        Map<String, Integer> conteoValores = new HashMap<>();
+        for (Carta carta : cartas) {
+            String palo = carta.getValor();
+            conteoValores.put(palo, conteoValores.getOrDefault(palo, 0) + 1);
+        }
+        return conteoValores;
+    }
 }
 

@@ -2,7 +2,7 @@ package edu.fiuba.algo3.modelo;
 
 import java.util.List;
 
-public class HighCard implements Mano {
+public class HighCard extends Mano {
     private int puntaje;
     private int multiplicador;
 

@@ -25,6 +25,10 @@ public class Jugador {
         this.cartasActuales = cartas;
     }
 
+    public boolean pudeJugarAlgunaMano(){
+        return this.cartasActuales.size() >= 5;
+    }
+
     public int jugarMano(List<Carta> cartas, Mano mano) {
         int puntaje = 0;
         for (Carta carta : cartas) {
