@@ -14,4 +14,9 @@ public class HighCard implements Mano {
     public boolean esJugable(List<Carta> cartas) {
         return true;
     }
+
+    @Override
+    public int calcularPuntaje(int valor) {
+        return 0;
+    }
 }

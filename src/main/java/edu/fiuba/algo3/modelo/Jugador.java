@@ -23,6 +23,12 @@ public class Jugador {
         this.cartasActuales = cartas;
     }
 
+    public int jugarMano(List<Carta> cartas, Mano mano) {
 
-
+        int valor = 0;
+        for (Carta carta : cartas) {
+            valor += carta.getPuntaje();
+        }
+        return mano.calcularPuntaje(valor);
+    }
 }

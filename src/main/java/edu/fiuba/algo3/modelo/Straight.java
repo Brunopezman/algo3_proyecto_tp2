@@ -36,4 +36,9 @@ public class Straight implements Mano{
         // Si no encontramos una secuencia de 5, no es una escalera
         return false;
     }
+
+    @Override
+    public int calcularPuntaje(int valor) {
+        return 0;
+    }
 }

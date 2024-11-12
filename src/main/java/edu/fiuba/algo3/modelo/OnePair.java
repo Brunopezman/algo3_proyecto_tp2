@@ -1,10 +1,9 @@
 package edu.fiuba.algo3.modelo;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class OnePair implements Mano{
+public class OnePair extends ContablePorValor implements Mano{
     private int puntaje;
     private int multiplicador;
 
@@ -15,14 +14,7 @@ public class OnePair implements Mano{
     @Override
     public boolean esJugable(List<Carta> cartas) {
         // Mapa para contar la cantidad de cartas por cada valor
-        Map<String, Integer> conteoValores = new HashMap<>();
-
-        // Contar las cartas por valor
-        for (Carta carta : cartas) {
-            String valor = carta.getValor();
-            conteoValores.put(valor, conteoValores.getOrDefault(valor, 0) + 1);
-        }
-
+        Map<String, Integer> conteoValores = this.contarPorValor(cartas);
         // Verificar si hay al menos un valor con exactamente 2 cartas
         for (int cantidad : conteoValores.values()) {
             if (cantidad == 2) {
@@ -31,5 +23,10 @@ public class OnePair implements Mano{
         }
 
         return false;
+    }
+
+    @Override
+    public int calcularPuntaje(int valor) {
+        return 0;
     }
 }

@@ -47,4 +47,9 @@ public class StraightFlush implements Mano{
 
         return false;
     }
+
+    @Override
+    public int calcularPuntaje(int valor) {
+        return 0;
+    }
 }

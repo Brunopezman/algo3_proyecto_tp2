@@ -11,7 +11,7 @@ public class Mazo {
     public Mazo() {
         this.cartas = new ArrayList<Carta>();
         String[] valores = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
-        String[] palos = {"Corazones", "Diamantes", "Tréboles", "Picas"};
+        String[] palos = {"Corazones", "Diamantes", "Treboles", "Picas"};
         for (String palo : palos) {
             for (String valor : valores) {
                 cartas.add(new Carta(valor, palo));
