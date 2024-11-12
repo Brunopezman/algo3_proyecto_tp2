@@ -64,20 +64,18 @@ public class CasosDeUsoTest {
         Carta carta5 = new Carta("6", "Picas");
         cartas.addAll(Arrays.asList(carta1, carta2, carta3, carta4, carta5));
         int esperado = 220;
-        int sumatoria = 0;
-        for (Carta carta: cartas) {
-            sumatoria += carta.getPuntaje();
-        }
         //act
-        int obtenido = jugador.jugarMano(sumatoria, flush);
+        int obtenido = jugador.jugarMano(cartas, flush);
         //assert
         assertEquals(esperado, obtenido);
     }
 
     @Test
     public void testImportaOrdenDeCartas() {
-        Jugador jugador = new Jugador("Migliore");
-        Comodin comodin = new Comodin(5);
+        Jugador jugador1 = new Jugador("Migliore");
+        Jugador jugador2 = new Jugador("Palermo");
+        Comodin1 comodin1 = new Comodin1();
+        Comodin2 comodin2 = new Comodin2();
         List<Carta> cartas = new ArrayList();
         Flush flush = new Flush();
         Carta carta1 = new Carta("2", "Picas");
@@ -86,16 +84,13 @@ public class CasosDeUsoTest {
         Carta carta4 = new Carta("5", "Picas");
         Carta carta5 = new Carta("6", "Picas");
         cartas.addAll(Arrays.asList(carta1, carta2, carta3, carta4, carta5));
-        int sumatoria = 0;
-        for (Carta carta: cartas) {
-            sumatoria += carta.getPuntaje();
-        }
+        jugador1.agregarComodin(comodin1);
+        jugador1.agregarComodin(comodin2);
+        jugador2.agregarComodin(comodin2);
+        jugador2.agregarComodin(comodin1);
         //act
-        int resultado1 = jugador.jugarMano(sumatoria, flush);
-        resultado1 = comodin.modificarValor(resultado1);
-        sumatoria = comodin.modificarValor(sumatoria);
-        int resultado2 = jugador.jugarMano(sumatoria, flush);
-        // System.out.printf("Resultado1: %s Resultado2: %d", resultado1, resultado2);
+        int resultado1 = jugador1.jugarMano(cartas, flush);
+        int resultado2 = jugador2.jugarMano(cartas, flush);
         //assert
         assertNotEquals(resultado1, resultado2);
     }

@@ -7,8 +7,11 @@ public interface Mano {
 
     int getMultiplicador();
 
+    void setPuntaje(int nuevoPuntaje);
     void setMultiplicador (int nuevoMultiplicador);
 
     int calcularPuntaje(int valor);
+
+    int getPuntaje();
 }
 

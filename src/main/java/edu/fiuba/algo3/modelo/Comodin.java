@@ -1,13 +1,6 @@
 package edu.fiuba.algo3.modelo;
 
-public class Comodin {
-    private int adicional;
+public abstract class Comodin {
 
-    public Comodin(int valor) {
-        this.adicional = valor;
-    }
-
-    public int modificarValor(int valor) {
-        return valor + this.adicional;
-    }
+    public abstract void modificarValor(Mano mano);
 }

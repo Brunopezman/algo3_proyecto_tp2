@@ -36,6 +36,11 @@ public class RoyalFlush implements Mano{
     }
 
     @Override
+    public int getPuntaje() {
+        return 0;
+    }
+
+    @Override
     public void setMultiplicador(int multiplicador) {
         this.multiplicador = multiplicador;
     }
@@ -43,5 +48,10 @@ public class RoyalFlush implements Mano{
     @Override
     public int getMultiplicador() {
         return multiplicador;
+    }
+
+    @Override
+    public void setPuntaje(int nuevoPuntaje) {
+
     }
 }
