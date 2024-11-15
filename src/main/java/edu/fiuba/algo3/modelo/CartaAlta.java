@@ -1,28 +1,23 @@
 package edu.fiuba.algo3.modelo;
 
 import java.util.List;
-import java.util.Map;
 
-public class OnePair extends Mano{
+public class CartaAlta extends Mano {
+    // Constantes
+    public static int PUNTAJE_INICIAL = 40;
+    public static int MULTIPLICADOR_INICIAL = 4;
+
+    // Atributos
     private int puntaje;
     private int multiplicador;
 
-    public OnePair(){
-        this.puntaje = 60;
-        this.multiplicador = 7;
+    public CartaAlta() {
+        this.puntaje = PUNTAJE_INICIAL;
+        this.multiplicador = MULTIPLICADOR_INICIAL;
     }
     @Override
     public boolean esJugable(List<Carta> cartas) {
-        // Mapa para contar la cantidad de cartas por cada valor
-        Map<String, Integer> conteoValores = this.contarPorValor(cartas);
-        // Verificar si hay al menos un valor con exactamente 2 cartas
-        for (int cantidad : conteoValores.values()) {
-            if (cantidad == 2) {
-                return true;  // Se puede formar un par
-            }
-        }
-
-        return false;
+        return true;
     }
 
     @Override

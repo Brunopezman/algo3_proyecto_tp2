@@ -3,13 +3,18 @@ package edu.fiuba.algo3.modelo;
 import java.util.List;
 import java.util.Collections;
 
-public class Straight extends Mano{
+public class Escalera extends Mano{
+    // Constantes
+    public static int PUNTAJE_INICIAL = 30;
+    public static int MULTIPLICADOR_INICIAL = 4;
+
+    // Atributos
     private int puntaje;
     private int multiplicador;
 
-    public Straight() {
-        this.puntaje = 30;
-        this.multiplicador = 4;
+    public Escalera() {
+        this.puntaje = PUNTAJE_INICIAL;
+        this.multiplicador = MULTIPLICADOR_INICIAL;
     }
     @Override
     public boolean esJugable(List<Carta> cartas) {

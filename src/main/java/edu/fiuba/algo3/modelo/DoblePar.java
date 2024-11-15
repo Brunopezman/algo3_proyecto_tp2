@@ -3,13 +3,18 @@ package edu.fiuba.algo3.modelo;
 import java.util.List;
 import java.util.Map;
 
-public class TwoPair extends Mano{
+public class DoblePar extends Mano{
+    // Constantes
+    public static int PUNTAJE_INICIAL = 20;
+    public static int MULTIPLICADOR_INICIAL = 2;
+
+    // Atributos
     private int puntaje;
     private int multiplicador;
 
-    public TwoPair() {
-        this.puntaje = 20;
-        this.multiplicador = 2;
+    public DoblePar() {
+        this.puntaje = PUNTAJE_INICIAL;
+        this.multiplicador = MULTIPLICADOR_INICIAL;
     }
 
     @Override

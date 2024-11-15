@@ -4,13 +4,19 @@ import java.util.stream.Collectors;
 import java.util.List;
 import java.util.Map;
 
-public class RoyalFlush extends Mano{
+public class EscaleraReal extends Mano{
+
+    // Constantes
+    public static int PUNTAJE_INICIAL = 100;
+    public static int MULTIPLICADOR_INICIAL = 8;
+
+    // Atributos
     private int puntaje;
     private int multiplicador;
 
-    public RoyalFlush(){
-        this.puntaje = 60;
-        this.multiplicador = 7;
+    public EscaleraReal(){
+        this.puntaje = PUNTAJE_INICIAL;
+        this.multiplicador = MULTIPLICADOR_INICIAL;
     }
 
     @Override

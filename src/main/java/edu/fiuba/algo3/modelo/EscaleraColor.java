@@ -3,13 +3,18 @@ package edu.fiuba.algo3.modelo;
 import java.util.*;
 
 
-public class StraightFlush extends Mano{
+public class EscaleraColor extends Mano{
+    // Constantes
+    public static int PUNTAJE_INICIAL = 100;
+    public static int MULTIPLICADOR_INICIAL = 8;
+
+    // Atributos
     private int puntaje;
     private int multiplicador;
 
-    public StraightFlush() {
-        this.puntaje = 100;
-        this.multiplicador = 8;
+    public EscaleraColor() {
+        this.puntaje = PUNTAJE_INICIAL;
+        this.multiplicador = MULTIPLICADOR_INICIAL;
     }
 
     @Override

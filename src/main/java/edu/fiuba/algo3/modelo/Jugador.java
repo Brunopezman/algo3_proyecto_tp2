@@ -8,6 +8,7 @@ public class Jugador {
     private String nombre;
     private List<Carta> cartasActuales;
     private List<Comodin> comodines;
+    private static final int CARTASARECIBIR = 8;
 
     public Jugador(String nombre) {
         this.nombre = nombre;
@@ -16,7 +17,7 @@ public class Jugador {
     }
 
     public List<Carta> recibirCartas(Mazo mazo) {
-        List<Carta> cartasRecibidas = mazo.darCartas(8);
+        List<Carta> cartasRecibidas = mazo.darCartas(CARTASARECIBIR);
         this.setCartasActuales(cartasRecibidas);
         return cartasRecibidas;
     }

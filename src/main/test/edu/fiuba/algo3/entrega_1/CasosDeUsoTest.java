@@ -52,7 +52,7 @@ public class CasosDeUsoTest {
         //arrange
         Jugador jugador = new Jugador("Migliore");
         List<Carta> cartas = new ArrayList();
-        Flush flush = new Flush();
+        Color flush = new Color();
         Carta carta1 = new Carta("2", "Picas");
         Carta carta2 = new Carta("3", "Picas");
         Carta carta3 = new Carta("4", "Picas");
@@ -74,7 +74,7 @@ public class CasosDeUsoTest {
         ComodinSuma comodin1 = new ComodinSuma(10);
         ComodinMultiplicacion comodin2 = new ComodinMultiplicacion(2);
         List<Carta> cartas = new ArrayList();
-        Mano flush = new Flush();
+        Mano flush = new Color();
         Carta carta1 = new Carta("2", "Picas");
         Carta carta2 = new Carta("3", "Picas");
         Carta carta3 = new Carta("4", "Picas");
@@ -110,10 +110,10 @@ public class CasosDeUsoTest {
         //arrange
         Jugador jugador = new Jugador("Simon");
         Tarot tarot = new Tarot(6);
-        Mano flush = new Flush();
+        Mano color = new Color();
         //act
-        flush = tarot.modificarMultiplicador(flush);
+        color = tarot.modificarMultiplicador(color);
         //assert
-        assertEquals(flush.getMultiplicador(), 6);
+        assertEquals(color.getMultiplicador(), 6);
     }
 }
