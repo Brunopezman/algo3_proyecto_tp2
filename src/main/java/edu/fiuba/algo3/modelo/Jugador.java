@@ -36,7 +36,7 @@ public class Jugador {
             puntaje += carta.getPuntaje();
         }
         for (Comodin comodin: comodines) {
-            comodin.modificarValor(mano);
+            mano.aplicarComodin(comodin);
         }
         return mano.calcularPuntaje(puntaje);
     }

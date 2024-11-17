@@ -1,6 +1,5 @@
 package edu.fiuba.algo3.modelo;
 
-import java.util.List;
 import java.util.Map;
 
 public class DoblePar extends Mano{
@@ -18,9 +17,9 @@ public class DoblePar extends Mano{
     }
 
     @Override
-    public boolean esJugable(List<Carta> cartas) {
+    public boolean esJugable(Operador cartas) {
         // Mapa para contar la cantidad de cartas por cada valor
-        Map<String, Integer> conteoValores = this.contarPorValor(cartas);
+        Map<String, Integer> conteoValores = cartas.contarPorValor();
         // Contar cuántos pares tenemos
         int pares = 0;
 

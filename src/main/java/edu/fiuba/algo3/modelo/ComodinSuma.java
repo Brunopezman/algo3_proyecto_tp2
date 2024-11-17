@@ -2,14 +2,17 @@ package edu.fiuba.algo3.modelo;
 
 public class ComodinSuma extends Comodin {
 
-    private int modificador;
+    private final int modificador;
 
     public ComodinSuma(int valor) {
         this.modificador = valor;
     }
+
     @Override
-    public void modificarValor(Mano mano) {
-        int nuevoPuntaje = mano.getPuntaje() + modificador;
-        mano.setPuntaje(nuevoPuntaje);
+    public int modificarValor(int puntaje) {
+        return (puntaje*modificador);
+        //this.modificador.aplicarModificador(puntaje);
+        //int nuevoPuntaje = mano.getPuntaje() + modificador;
+        //mano.setPuntaje(nuevoPuntaje);
     }
 }

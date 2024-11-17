@@ -8,22 +8,31 @@ public class Mazo {
 
     private List<Carta> cartas;
 
-    public Mazo() {
+    public Mazo(){
         this.cartas = new ArrayList<Carta>();
         String[] valores = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
         String[] palos = {"Corazones", "Diamantes", "Treboles", "Picas"};
         for (String palo : palos) {
-            for (String valor : valores) {
-                cartas.add(new Carta(valor, palo));
+            int index = 0;
+            for (int i = 0; i < valores.length; i++) {
+                String valor = valores[i];
+                // Si el valor es entre 2 y 8 (índice de 0 a 7), es una carta numérica
+                if (i <= 8) {
+                    // Carta numérica
+                    this.cartas.add(new CartaNumerica(valor, palo));
+                } else {
+                    // Carta no numérica (9, 10, J, Q, K, A)
+                    this.cartas.add(new CartaNoNumerica(valor, palo));
+                }
             }
         }
-        this.barajar(cartas);
+        //this.barajar(cartas);
     }
 
-    private void barajar(List<Carta> cartas) {
+    //private void barajar(List<Carta> cartas) {
 
-        Collections.shuffle(cartas);
-    }
+    //Collections.shuffle(cartas);
+    //}
 
     // Método para dar una cantidad específica de cartas al jugador
     public List<Carta> darCartas(int cantidad) {

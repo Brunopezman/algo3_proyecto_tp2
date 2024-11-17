@@ -1,35 +1,41 @@
 package edu.fiuba.algo3.modelo;
 
+import java.util.List;
+
 public class Carta {
 
     private String valor;
     private String palo;
     private int puntaje;
 
-    public Carta(String valor, String palo) {
-        this.valor = valor;
-        this.palo = palo;
-        this.puntaje = this.asignarPuntaje(valor);
-    }
-
-    //Método para asignar puntaje basado en el valor de la carta
-    private int asignarPuntaje(String valor) {
-        switch (valor) {
-            case "A": return 1;  // Puntaje para la carta "A"
-            case "J": return 2;
-            case "K": return 3;
-            case "Q": return 4;
-            default: return Integer.parseInt(valor);  // Para los valores numéricos
-        }
-    }
+    public void setValor(String valor) { this.valor = valor; }
 
     public void setPuntaje(int valor) { this.puntaje = valor; }
 
-    public String getValor() {
-        return this.valor;
-    }
+    public void setPalo(String palo) { this.palo = palo; }
+
+    public String getValor() { return this.valor; }
 
     public String getPalo() { return this.palo; }
 
     public int getPuntaje() { return this.puntaje; }
+
+    public boolean esConsecutiva(Carta otraCarta) {
+        List<String> orden = List.of("A", "2", "3", "4", "5","6", "7", "8", "9", "10","J", "Q", "K");
+
+        String valorOtra = otraCarta.getValor();
+
+        int posicionOtra = orden.indexOf(valorOtra);
+
+        String valorConsecutivo = String.valueOf(orden.get(posicionOtra+1));
+
+        return   valorConsecutivo.equals(this.getValor());
+    }
+
+
+    public boolean esIgual(Carta otraCarta){ return (this.tieneMismoPalo(otraCarta) && this.tieneMismoValor(otraCarta)); };
+
+    public boolean tieneMismoPalo(Carta otraCarta){ return (this.palo.equals(otraCarta.getPalo())); };
+
+    public boolean tieneMismoValor(Carta otraCarta){ return (this.valor.equals(otraCarta.getValor())); };
 }

@@ -11,45 +11,30 @@ public class EscaleraColor extends Mano{
     // Atributos
     private int puntaje;
     private int multiplicador;
+    private Operador operador;
+    private Escalera escalera;
+
 
     public EscaleraColor() {
         this.puntaje = PUNTAJE_INICIAL;
         this.multiplicador = MULTIPLICADOR_INICIAL;
+        this.escalera = new Escalera();
+        this.operador = new Operador();
     }
 
     @Override
     public boolean esJugable(List<Carta> cartas) {
-        // Mapa para agrupar las cartas por palo
-        Map<String, List<Carta>> cartasPorPalo = new HashMap<>();
 
-        // Agrupar las cartas por palo
-        for (Carta carta : cartas) {
-            cartasPorPalo.computeIfAbsent(carta.getPalo(), k -> new ArrayList<>()).add(carta);
-        }
+        Map<String, List<Carta>> cartasPorPalo = this.operador.agruparPorPalo(cartas);
 
         // Verificar si hay un Straight Flush en algún palo
         for (List<Carta> cartasDelPalo : cartasPorPalo.values()) {
             if (cartasDelPalo.size() >= 5) {
-                // Ordenar las cartas por su valor
-                Collections.sort(cartasDelPalo, (a, b) -> Integer.compare(a.getPuntaje(), b.getPuntaje()));
-
-                // Verificar si hay una secuencia de cartas consecutivas
-                int secuenciaContador = 1;
-                for (int i = 1; i < cartasDelPalo.size(); i++) {
-                    if (cartasDelPalo.get(i).getPuntaje() == cartasDelPalo.get(i - 1).getPuntaje() + 1) {
-                        secuenciaContador++;
-                    } else if (cartasDelPalo.get(i).getPuntaje() != cartasDelPalo.get(i - 1).getPuntaje()) {
-                        secuenciaContador = 1; // Si no son consecutivas, reiniciamos el contador
-                    }
-
-                    // Si encontramos una secuencia de 5 cartas consecutivas, es un Straight Flush
-                    if (secuenciaContador >= 5) {
-                        return true;
-                    }
+                if (this.escalera.verificarEscalera(cartasDelPalo)) {
+                    return true;
                 }
             }
         }
-
         return false;
     }
 

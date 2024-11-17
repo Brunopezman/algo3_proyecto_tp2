@@ -24,8 +24,9 @@ public class Turno {
 
     public boolean existeManoJugable(List<Carta> cartas){
         boolean existe = false;
+        Operador conjunto = new Operador(cartas);
         for (Mano mano : this.manosJugables){
-            if (mano.esJugable(cartas)){
+            if (mano.esJugable(conjunto)){
                 existe = true;
             }
         }

@@ -51,17 +51,17 @@ public class CasosDeUsoTest {
     public void testJugarManoAplicaValorCorrespondiente() {
         //arrange
         Jugador jugador = new Jugador("Migliore");
-        List<Carta> cartas = new ArrayList();
-        Color flush = new Color();
-        Carta carta1 = new Carta("2", "Picas");
-        Carta carta2 = new Carta("3", "Picas");
-        Carta carta3 = new Carta("4", "Picas");
-        Carta carta4 = new Carta("5", "Picas");
-        Carta carta5 = new Carta("6", "Picas");
+        List<Carta> cartas = new ArrayList<>();
+        Color color = new Color();
+        Carta carta1 = new CartaNumerica("2", "Picas");
+        Carta carta2 = new CartaNumerica("3", "Picas");
+        Carta carta3 = new CartaNumerica("4", "Picas");
+        Carta carta4 = new CartaNumerica("5", "Picas");
+        Carta carta5 = new CartaNumerica("6", "Picas");
         cartas.addAll(Arrays.asList(carta1, carta2, carta3, carta4, carta5));
         int esperado = 220;
         //act
-        int obtenido = jugador.jugarMano(cartas, flush);
+        int obtenido = jugador.jugarMano(cartas, color);
         //assert
         assertEquals(esperado, obtenido);
     }
@@ -73,32 +73,30 @@ public class CasosDeUsoTest {
         Jugador jugador2 = new Jugador("Palermo");
         ComodinSuma comodin1 = new ComodinSuma(10);
         ComodinMultiplicacion comodin2 = new ComodinMultiplicacion(2);
-        List<Carta> cartas = new ArrayList();
-        Mano flush = new Color();
-        Carta carta1 = new Carta("2", "Picas");
-        Carta carta2 = new Carta("3", "Picas");
-        Carta carta3 = new Carta("4", "Picas");
-        Carta carta4 = new Carta("5", "Picas");
-        Carta carta5 = new Carta("6", "Picas");
+        List<Carta> cartas = new ArrayList<>();
+        Mano color = new Color();
+        Carta carta1 = new CartaNumerica("2", "Picas");
+        Carta carta2 = new CartaNumerica("3", "Picas");
+        Carta carta3 = new CartaNumerica("4", "Picas");
+        Carta carta4 = new CartaNumerica("5", "Picas");
+        Carta carta5 = new CartaNumerica("6", "Picas");
         cartas.addAll(Arrays.asList(carta1, carta2, carta3, carta4, carta5));
         jugador1.agregarComodin(comodin1);
         jugador1.agregarComodin(comodin2);
         jugador2.agregarComodin(comodin2);
         jugador2.agregarComodin(comodin1);
         //act
-        int resultado1 = jugador1.jugarMano(cartas, flush);
-        int resultado2 = jugador2.jugarMano(cartas, flush);
+        int resultado1 = jugador1.jugarMano(cartas, color);
+        int resultado2 = jugador2.jugarMano(cartas, color);
         //assert
         assertNotEquals(resultado1, resultado2);
     }
-
     @Test
     public void modificarCartaConTarotCambiaPuntos() {
         //arrange
-        Jugador jugador = new Jugador("Aleksandra");
         Tarot tarot = new Tarot(10);
         Mazo mazo = new Mazo();
-        Carta carta = new Carta("2", "Picas");
+        Carta carta = new CartaNumerica("2", "Picas");
         //act
         carta = tarot.modificarValorCarta(mazo, carta);
         //assert

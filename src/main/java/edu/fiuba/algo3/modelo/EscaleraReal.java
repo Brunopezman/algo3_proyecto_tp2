@@ -21,8 +21,8 @@ public class EscaleraReal extends Mano{
 
     @Override
     public boolean esJugable(List<Carta> cartas) {
-        Map<String, List<Carta>> cartasPorPalo = cartas.stream()
-                .collect(Collectors.groupingBy(Carta::getPalo));
+
+        Map<String, List<Carta>> cartasPorPalo = cartas.separarPorPalo();
 
         for (List<Carta> cartasDelMismoPalo : cartasPorPalo.values()) {
             List<String> valoresRequeridos = List.of("10", "J", "Q", "K", "A");

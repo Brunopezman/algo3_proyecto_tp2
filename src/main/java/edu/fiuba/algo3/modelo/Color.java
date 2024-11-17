@@ -11,16 +11,18 @@ public class Color extends Mano{
     // Atributos
     private int puntaje;
     private int multiplicador;
+    private final Operador operador;
 
     public Color(){
         this.puntaje = PUNTAJE_INICIAL;
         this.multiplicador = MULTIPLICADOR_INICIAL;
+        this.operador = new Operador();
     }
 
     @Override
     public boolean esJugable(List<Carta> cartas) {
         // Mapa para contar la cantidad de cartas por cada palo
-        Map<String, Integer> conteoPalos = this.contarPorPalo(cartas);
+        Map<String, Integer> conteoPalos = this.operador.contarPorPalo(cartas);
         // Verificar si alguno de los palos tiene al menos 5 cartas
         for (int cantidad : conteoPalos.values()) {
             if (cantidad >= 5) {

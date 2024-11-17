@@ -1,6 +1,5 @@
 package edu.fiuba.algo3.modelo;
 
-import java.util.List;
 import java.util.Map;
 
 public class Par extends Mano{
@@ -17,9 +16,9 @@ public class Par extends Mano{
         this.multiplicador = MULTIPLICADOR_INICIAL;
     }
     @Override
-    public boolean esJugable(List<Carta> cartas) {
+    public boolean esJugable(Operador cartas) {
         // Mapa para contar la cantidad de cartas por cada valor
-        Map<String, Integer> conteoValores = this.contarPorValor(cartas);
+        Map<String, Integer> conteoValores = cartas.contarPorValor();
         // Verificar si hay al menos un valor con exactamente 2 cartas
         for (int cantidad : conteoValores.values()) {
             if (cantidad == 2) {
