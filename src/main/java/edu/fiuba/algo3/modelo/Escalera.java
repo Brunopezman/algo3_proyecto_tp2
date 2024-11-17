@@ -18,7 +18,7 @@ public class Escalera extends Mano{
     }
 
     @Override
-    public boolean esJugable(Operador cartas) {
+    public boolean esJugable(List<Carta> cartas) {
         return (this.verificarEscalera(cartas));
     }
 

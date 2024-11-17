@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.modelo;
 
+import java.util.List;
 import java.util.Map;
 
 public class Par extends Mano{
@@ -10,15 +11,17 @@ public class Par extends Mano{
     // Atributos
     private int puntaje;
     private int multiplicador;
+    private Operador operador;
 
     public Par(){
         this.puntaje = PUNTAJE_INICIAL;
         this.multiplicador = MULTIPLICADOR_INICIAL;
+        this.operador = new Operador();
     }
     @Override
-    public boolean esJugable(Operador cartas) {
+    public boolean esJugable(List<Carta> cartas) {
         // Mapa para contar la cantidad de cartas por cada valor
-        Map<String, Integer> conteoValores = cartas.contarPorValor();
+        Map<String, Integer> conteoValores = this.operador.contarPorValor(cartas);
         // Verificar si hay al menos un valor con exactamente 2 cartas
         for (int cantidad : conteoValores.values()) {
             if (cantidad == 2) {

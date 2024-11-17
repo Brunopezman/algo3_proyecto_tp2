@@ -13,16 +13,18 @@ public class EscaleraReal extends Mano{
     // Atributos
     private int puntaje;
     private int multiplicador;
+    private Operador operador;
 
     public EscaleraReal(){
         this.puntaje = PUNTAJE_INICIAL;
         this.multiplicador = MULTIPLICADOR_INICIAL;
+        this.operador = new Operador();
     }
 
     @Override
     public boolean esJugable(List<Carta> cartas) {
 
-        Map<String, List<Carta>> cartasPorPalo = cartas.separarPorPalo();
+        Map<String, List<Carta>> cartasPorPalo = operador.separarPorPalo(cartas);
 
         for (List<Carta> cartasDelMismoPalo : cartasPorPalo.values()) {
             List<String> valoresRequeridos = List.of("10", "J", "Q", "K", "A");

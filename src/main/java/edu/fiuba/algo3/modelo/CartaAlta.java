@@ -1,5 +1,7 @@
 package edu.fiuba.algo3.modelo;
 
+import java.util.List;
+
 public class CartaAlta extends Mano {
     // Constantes
     public static int PUNTAJE_INICIAL = 40;
@@ -14,7 +16,7 @@ public class CartaAlta extends Mano {
         this.multiplicador = MULTIPLICADOR_INICIAL;
     }
     @Override
-    public boolean esJugable(Operador cartas) {
+    public boolean esJugable(List<Carta> cartas) {
         return true;
     }
 
