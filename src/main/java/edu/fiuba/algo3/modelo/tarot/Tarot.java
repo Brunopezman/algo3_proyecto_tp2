@@ -1,4 +1,8 @@
-package edu.fiuba.algo3.modelo;
+package edu.fiuba.algo3.modelo.tarot;
+
+import edu.fiuba.algo3.modelo.juego.Mazo;
+import edu.fiuba.algo3.modelo.carta.Carta;
+import edu.fiuba.algo3.modelo.mano.Mano;
 
 public class Tarot {
     private int valor;
@@ -19,7 +23,7 @@ public class Tarot {
     }
 
     public Mano modificarMultiplicador(Mano mano){
-        mano.setMultiplicador(this.valor);
+        mano.modificarMultiplicador(this.valor);
         return mano;
     }
 }

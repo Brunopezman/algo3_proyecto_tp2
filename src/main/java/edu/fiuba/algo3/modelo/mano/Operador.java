@@ -1,4 +1,6 @@
-package edu.fiuba.algo3.modelo;
+package edu.fiuba.algo3.modelo.mano;
+
+import edu.fiuba.algo3.modelo.carta.Carta;
 
 import java.util.*;
 import java.util.stream.Collectors;

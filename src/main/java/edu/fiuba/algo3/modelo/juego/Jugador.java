@@ -1,4 +1,8 @@
-package edu.fiuba.algo3.modelo;
+package edu.fiuba.algo3.modelo.juego;
+
+import edu.fiuba.algo3.modelo.carta.Carta;
+import edu.fiuba.algo3.modelo.comodin.Comodin;
+import edu.fiuba.algo3.modelo.mano.Mano;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,12 +40,22 @@ public class Jugador {
             puntaje += carta.getPuntaje();
         }
         for (Comodin comodin: comodines) {
-            mano.aplicarComodin(comodin);
+            comodin.aplicarEfecto(mano);
         }
         return mano.calcularPuntaje(puntaje);
     }
 
     public void agregarComodin(Comodin comodin) {
         comodines.add(comodin);
+    }
+
+    public void descartar(Mazo mazo, int cantidad){
+        for (int i = 0; i < cantidad; i++) {
+            this.cartasActuales.remove(0);
+        }
+        List<Carta> nuevasCartas= mazo.darCartas(cantidad);
+        for (int i = 0; i < cantidad; i++) {
+            this.cartasActuales.add(nuevasCartas.get(i));
+        }
     }
 }

@@ -1,47 +1,38 @@
-package edu.fiuba.algo3.modelo;
+package edu.fiuba.algo3.modelo.mano;
+
+import edu.fiuba.algo3.modelo.carta.Carta;
 
 import java.util.List;
 import java.util.Map;
 
-public class FullHouse extends Mano {
+public class Poker extends Mano{
     // Constantes
-    public static int PUNTAJE_INICIAL = 40;
-    public static int MULTIPLICADOR_INICIAL = 4;
+    public static int PUNTAJE_INICIAL = 60;
+    public static int MULTIPLICADOR_INICIAL = 7;
 
     // Atributos
     private int puntaje;
     private int multiplicador;
     private Operador operador;
 
-    public FullHouse() {
+    public Poker(){
         this.puntaje = PUNTAJE_INICIAL;
         this.multiplicador = MULTIPLICADOR_INICIAL;
         this.operador = new Operador();
     }
-
     @Override
     public boolean esJugable(List<Carta> cartas) {
         // Mapa para contar la cantidad de cartas por cada valor
         Map<String, Integer> conteoValores = this.operador.contarPorValor(cartas);
 
-        // Variables para contar la presencia de una "triple" y un "par"
-        boolean tieneTres = false;
-        boolean tieneDos = false;
-
-        // Verificar las cantidades en el mapa
+        // Verificar si hay un valor con al menos 4 cartas
         for (int cantidad : conteoValores.values()) {
-            if (cantidad == 3) {
-                tieneTres = true;
-            } else if (cantidad == 2) {
-                tieneDos = true;
-            } else if (cantidad >= 5) {
-                // Si tienes más de tres del mismo valor (por ejemplo, 4), esto podría ser parte de una triple
-                // y un par al mismo tiempo, por lo que lo dividimos
-                tieneTres = true;
-                tieneDos = true;
+            if (cantidad >= 4) {
+                return true;  // Se puede formar un Four of a Kind
             }
         }
-        return (tieneTres && tieneDos);
+
+        return false;
     }
 
     @Override

@@ -1,21 +1,21 @@
-package edu.fiuba.algo3.modelo;
+package edu.fiuba.algo3.modelo.mano;
 
-import java.util.stream.Collectors;
+import edu.fiuba.algo3.modelo.carta.Carta;
+
 import java.util.List;
 import java.util.Map;
 
-public class EscaleraReal extends Mano{
-
+public class DoblePar extends Mano{
     // Constantes
-    public static int PUNTAJE_INICIAL = 100;
-    public static int MULTIPLICADOR_INICIAL = 8;
+    public static int PUNTAJE_INICIAL = 20;
+    public static int MULTIPLICADOR_INICIAL = 2;
 
     // Atributos
     private int puntaje;
     private int multiplicador;
     private Operador operador;
 
-    public EscaleraReal(){
+    public DoblePar() {
         this.puntaje = PUNTAJE_INICIAL;
         this.multiplicador = MULTIPLICADOR_INICIAL;
         this.operador = new Operador();
@@ -23,19 +23,20 @@ public class EscaleraReal extends Mano{
 
     @Override
     public boolean esJugable(List<Carta> cartas) {
+        // Mapa para contar la cantidad de cartas por cada valor
+        Map<String, Integer> conteoValores = this.operador.contarPorValor(cartas);
+        // Contar cuántos pares tenemos
+        int pares = 0;
 
-        Map<String, List<Carta>> cartasPorPalo = operador.separarPorPalo(cartas);
-
-        for (List<Carta> cartasDelMismoPalo : cartasPorPalo.values()) {
-            List<String> valoresRequeridos = List.of("10", "J", "Q", "K", "A");
-            List<String> valoresEnPalo = cartasDelMismoPalo.stream()
-                    .map(Carta::getValor)
-                    .collect(Collectors.toList());
-            if (valoresEnPalo.containsAll(valoresRequeridos)) {
-                return true;
+        // Recorrer el mapa para contar los pares
+        for (int cantidad : conteoValores.values()) {
+            if (cantidad == 2) {
+                pares++;
             }
         }
-        return false;
+
+        // Si encontramos exactamente 2 pares, devolvemos true
+        return pares == 2;
     }
 
     @Override

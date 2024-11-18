@@ -1,9 +1,13 @@
-package edu.fiuba.algo3.modelo;
+package edu.fiuba.algo3.modelo.mano;
 
-import java.util.*;
+import edu.fiuba.algo3.modelo.carta.Carta;
 
+import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Map;
 
-public class EscaleraColor extends Mano{
+public class EscaleraReal extends Mano{
+
     // Constantes
     public static int PUNTAJE_INICIAL = 100;
     public static int MULTIPLICADOR_INICIAL = 8;
@@ -12,27 +16,25 @@ public class EscaleraColor extends Mano{
     private int puntaje;
     private int multiplicador;
     private Operador operador;
-    private Escalera escalera;
 
-
-    public EscaleraColor() {
+    public EscaleraReal(){
         this.puntaje = PUNTAJE_INICIAL;
         this.multiplicador = MULTIPLICADOR_INICIAL;
-        this.escalera = new Escalera();
         this.operador = new Operador();
     }
 
     @Override
     public boolean esJugable(List<Carta> cartas) {
 
-        Map<String, List<Carta>> cartasPorPalo = this.operador.agruparPorPalo(cartas);
+        Map<String, List<Carta>> cartasPorPalo = operador.separarPorPalo(cartas);
 
-        // Verificar si hay un Straight Flush en algún palo
-        for (List<Carta> cartasDelPalo : cartasPorPalo.values()) {
-            if (cartasDelPalo.size() >= 5) {
-                if (this.escalera.verificarEscalera(cartasDelPalo)) {
-                    return true;
-                }
+        for (List<Carta> cartasDelMismoPalo : cartasPorPalo.values()) {
+            List<String> valoresRequeridos = List.of("10", "J", "Q", "K", "A");
+            List<String> valoresEnPalo = cartasDelMismoPalo.stream()
+                    .map(Carta::getValor)
+                    .collect(Collectors.toList());
+            if (valoresEnPalo.containsAll(valoresRequeridos)) {
+                return true;
             }
         }
         return false;

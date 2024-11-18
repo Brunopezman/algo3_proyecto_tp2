@@ -1,4 +1,7 @@
-package edu.fiuba.algo3.modelo;
+package edu.fiuba.algo3.modelo.juego;
+
+import edu.fiuba.algo3.modelo.carta.Carta;
+import edu.fiuba.algo3.modelo.mano.*;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -6,6 +9,7 @@ import java.util.ArrayList;
 public class Turno {
     private List<Mano> manosJugables;
     private int puntaje;
+    private int cantidadDescartes;
 
     public Turno(){
         this.manosJugables = new ArrayList<>();
@@ -20,6 +24,7 @@ public class Turno {
         this.manosJugables.add(new DoblePar());
         this.manosJugables.add(new Par());
         this.manosJugables.add(new CartaAlta());
+        this.cantidadDescartes = 0;
     }
 
     public boolean existeManoJugable(List<Carta> cartas){
@@ -31,5 +36,25 @@ public class Turno {
         }
         return existe;
     }
+
+    public void sumarManoJugada(int valor){
+        this.setPuntaje(valor);
+    }
+
+    public void sumarDescartes(int cantidad){
+        this.cantidadDescartes += cantidad;
+    }
+
+    public boolean puedeDescartar(int cantidad){
+        if(this.cantidadDescartes + cantidad > 3){
+            return false;
+        }
+        return true;
+    }
+
+    private void setPuntaje(int nuevoPuntaje){
+        this.puntaje = nuevoPuntaje;
+    }
+
 }
 

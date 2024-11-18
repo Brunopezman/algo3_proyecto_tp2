@@ -1,8 +1,11 @@
-package edu.fiuba.algo3.modelo;
+package edu.fiuba.algo3.modelo.juego;
+
+import edu.fiuba.algo3.modelo.carta.Carta;
+import edu.fiuba.algo3.modelo.carta.CartaNoNumerica;
+import edu.fiuba.algo3.modelo.carta.CartaNumerica;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Collections;
 
 public class Mazo {
 

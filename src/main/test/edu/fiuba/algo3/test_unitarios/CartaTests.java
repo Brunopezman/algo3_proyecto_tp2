@@ -1,6 +1,6 @@
 package edu.fiuba.algo3.test_unitarios;
 
-import edu.fiuba.algo3.modelo.CartaNumerica;
+import edu.fiuba.algo3.modelo.carta.CartaNumerica;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

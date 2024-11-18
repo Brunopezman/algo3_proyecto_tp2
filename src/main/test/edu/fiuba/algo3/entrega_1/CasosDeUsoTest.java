@@ -1,6 +1,14 @@
 package edu.fiuba.algo3.entrega_1;
 
-import edu.fiuba.algo3.modelo.*;
+import edu.fiuba.algo3.modelo.carta.Carta;
+import edu.fiuba.algo3.modelo.carta.CartaNumerica;
+import edu.fiuba.algo3.modelo.comodin.ComodinMultiplicador;
+import edu.fiuba.algo3.modelo.comodin.ComodinPuntaje;
+import edu.fiuba.algo3.modelo.juego.Jugador;
+import edu.fiuba.algo3.modelo.juego.Mazo;
+import edu.fiuba.algo3.modelo.mano.Color;
+import edu.fiuba.algo3.modelo.mano.Mano;
+import edu.fiuba.algo3.modelo.tarot.Tarot;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -11,6 +19,10 @@ import java.util.List;
 
 
 public class CasosDeUsoTest {
+
+    private static final char SIMBOLOSUMAR = '+';
+    private static final char SIMBOLOMULTIPLICAR = '*';
+
 
     @Test
     public void testJugadorPoseeCartasSuficientesParaEmpezar() {
@@ -71,8 +83,8 @@ public class CasosDeUsoTest {
         //arrange
         Jugador jugador1 = new Jugador("Riquelme");
         Jugador jugador2 = new Jugador("Palermo");
-        ComodinSuma comodin1 = new ComodinSuma(10);
-        ComodinMultiplicacion comodin2 = new ComodinMultiplicacion(2);
+        ComodinPuntaje comodin1 = new ComodinPuntaje(10, SIMBOLOSUMAR);
+        ComodinPuntaje comodin2 = new ComodinPuntaje(2, SIMBOLOMULTIPLICAR);
         List<Carta> cartas = new ArrayList<>();
         Mano color = new Color();
         Carta carta1 = new CartaNumerica("2", "Picas");

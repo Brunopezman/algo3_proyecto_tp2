@@ -1,4 +1,6 @@
-package edu.fiuba.algo3.modelo;
+package edu.fiuba.algo3.modelo.mano;
+
+import edu.fiuba.algo3.modelo.carta.Carta;
 
 import java.util.List;
 
@@ -15,6 +17,7 @@ public class Escalera extends Mano{
     public Escalera() {
         this.puntaje = PUNTAJE_INICIAL;
         this.multiplicador = MULTIPLICADOR_INICIAL;
+        this.operador = new Operador();
     }
 
     @Override
@@ -24,7 +27,7 @@ public class Escalera extends Mano{
 
     @Override
     public int calcularPuntaje(int valor) {
-        return 0;
+        return (this.puntaje + valor)*this.multiplicador;
     }
 
     @Override

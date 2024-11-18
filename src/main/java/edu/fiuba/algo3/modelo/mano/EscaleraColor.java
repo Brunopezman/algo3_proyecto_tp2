@@ -1,35 +1,42 @@
-package edu.fiuba.algo3.modelo;
+package edu.fiuba.algo3.modelo.mano;
 
-import java.util.List;
-import java.util.Map;
+import edu.fiuba.algo3.modelo.carta.Carta;
 
-public class Poker extends Mano{
+import java.util.*;
+
+
+public class EscaleraColor extends Mano{
     // Constantes
-    public static int PUNTAJE_INICIAL = 60;
-    public static int MULTIPLICADOR_INICIAL = 7;
+    public static int PUNTAJE_INICIAL = 100;
+    public static int MULTIPLICADOR_INICIAL = 8;
 
     // Atributos
     private int puntaje;
     private int multiplicador;
     private Operador operador;
+    private Escalera escalera;
 
-    public Poker(){
+
+    public EscaleraColor() {
         this.puntaje = PUNTAJE_INICIAL;
         this.multiplicador = MULTIPLICADOR_INICIAL;
+        this.escalera = new Escalera();
         this.operador = new Operador();
     }
+
     @Override
     public boolean esJugable(List<Carta> cartas) {
-        // Mapa para contar la cantidad de cartas por cada valor
-        Map<String, Integer> conteoValores = this.operador.contarPorValor(cartas);
 
-        // Verificar si hay un valor con al menos 4 cartas
-        for (int cantidad : conteoValores.values()) {
-            if (cantidad >= 4) {
-                return true;  // Se puede formar un Four of a Kind
+        Map<String, List<Carta>> cartasPorPalo = this.operador.agruparPorPalo(cartas);
+
+        // Verificar si hay un Straight Flush en algún palo
+        for (List<Carta> cartasDelPalo : cartasPorPalo.values()) {
+            if (cartasDelPalo.size() >= 5) {
+                if (this.escalera.verificarEscalera(cartasDelPalo)) {
+                    return true;
+                }
             }
         }
-
         return false;
     }
 
