@@ -1,4 +1,4 @@
-package edu.fiuba.algo3.test_unitarios;
+package edu.fiuba.algo3.modelo_tests.carta;
 
 import edu.fiuba.algo3.modelo.ValorInvalidoException;
 import edu.fiuba.algo3.modelo.PaloInvalidoException;

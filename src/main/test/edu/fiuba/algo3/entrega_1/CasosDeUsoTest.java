@@ -4,8 +4,7 @@ import edu.fiuba.algo3.modelo.carta.Carta;
 import edu.fiuba.algo3.modelo.carta.CartaNumerica;
 import edu.fiuba.algo3.modelo.comodin.ComodinMultiplicador;
 import edu.fiuba.algo3.modelo.comodin.ComodinPuntaje;
-import edu.fiuba.algo3.modelo.juego.Jugador;
-import edu.fiuba.algo3.modelo.juego.Mazo;
+import edu.fiuba.algo3.modelo.juego.*;
 import edu.fiuba.algo3.modelo.mano.Color;
 import edu.fiuba.algo3.modelo.mano.Mano;
 import edu.fiuba.algo3.modelo.tarot.Tarot;
@@ -17,12 +16,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/*
+
 public class CasosDeUsoTest {
 
     private static final char SIMBOLOSUMAR = '+';
     private static final char SIMBOLOMULTIPLICAR = '*';
-
 
     @Test
     public void testJugadorPoseeCartasSuficientesParaEmpezar() {
@@ -47,21 +45,24 @@ public class CasosDeUsoTest {
         assertEquals(esperado, obtenido.size());
     }
 
+
     @Test
     public void testSePuedeJugarManoDeUnMazo() {
         //arrange
         Jugador jugador = new Jugador("Bruno");
         Mazo mazo = new Mazo();
         //act
-        List<Carta> cartas = jugador.recibirCartas(mazo);
+        jugador.recibirCartas(mazo);
         boolean respuesta = jugador.pudeJugarAlgunaMano();
         //assert
-        assert(respuesta);
+        assert (respuesta);
     }
 
     @Test
     public void testJugarManoAplicaValorCorrespondiente() {
         //arrange
+        Ronda ronda = new Ronda();
+        Turno turno = ronda.iniciarRonda();
         Jugador jugador = new Jugador("Migliore");
         List<Carta> cartas = new ArrayList<>();
         Color color = new Color();
@@ -73,18 +74,28 @@ public class CasosDeUsoTest {
         cartas.addAll(Arrays.asList(carta1, carta2, carta3, carta4, carta5));
         int esperado = 220;
         //act
-        int obtenido = jugador.jugarMano(cartas, color);
+        Jugada jugada = jugador.jugarMano(cartas, color);
+        turno.calcularJugada(jugada);
+        int resultado = turno.puntajeDelTurno();
         //assert
-        assertEquals(esperado, obtenido);
+        assertEquals(esperado, resultado);
     }
+
 
     @Test
     public void testImportaOrdenDePuntuacionDeCartas() {
         //arrange
-        Jugador jugador1 = new Jugador("Riquelme");
-        Jugador jugador2 = new Jugador("Palermo");
+        Ronda ronda1 = new Ronda();
+        Ronda ronda2 = new Ronda();
         ComodinPuntaje comodin1 = new ComodinPuntaje(10, SIMBOLOSUMAR);
         ComodinPuntaje comodin2 = new ComodinPuntaje(2, SIMBOLOMULTIPLICAR);
+        ronda1.agregarComodin(comodin1);
+        ronda1.agregarComodin(comodin2);
+        ronda2.agregarComodin(comodin2);
+        ronda2.agregarComodin(comodin1);
+        Turno turno1 = ronda1.iniciarRonda();
+        Turno turno2 = ronda2.iniciarRonda();
+        Jugador jugador = new Jugador("Riquelme");
         List<Carta> cartas = new ArrayList<>();
         Mano color = new Color();
         Carta carta1 = new CartaNumerica("2", "Picas");
@@ -93,16 +104,16 @@ public class CasosDeUsoTest {
         Carta carta4 = new CartaNumerica("5", "Picas");
         Carta carta5 = new CartaNumerica("6", "Picas");
         cartas.addAll(Arrays.asList(carta1, carta2, carta3, carta4, carta5));
-        jugador1.agregarComodin(comodin1);
-        jugador1.agregarComodin(comodin2);
-        jugador2.agregarComodin(comodin2);
-        jugador2.agregarComodin(comodin1);
         //act
-        int resultado1 = jugador1.jugarMano(cartas, color);
-        int resultado2 = jugador2.jugarMano(cartas, color);
+        Jugada jugada = jugador.jugarMano(cartas, color);
+        turno1.calcularJugada(jugada);
+        turno2.calcularJugada(jugada);
+        int resultado1 = turno1.puntajeDelTurno();
+        int resultado2 = turno2.puntajeDelTurno();
         //assert
         assertNotEquals(resultado1, resultado2);
     }
+
     @Test
     public void modificarCartaConTarotCambiaPuntos() {
         //arrange
@@ -114,6 +125,8 @@ public class CasosDeUsoTest {
         //assert
         assertEquals(carta.getPuntaje(), 10);
     }
+
+
 
     @Test
     public void modificarCartaConTarotCambiarMultiplicador() {
@@ -127,4 +140,3 @@ public class CasosDeUsoTest {
         assertEquals(color.getMultiplicador(), 6);
     }
 }
-*/

@@ -7,12 +7,10 @@ public class ComodinPuntaje extends Comodin {
 
     private final int modificador;
     private char operacion;
-    private String tipo;
 
     public ComodinPuntaje(int valor, char simbolo) {
         this.modificador = valor;
         this.operacion = simbolo;
-        this.tipo = "Puntaje";
     }
 
     @Override
