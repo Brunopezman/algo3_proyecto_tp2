@@ -14,8 +14,6 @@ public class ComodinManoEspecifica extends Comodin{
 
     @Override
     public void aplicarEfecto(Jugada jugada) {
-        if (jugada.jugoEstaMano(manoModificable)) {
-            comodin.aplicarEfecto(jugada);
-        }
+        if (jugada.jugoEstaMano(manoModificable)) { comodin.aplicarEfecto(jugada); }
     }
 }

@@ -2,10 +2,7 @@ package edu.fiuba.algo3.entrega_2;
 
 import edu.fiuba.algo3.modelo.carta.Carta;
 import edu.fiuba.algo3.modelo.carta.CartaNumerica;
-import edu.fiuba.algo3.modelo.comodin.ComodinDescarte;
-import edu.fiuba.algo3.modelo.comodin.ComodinManoEspecifica;
-import edu.fiuba.algo3.modelo.comodin.ComodinMultiplicador;
-import edu.fiuba.algo3.modelo.comodin.ComodinPuntaje;
+import edu.fiuba.algo3.modelo.comodin.*;
 import edu.fiuba.algo3.modelo.juego.*;
 import edu.fiuba.algo3.modelo.mano.Color;
 import edu.fiuba.algo3.modelo.mano.Escalera;
@@ -106,8 +103,7 @@ public class CasosDeUsoTest {
     }
 
     @Test
-    public void ComodinConChance1Sobre1000SeRompe(){
-    }
+    public void ComodinConChance1Sobre1000SeRompe(){}
 
     @Test
     public void ComodinDeCombinacionSeAplicaCorrectamente(){
@@ -117,7 +113,8 @@ public class CasosDeUsoTest {
         Mano escalera = new Escalera();
         ComodinMultiplicador multiplicador = new ComodinMultiplicador(3,SIMBOLOMULTIPLICAR);
         ComodinManoEspecifica comodin2 = new ComodinManoEspecifica(escalera,multiplicador);
-        ComodinPuntaje comodin3 = new ComodinPuntaje(5,SIMBOLOSUMAR);
+        ComodinPuntaje sumador = new ComodinPuntaje(5,SIMBOLOSUMAR);
+        ComodinAleatorio comodin3 = new ComodinAleatorio(sumador);
         ronda.agregarComodin(comodin1);
         ronda.agregarComodin(comodin2);
         ronda.agregarComodin(comodin3);
