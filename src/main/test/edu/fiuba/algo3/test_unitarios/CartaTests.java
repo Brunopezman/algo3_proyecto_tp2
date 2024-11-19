@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.test_unitarios;
 
+import edu.fiuba.algo3.modelo.carta.CartaNoNumerica;
 import edu.fiuba.algo3.modelo.carta.CartaNumerica;
 import org.junit.jupiter.api.Test;
 
@@ -131,4 +132,15 @@ public class CartaTests {
     }
 
     //PROBAR CASOS COMBINADOS DE CARTAS NUMERICAS Y NONUMERICAS
+
+    @Test
+    public void testUnaCartaNoNumericaReconoceOtraCartaConsecutivaNumerica() {
+        //arrange
+        CartaNoNumerica carta = new CartaNoNumerica("A","Diamantes");
+        CartaNumerica carta2 = new CartaNumerica("2","Diamantes");
+        //act
+        boolean resultado = carta2.esConsecutiva(carta);
+        //assert
+        assert(resultado);
+    }
 }

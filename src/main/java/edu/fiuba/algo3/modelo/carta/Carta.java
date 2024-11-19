@@ -21,7 +21,7 @@ public class Carta {
     public int getPuntaje() { return this.puntaje; }
 
     public boolean esConsecutiva(Carta otraCarta) {
-        List<String> orden = List.of("A", "2", "3", "4", "5","6", "7", "8", "9", "10","J", "Q", "K");
+        List<String> orden = List.of("A", "2", "3", "4", "5","6", "7", "8", "9", "10","J", "Q", "K", "A");
 
         String valorOtra = otraCarta.getValor();
 
@@ -29,9 +29,8 @@ public class Carta {
 
         String valorConsecutivo = String.valueOf(orden.get(posicionOtra+1));
 
-        return   valorConsecutivo.equals(this.getValor());
+        return  valorConsecutivo.equals(this.getValor());
     }
-
 
     public boolean esIgual(Carta otraCarta){ return (this.tieneMismoPalo(otraCarta) && this.tieneMismoValor(otraCarta)); };
 

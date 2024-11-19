@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.modelo.juego;
 
 import edu.fiuba.algo3.modelo.carta.Carta;
+import edu.fiuba.algo3.modelo.comodin.Comodin;
 import edu.fiuba.algo3.modelo.mano.*;
 
 import java.util.List;
@@ -10,8 +11,9 @@ public class Turno {
     private List<Mano> manosJugables;
     private int puntaje;
     private int cantidadDescartes;
+    private List<Comodin> comodines;
 
-    public Turno(){
+    public Turno(List<Comodin> comodines){
         this.manosJugables = new ArrayList<>();
         this.puntaje = 0;
         this.manosJugables.add(new EscaleraReal());
@@ -25,6 +27,14 @@ public class Turno {
         this.manosJugables.add(new Par());
         this.manosJugables.add(new CartaAlta());
         this.cantidadDescartes = 0;
+        this.comodines = comodines;
+    }
+
+    public void calcularJugada(Jugada jugada){
+        for (Comodin comodin: comodines) {
+            comodin.aplicarEfecto(jugada);
+        }
+        puntaje = jugada.calcularPuntaje();
     }
 
     public boolean existeManoJugable(List<Carta> cartas){
@@ -37,6 +47,10 @@ public class Turno {
         return existe;
     }
 
+    public int puntajeDelTurno(){
+        return puntaje;
+    }
+
     public void sumarManoJugada(int valor){
         this.setPuntaje(valor);
     }
@@ -45,8 +59,8 @@ public class Turno {
         this.cantidadDescartes += cantidad;
     }
 
-    public boolean puedeDescartar(int cantidad){
-        if(this.cantidadDescartes + cantidad > 3){
+    public boolean puedeDescartar(){
+        if(this.cantidadDescartes == 3){
             return false;
         }
         return true;
@@ -56,5 +70,8 @@ public class Turno {
         this.puntaje = nuevoPuntaje;
     }
 
+    public void registrarDescarte() {
+        this.cantidadDescartes++;
+    }
 }
 

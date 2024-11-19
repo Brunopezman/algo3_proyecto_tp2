@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.modelo.comodin;
 
+import edu.fiuba.algo3.modelo.juego.Jugada;
 import edu.fiuba.algo3.modelo.mano.Mano;
 
 public class ComodinMultiplicador extends Comodin{
@@ -13,14 +14,5 @@ public class ComodinMultiplicador extends Comodin{
     }
 
     @Override
-    public void aplicarEfecto(Mano mano) {
-        int nuevoValor;
-        if (this.operacion == '+') {
-            nuevoValor = mano.getMultiplicador() + modificador;
-        }else {
-            nuevoValor = mano.getMultiplicador() * modificador;
-        }
-        mano.modificarMultiplicador(nuevoValor);
-
-    }
+    public void aplicarEfecto(Jugada jugada) { jugada.modificarMultiplicadorMano(operacion, modificador); }
 }

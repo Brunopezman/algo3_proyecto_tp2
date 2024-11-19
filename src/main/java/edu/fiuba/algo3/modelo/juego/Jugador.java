@@ -13,6 +13,7 @@ public class Jugador {
     private List<Carta> cartasActuales;
     private List<Comodin> comodines;
     private static final int CARTASARECIBIR = 8;
+    private int descartes;
 
     public Jugador(String nombre) {
         this.nombre = nombre;
@@ -26,6 +27,22 @@ public class Jugador {
         return cartasRecibidas;
     }
 
+    private boolean verificarExistenciaDeCartas(List<Carta> cartas){
+        boolean encontrado = false;
+        for(Carta carta : cartas){
+            for(Carta cartaActual : cartasActuales){
+                if(carta.esIgual(cartaActual)){
+                    encontrado = true;
+                    break;
+                }
+            }
+            if(!encontrado){
+                break;
+            }
+        }
+        return encontrado;
+    }
+
     private void setCartasActuales(List<Carta> cartas) {
         this.cartasActuales = cartas;
     }
@@ -34,27 +51,41 @@ public class Jugador {
         return this.cartasActuales.size() >= 5;
     }
 
-    public int jugarMano(List<Carta> cartas, Mano mano) {
+    public Jugada jugarMano(List<Carta> cartas, Mano mano) {
         int puntaje = 0;
+
         for (Carta carta : cartas) {
             puntaje += carta.getPuntaje();
         }
-        for (Comodin comodin: comodines) {
-            comodin.aplicarEfecto(mano);
-        }
-        return mano.calcularPuntaje(puntaje);
+
+        return new Jugada(mano, this.descartes, puntaje);
     }
 
-    public void agregarComodin(Comodin comodin) {
-        comodines.add(comodin);
-    }
+    //public void agregarComodin(Comodin comodin) {
+    //    comodines.add(comodin);
+    //}
 
-    public void descartar(Mazo mazo, int cantidad){
-        for (int i = 0; i < cantidad; i++) {
-            this.cartasActuales.remove(0);
+    //descartes al azar?
+    public void descartar(Mazo mazo, List<Carta> cartasADescartar){
+        if (this.descartes == 3 ) {
+            throw new IllegalArgumentException("No puede realizar más descartes en este turno.");
         }
-        List<Carta> nuevasCartas= mazo.darCartas(cantidad);
-        for (int i = 0; i < cantidad; i++) {
+
+        if (!this.verificarExistenciaDeCartas(cartasADescartar)) {
+            throw new IllegalArgumentException("Algunas cartas no están en la mano.");
+        }
+
+        this.descartes++;
+
+        // Descartar cada carta
+        for (Carta carta : cartasADescartar) {
+            cartasActuales.remove(carta);
+        }
+
+        //dar nuevamente la cantidad de cartas que descartó
+        int cantidadARecibir = cartasADescartar.size();
+        List<Carta> nuevasCartas= mazo.darCartas(cantidadARecibir);
+        for (int i = 0; i < cantidadARecibir; i++) {
             this.cartasActuales.add(nuevasCartas.get(i));
         }
     }

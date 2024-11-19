@@ -39,9 +39,8 @@ public abstract class Mano {
         this.setPuntaje(valor);
     }
 
-    public void modificarMultiplicador(int valor){
-        this.setMultiplicador(valor);
-    }
+    public void modificarMultiplicador(int valor){ this.setMultiplicador(valor); }
 
+    public boolean esMismaMano(Mano manoRecibida){ return this.getClass().equals(manoRecibida.getClass()); }
 }
 
