@@ -76,7 +76,7 @@ public class CasosDeUsoTest {
 
     @Test
     public void ComodinSuma10PorDescarte(){
-
+        //arrange
         Ronda ronda = new Ronda();
         ComodinDescarte comodin = new ComodinDescarte(new ComodinPuntaje(10, SIMBOLOSUMAR));
         ronda.agregarComodin(comodin);
@@ -95,9 +95,10 @@ public class CasosDeUsoTest {
         jugador.recibirCartas(mazo);
         List<Carta> cartasDescarte = new ArrayList<Carta>();
         cartasDescarte.add(carta6);
+        int esperado = 260;
+        //act
         jugador.descartar(mazo,cartasDescarte);
         Jugada jugada = jugador.jugarMano(cartas, color);
-        int esperado = 260;
         turno.calcularJugada(jugada);
         int resultado = turno.puntajeDelTurno();
         //assert
@@ -110,6 +111,7 @@ public class CasosDeUsoTest {
 
     @Test
     public void ComodinDeCombinacionSeAplicaCorrectamente(){
+        //arrange
         Ronda ronda = new Ronda();
         ComodinDescarte comodin1 = new ComodinDescarte(new ComodinPuntaje(10, SIMBOLOSUMAR));
         Mano escalera = new Escalera();
@@ -133,9 +135,10 @@ public class CasosDeUsoTest {
         jugador.recibirCartas(mazo);
         List<Carta> cartasDescarte = new ArrayList<Carta>();
         cartasDescarte.add(carta6);
+        int esperado = 780;
+        //act
         jugador.descartar(mazo,cartasDescarte);
         Jugada jugada = jugador.jugarMano(cartas, escalera);
-        int esperado = 840;
         turno.calcularJugada(jugada);
         int resultado = turno.puntajeDelTurno();
         //assert

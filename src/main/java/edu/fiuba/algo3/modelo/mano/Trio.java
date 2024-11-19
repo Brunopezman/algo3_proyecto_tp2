@@ -10,11 +10,6 @@ public class Trio extends Mano{
     public static int PUNTAJE_INICIAL = 30;
     public static int MULTIPLICADOR_INICIAL = 3;
 
-    // Atributos
-    private int puntaje;
-    private int multiplicador;
-    private Operador operador;
-
     public Trio() {
         this.puntaje = PUNTAJE_INICIAL;
         this.multiplicador = MULTIPLICADOR_INICIAL;
@@ -34,31 +29,6 @@ public class Trio extends Mano{
         }
 
         return false;  // No se puede formar un Three of a Kind
-    }
-
-    @Override
-    public int calcularPuntaje(int valor) {
-        return 0;
-    }
-
-    @Override
-    public int getPuntaje() {
-        return 0;
-    }
-
-    @Override
-    public void setMultiplicador(int multiplicador) {
-        this.multiplicador = multiplicador;
-    }
-
-    @Override
-    public int getMultiplicador() {
-        return multiplicador;
-    }
-
-    @Override
-    public void setPuntaje(int nuevoPuntaje) {
-
     }
 }
 

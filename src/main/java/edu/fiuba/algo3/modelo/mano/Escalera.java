@@ -9,11 +9,6 @@ public class Escalera extends Mano{
     public static int PUNTAJE_INICIAL = 30;
     public static int MULTIPLICADOR_INICIAL = 4;
 
-    // Atributos
-    private int puntaje;
-    private int multiplicador;
-    private Operador operador;
-
     public Escalera() {
         this.puntaje = PUNTAJE_INICIAL;
         this.multiplicador = MULTIPLICADOR_INICIAL;
@@ -24,29 +19,6 @@ public class Escalera extends Mano{
     public boolean esJugable(List<Carta> cartas) {
         return (this.verificarEscalera(cartas));
     }
-
-    @Override
-    public int calcularPuntaje(int valor) {
-        return (this.puntaje + valor)*this.multiplicador;
-    }
-
-    @Override
-    public int getPuntaje() {
-        return 0;
-    }
-
-    @Override
-    public void setMultiplicador(int multiplicador) {
-        this.multiplicador = multiplicador;
-    }
-
-    @Override
-    public int getMultiplicador() {
-        return multiplicador;
-    }
-
-    @Override
-    public void setPuntaje(int nuevoPuntaje) {}
 
     public boolean verificarEscalera(List<Carta> cartas){
 

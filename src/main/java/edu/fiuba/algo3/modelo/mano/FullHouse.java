@@ -10,11 +10,6 @@ public class FullHouse extends Mano {
     public static int PUNTAJE_INICIAL = 40;
     public static int MULTIPLICADOR_INICIAL = 4;
 
-    // Atributos
-    private int puntaje;
-    private int multiplicador;
-    private Operador operador;
-
     public FullHouse() {
         this.puntaje = PUNTAJE_INICIAL;
         this.multiplicador = MULTIPLICADOR_INICIAL;
@@ -44,30 +39,5 @@ public class FullHouse extends Mano {
             }
         }
         return (tieneTres && tieneDos);
-    }
-
-    @Override
-    public int calcularPuntaje(int valor) {
-        return 0;
-    }
-
-    @Override
-    public int getPuntaje() {
-        return 0;
-    }
-
-    @Override
-    public void setMultiplicador(int multiplicador) {
-        this.multiplicador = multiplicador;
-    }
-
-    @Override
-    public int getMultiplicador() {
-        return multiplicador;
-    }
-
-    @Override
-    public void setPuntaje(int nuevoPuntaje) {
-
     }
 }

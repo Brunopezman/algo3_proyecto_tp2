@@ -9,35 +9,23 @@ import java.util.Map;
 
 public abstract class Mano {
 
+    protected int puntaje;
+    protected int multiplicador;
+    protected Operador operador;
+
     abstract public boolean esJugable(List<Carta> cartas);
 
-    abstract protected void setPuntaje(int nuevoPuntaje);
+    protected void setPuntaje(int nuevoPuntaje){ puntaje = nuevoPuntaje; }
 
-    abstract protected void setMultiplicador (int nuevoMultiplicador);
+    protected void setMultiplicador (int nuevoMultiplicador){ multiplicador = nuevoMultiplicador; }
 
-    abstract public int getPuntaje();
+    public int getPuntaje(){ return puntaje; };
 
-    abstract public int getMultiplicador();
+    public int getMultiplicador(){ return multiplicador; };
 
-    abstract public int calcularPuntaje(int valor);
+    public int calcularPuntaje(int valor){ return (this.puntaje + valor)*this.multiplicador; };
 
-
-//    public Map<String, Integer> contarPorValor(List<Carta> cartas) {
-//        Map<String, Integer> conteoValores = new HashMap<>();
-//        for (Carta carta : cartas) {
-//            String palo = carta.getValor();
-//            conteoValores.put(palo, conteoValores.getOrDefault(palo, 0) + 1);
-//        }
-//        return conteoValores;
-//    }
-//    public void aplicarComodin(Comodin comodin){
-//        int valorModificado = comodin.modificarValor(this.getPuntaje(),this.getMultiplicador());
-//        this.setPuntaje(valorModificado);
-//    }
-
-    public void modificarPuntaje (int valor){
-        this.setPuntaje(valor);
-    }
+    public void modificarPuntaje (int valor){ this.setPuntaje(valor); }
 
     public void modificarMultiplicador(int valor){ this.setMultiplicador(valor); }
 

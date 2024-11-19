@@ -12,11 +12,6 @@ public class EscaleraReal extends Mano{
     public static int PUNTAJE_INICIAL = 100;
     public static int MULTIPLICADOR_INICIAL = 8;
 
-    // Atributos
-    private int puntaje;
-    private int multiplicador;
-    private Operador operador;
-
     public EscaleraReal(){
         this.puntaje = PUNTAJE_INICIAL;
         this.multiplicador = MULTIPLICADOR_INICIAL;
@@ -38,30 +33,5 @@ public class EscaleraReal extends Mano{
             }
         }
         return false;
-    }
-
-    @Override
-    public int calcularPuntaje(int valor) {
-        return 0;
-    }
-
-    @Override
-    public int getPuntaje() {
-        return 0;
-    }
-
-    @Override
-    public void setMultiplicador(int multiplicador) {
-        this.multiplicador = multiplicador;
-    }
-
-    @Override
-    public int getMultiplicador() {
-        return multiplicador;
-    }
-
-    @Override
-    public void setPuntaje(int nuevoPuntaje) {
-
     }
 }

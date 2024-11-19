@@ -10,11 +10,6 @@ public class Color extends Mano{
     public static int PUNTAJE_INICIAL = 35;
     public static int MULTIPLICADOR_INICIAL = 4;
 
-    // Atributos
-    private int puntaje;
-    private int multiplicador;
-    private final Operador operador;
-
     public Color(){
         this.puntaje = PUNTAJE_INICIAL;
         this.multiplicador = MULTIPLICADOR_INICIAL;
@@ -34,28 +29,4 @@ public class Color extends Mano{
         return false;
     }
 
-    @Override
-    public int calcularPuntaje(int valor) {
-        return (this.puntaje + valor)*this.multiplicador;
-    }
-
-    @Override
-    public int getPuntaje() {
-        return this.puntaje;
-    }
-
-    @Override
-    public void setPuntaje(int nuevoPuntaje) {
-        this.puntaje = nuevoPuntaje;
-    }
-
-    @Override
-    public void setMultiplicador(int nuevoMultiplicador) {
-        this.multiplicador = nuevoMultiplicador;
-    }
-
-    @Override
-    public int getMultiplicador() {
-        return this.multiplicador;
-    }
 }
