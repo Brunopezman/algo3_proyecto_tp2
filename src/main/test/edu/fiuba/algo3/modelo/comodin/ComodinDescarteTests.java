@@ -1,6 +1,5 @@
-package edu.fiuba.algo3.modelo_tests.comodin;
+package edu.fiuba.algo3.modelo.comodin;
 
-import edu.fiuba.algo3.modelo.comodin.*;
 import edu.fiuba.algo3.modelo.juego.*;
 import edu.fiuba.algo3.modelo.mano.Color;
 import org.junit.jupiter.api.Test;

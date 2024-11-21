@@ -1,7 +1,6 @@
-package edu.fiuba.algo3.modelo_tests.mano;
+package edu.fiuba.algo3.modelo.mano;
 
 import edu.fiuba.algo3.modelo.carta.*;
-import edu.fiuba.algo3.modelo.mano.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
