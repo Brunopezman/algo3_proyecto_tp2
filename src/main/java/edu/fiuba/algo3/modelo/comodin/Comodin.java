@@ -6,7 +6,7 @@ public abstract class Comodin {
 
     protected int multiplicador;
     protected int  puntos;
-    protected estrategiaModificador estrategia;
+    protected EstrategiaModificador estrategia;
 
     public abstract void aplicarEfecto(Jugada jugada);
 }
