@@ -25,7 +25,7 @@ public class EscaleraReal extends Mano{
 
         for (List<Carta> cartasDelMismoPalo : cartasPorPalo.values()) {
             List<String> valoresRequeridos = List.of("10", "J", "Q", "K", "A");
-            List<String> valoresEnPalo = cartasDelMismoPalo.stream().map(Carta::puntaje).collect(Collectors.toList());
+            List<String> valoresEnPalo = cartasDelMismoPalo.stream().map(Carta::numero).collect(Collectors.toList());
             if (valoresEnPalo.containsAll(valoresRequeridos)) {
                 return true;
             }

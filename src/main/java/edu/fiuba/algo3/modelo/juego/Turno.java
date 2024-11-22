@@ -3,7 +3,6 @@ package edu.fiuba.algo3.modelo.juego;
 import edu.fiuba.algo3.modelo.carta.Carta;
 import edu.fiuba.algo3.modelo.comodin.Comodin;
 import edu.fiuba.algo3.modelo.mano.*;
-import edu.fiuba.algo3.modelo.tarot.Tarot;
 
 import java.util.List;
 import java.util.ArrayList;
