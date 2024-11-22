@@ -1,7 +1,6 @@
 package edu.fiuba.algo3.entrega_2;
 
 import edu.fiuba.algo3.modelo.carta.Carta;
-import edu.fiuba.algo3.modelo.carta.CartaNumerica;
 import edu.fiuba.algo3.modelo.comodin.*;
 import edu.fiuba.algo3.modelo.juego.*;
 import edu.fiuba.algo3.modelo.mano.Color;

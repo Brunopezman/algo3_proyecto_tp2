@@ -1,12 +1,6 @@
 package edu.fiuba.algo3.modelo.juego;
 
-import edu.fiuba.algo3.modelo.carta.Carta;
-import edu.fiuba.algo3.modelo.comodin.Comodin;
-import edu.fiuba.algo3.modelo.comodin.ComodinDescarte;
-import edu.fiuba.algo3.modelo.comodin.ComodinPuntaje;
 import edu.fiuba.algo3.modelo.mano.Mano;
-
-import java.util.List;
 
 public class Jugada {
 
