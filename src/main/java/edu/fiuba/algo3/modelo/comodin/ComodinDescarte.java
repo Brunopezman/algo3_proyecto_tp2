@@ -1,6 +1,5 @@
 package edu.fiuba.algo3.modelo.comodin;
 
-import edu.fiuba.algo3.modelo.juego.Jugada;
 import edu.fiuba.algo3.modelo.mano.Mano;
 
 public class ComodinDescarte extends Comodin {
@@ -12,9 +11,9 @@ public class ComodinDescarte extends Comodin {
     }
 
     @Override
-    public void aplicarEfecto(Jugada jugada) {
-        if(jugada.seDescarto()) {
-            estrategia.realizarModificacion(jugada,multiplicador,puntos);
+    public void aplicarEfecto(Mano mano) {
+        for (int i = 0; i < mano.cantidadDescartes(); i++) {
+            estrategia.realizarModificacion(mano, multiplicador, puntos);
         }
     }
 

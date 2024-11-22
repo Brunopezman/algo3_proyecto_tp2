@@ -1,25 +1,26 @@
 package edu.fiuba.algo3.modelo.comodin;
 
-import edu.fiuba.algo3.modelo.juego.Jugada;
+import edu.fiuba.algo3.modelo.mano.Mano;
 
 import java.util.Random;
 
 public class ComodinAleatorio extends Comodin{
 
+    private int probabilidad;
     private int valorParaEjecucion;
 
-    public ComodinAleatorio(int valorMultiplicador,int valorPuntos, estrategiaModificador estrategia) {
+    public ComodinAleatorio(int valorMultiplicador,int valorPuntos, estrategiaModificador estrategia, int probabilidad) {
         this.multiplicador = valorMultiplicador;
         this.puntos = valorPuntos;
         this.estrategia = estrategia;
-        //this.valorParaEjecucion = algo;
+        this.valorParaEjecucion = 0;
+        this.probabilidad = probabilidad;
     }
 
-
     @Override
-    public void aplicarEfecto(Jugada jugada) {
+    public void aplicarEfecto(Mano mano) {
         Random aleatorio = new Random();
-        int randomActual = aleatorio.nextInt(5);
-        if(valorParaEjecucion == randomActual){ estrategia.realizarModificacion(jugada,multiplicador,puntos); }
+        int randomActual = aleatorio.nextInt(probabilidad);
+        if(valorParaEjecucion == randomActual){ estrategia.realizarModificacion(mano,multiplicador,puntos); }
     }
 }

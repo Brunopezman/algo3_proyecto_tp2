@@ -1,6 +1,6 @@
 package edu.fiuba.algo3.modelo.comodin;
 
-import edu.fiuba.algo3.modelo.juego.Jugada;
+import edu.fiuba.algo3.modelo.mano.Mano;
 
 public class ComodinRegular extends Comodin {
 
@@ -11,7 +11,7 @@ public class ComodinRegular extends Comodin {
     }
 
     @Override
-    public void aplicarEfecto(Jugada jugada) {
-        estrategia.realizarModificacion(jugada, multiplicador, puntos);
+    public void aplicarEfecto(Mano mano) {
+        estrategia.realizarModificacion(mano, multiplicador, puntos);
     }
 }

@@ -1,10 +1,10 @@
 package edu.fiuba.algo3.modelo.comodin;
 
-import edu.fiuba.algo3.modelo.juego.Jugada;
+import edu.fiuba.algo3.modelo.mano.Mano;
 
 public class estrategiaMultiplicarMultiplicador {
 
-    void realizarModificacion(Jugada jugada, int multiplicador, int puntos){
-        jugada.multiplicarMultiplicador(multiplicador);
+    void realizarModificacion(Mano mano, int multiplicador, int puntos){
+        mano.multiplicarMultiplicador(multiplicador);
     }
 }

@@ -1,9 +1,9 @@
 package edu.fiuba.algo3.modelo.comodin;
 
-import edu.fiuba.algo3.modelo.juego.Jugada;
+import edu.fiuba.algo3.modelo.mano.Mano;
 
 public class estrategiaSumarPuntos {
-    void realizarModificacion(Jugada jugada, int multiplicador, int puntos){
-        jugada.sumarPuntos(puntos);
+    void realizarModificacion(Mano mano, int multiplicador, int puntos){
+        mano.sumarPuntos(puntos);
     }
 }

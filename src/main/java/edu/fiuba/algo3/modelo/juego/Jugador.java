@@ -51,14 +51,16 @@ public class Jugador {
         return this.cartasActuales.size() >= 5;
     }
 
-    public Jugada jugarMano(List<Carta> cartas, Mano mano) {
+    public Mano jugarMano(List<Carta> cartas, Mano mano) {
         int puntaje = 0;
 
         for (Carta carta : cartas) {
             puntaje += carta.getPuntaje();
         }
 
-        return new Jugada(mano, this.descartes, puntaje);
+        mano.sumarPuntos(puntaje);
+        mano.sumarDescartes(descartes);
+        return mano;
     }
 
     //public void agregarComodin(Comodin comodin) {

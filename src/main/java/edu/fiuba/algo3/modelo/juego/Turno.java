@@ -30,11 +30,11 @@ public class Turno {
         this.comodines = comodines;
     }
 
-    public void calcularJugada(Jugada jugada){
+    public void calcularJugada(Mano mano){
         for (Comodin comodin: comodines) {
-            comodin.aplicarEfecto(jugada);
+            comodin.aplicarEfecto(mano);
         }
-        puntaje = jugada.calcularPuntaje();
+        puntaje = mano.puntajeFinal();
     }
 
     public boolean existeManoJugable(List<Carta> cartas){
