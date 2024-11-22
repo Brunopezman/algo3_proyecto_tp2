@@ -22,29 +22,21 @@ public class Jugada {
 
     public boolean seDescarto(){return this.huboDescartes;}
 
-    public void modificarMultiplicadorMano(char operador, int modificador){
-        int nuevoValor;
-        if (operador == '+') {
-            nuevoValor = mano.getMultiplicador() + modificador;
-        }else {
-            nuevoValor = mano.getMultiplicador() * modificador;
-        }
-        mano.modificarMultiplicador(nuevoValor);
-    }
-
-    public void modificarPuntajeMano(char operador, int modificador){
-        int nuevoValor;
-        if (operador == '+') {
-            nuevoValor = mano.getPuntaje() + modificador;
-        }else {
-            nuevoValor = mano.getPuntaje() * modificador;
-        }
-        mano.modificarPuntaje(nuevoValor);
-    }
-
     public int calcularPuntaje(){ return mano.calcularPuntaje(puntaje); }
 
     public boolean jugoEstaMano(Mano manoRecibida) {
         return mano.esMismaMano(manoRecibida);
+    }
+
+    public void sumarMultiplicador(int multiplicador) {
+        mano.sumarMultiplicador(multiplicador);
+    }
+
+    public void multiplicarMultiplicador(int multiplicador) {
+        mano.multiplicarMultiplicador(multiplicador);
+    }
+
+    public void sumarPuntos(int puntos){
+        mano.sumarPuntos(puntos);
     }
 }
