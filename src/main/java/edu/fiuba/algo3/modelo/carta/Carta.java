@@ -4,33 +4,19 @@ import java.util.List;
 
 public class Carta {
 
-    private String valor;
-    private String palo;
-    private int puntaje;
+    private Valor valor;
+    private Palo palo;
 
-    public void setValor(String valor) { this.valor = valor; }
-
-    public void setPuntaje(int valor) { this.puntaje = valor; }
-
-    public void setPalo(String palo) { this.palo = palo; }
-
-    public String getValor() { return this.valor; }
-
-    public String getPalo() { return this.palo; }
-
-    public int getPuntaje() { return this.puntaje; }
-
-    public boolean esConsecutiva(Carta otraCarta) {
-        List<String> orden = List.of("A", "2", "3", "4", "5","6", "7", "8", "9", "10","J", "Q", "K", "A");
-
-        String valorOtra = otraCarta.getValor();
-
-        int posicionOtra = orden.indexOf(valorOtra);
-
-        String valorConsecutivo = String.valueOf(orden.get(posicionOtra+1));
-
-        return  valorConsecutivo.equals(this.getValor());
+    public Carta(String valor, String consecutivo, String palo) {
+        this.valor = new Valor(valor, consecutivo);
+        this.palo = new Palo(palo);
     }
+
+    public Valor getValor() { return this.valor; }
+
+    public Palo getPalo() { return this.palo; }
+
+    public boolean esConsecutiva(Carta otraCarta) { return valor.sonConsecutivos(valor.getNumero()); }
 
     public boolean esIgual(Carta otraCarta){ return (this.tieneMismoPalo(otraCarta) && this.tieneMismoValor(otraCarta)); };
 
