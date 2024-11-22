@@ -5,16 +5,16 @@ import edu.fiuba.algo3.modelo.mano.Mano;
 
 public class ComodinDescarte extends Comodin {
 
-    private Comodin comodin;
-
-    public ComodinDescarte(Comodin comodin) {
-        this.comodin = comodin;
+    public ComodinDescarte(int valorMultiplicador,int valorPuntos, estrategiaModificador estrategia) {
+        this.multiplicador = valorMultiplicador;
+        this.puntos = valorPuntos;
+        this.estrategia = estrategia;
     }
 
     @Override
     public void aplicarEfecto(Jugada jugada) {
         if(jugada.seDescarto()) {
-            this.comodin.aplicarEfecto(jugada);
+            estrategia.realizarModificacion(jugada,multiplicador,puntos);
         }
     }
 

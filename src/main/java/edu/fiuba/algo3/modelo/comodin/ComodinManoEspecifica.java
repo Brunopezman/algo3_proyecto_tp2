@@ -4,16 +4,19 @@ import edu.fiuba.algo3.modelo.juego.Jugada;
 import edu.fiuba.algo3.modelo.mano.Mano;
 
 public class ComodinManoEspecifica extends Comodin{
-    private Comodin comodin;
-    private Mano manoModificable;
 
-    public ComodinManoEspecifica(Mano manoModificable, Comodin comodin) {
-        this.comodin = comodin;
-        this.manoModificable = manoModificable;
+    private Mano manoQueAfecta;
+
+    public ComodinManoEspecifica(int valorMultiplicador,int valorPuntos, estrategiaModificador estrategia) {
+        this.multiplicador = valorMultiplicador;
+        this.puntos = valorPuntos;
+        this.estrategia = estrategia;
     }
 
     @Override
     public void aplicarEfecto(Jugada jugada) {
-        if (jugada.jugoEstaMano(manoModificable)) { comodin.aplicarEfecto(jugada); }
+        if(jugada.jugoEstaMano(manoQueAfecta)){
+            estrategia.realizarModificacion(jugada, multiplicador, puntos);
+        }
     }
 }

@@ -5,12 +5,10 @@ import edu.fiuba.algo3.modelo.mano.Mano;
 
 public class ComodinPuntaje extends Comodin {
 
-    private final int modificador;
-    private char operacion;
-
-    public ComodinPuntaje(int valor, char simbolo) {
-        this.modificador = valor;
-        this.operacion = simbolo;
+    public ComodinPuntaje(int valorMultiplicador,int valorPuntos, estrategiaModificador estrategia) {
+        this.multiplicador = valorMultiplicador;
+        this.puntos = valorPuntos;
+        this.estrategia = estrategia;
     }
 
     @Override
