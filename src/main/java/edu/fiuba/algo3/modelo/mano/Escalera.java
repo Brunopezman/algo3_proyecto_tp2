@@ -35,7 +35,7 @@ public class Escalera extends Mano{
             if (cartaActual.esConsecutiva(cartaAnterior)) {
                 secuenciaContador++;
             }
-            else if (!(cartaActual.tieneMismoValor(cartaAnterior))) {
+            else if (!(cartaActual.tieneMismoNumero(cartaAnterior))) {
                 secuenciaContador = 1;
             }
             // Si encontramos una secuencia de 5 cartas consecutivas, podemos decir que hay una escalera

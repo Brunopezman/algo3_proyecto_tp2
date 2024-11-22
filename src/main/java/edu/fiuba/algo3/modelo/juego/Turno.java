@@ -3,17 +3,18 @@ package edu.fiuba.algo3.modelo.juego;
 import edu.fiuba.algo3.modelo.carta.Carta;
 import edu.fiuba.algo3.modelo.comodin.Comodin;
 import edu.fiuba.algo3.modelo.mano.*;
+import edu.fiuba.algo3.modelo.tarot.Tarot;
 
 import java.util.List;
 import java.util.ArrayList;
 
 public class Turno {
     private List<Mano> manosJugables;
+    private List<Comodin> comodines;
     private int puntaje;
     private int cantidadDescartes;
-    private List<Comodin> comodines;
 
-    public Turno(List<Comodin> comodines){
+    public Turno(List<Comodin> comodines) {
         this.manosJugables = new ArrayList<>();
         this.puntaje = 0;
         this.manosJugables.add(new EscaleraReal());

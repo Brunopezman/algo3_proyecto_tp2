@@ -55,5 +55,10 @@ public abstract class Mano {
     public int cantidadDescartes() {
         return descartes;
     }
+
+    public void aumentarAtributos(int puntaje, int multiplicador) {
+        this.puntaje += puntaje;
+        this.multiplicador += multiplicador;
+    }
 }
 

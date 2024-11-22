@@ -4,7 +4,7 @@ import edu.fiuba.algo3.modelo.mano.Mano;
 
 public class ComodinRegular extends Comodin {
 
-    public ComodinRegular(int valorMultiplicador,int valorPuntos, EstrategiaModificador estrategia) {
+    public ComodinRegular(int valorMultiplicador,int valorPuntos, EstrategiaComodin estrategia) {
         this.multiplicador = valorMultiplicador;
         this.puntos = valorPuntos;
         this.estrategia = estrategia;

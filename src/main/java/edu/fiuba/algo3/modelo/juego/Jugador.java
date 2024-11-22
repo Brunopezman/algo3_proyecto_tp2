@@ -8,17 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Jugador {
+    private static final int CARTASARECIBIR = 8;
 
     private String nombre;
     private List<Carta> cartasActuales;
     private List<Comodin> comodines;
-    private static final int CARTASARECIBIR = 8;
     private int descartes;
 
     public Jugador(String nombre) {
         this.nombre = nombre;
         this.cartasActuales = new ArrayList<>();
-        this.comodines = new ArrayList<>();
+        //this.comodines = new ArrayList<>();
     }
 
     public List<Carta> recibirCartas(Mazo mazo) {
@@ -54,8 +54,9 @@ public class Jugador {
     public Mano jugarMano(List<Carta> cartas, Mano mano) {
         int puntaje = 0;
 
-        for (Carta carta : cartas) {
-            puntaje += carta.getPuntaje();
+
+        for (Carta carta : cartas) {;
+            puntaje += carta.puntaje();
         }
 
         mano.sumarPuntos(puntaje);
@@ -63,11 +64,6 @@ public class Jugador {
         return mano;
     }
 
-    //public void agregarComodin(Comodin comodin) {
-    //    comodines.add(comodin);
-    //}
-
-    //descartes al azar?
     public void descartar(Mazo mazo, List<Carta> cartasADescartar){
         if (this.descartes == 3 ) {
             throw new IllegalArgumentException("No puede realizar más descartes en este turno.");
