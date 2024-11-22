@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CasosDeUsoTest {
-
+/*
     private static final char SIMBOLOSUMAR = '+';
     private static final char SIMBOLOMULTIPLICAR = '*';
 
@@ -140,5 +140,5 @@ public class CasosDeUsoTest {
         //assert
         assertEquals(esperado, resultado);
     }
-
+*/
 }

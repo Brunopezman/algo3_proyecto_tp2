@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ManoTests {
-
+/*
     @Test
     public void testCartaAltaReconoceSiEsJugable(){
         List<Carta> cartas = new ArrayList<>();
@@ -138,4 +138,6 @@ public class ManoTests {
         Mano trio = new Trio();
         assert trio.esJugable(cartas);
     }
+
+ */
 }

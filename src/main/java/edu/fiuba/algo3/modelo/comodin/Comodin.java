@@ -8,6 +8,6 @@ public abstract class Comodin {
     protected int  puntos;
     protected EstrategiaModificador estrategia;
 
-    public void setEstrategia(estrategiaModificador estrategia) { this.estrategia = estrategia; }
+    public void setEstrategia(EstrategiaModificador estrategia) { this.estrategia = estrategia; }
     public abstract void aplicarEfecto(Mano mano);
 }
