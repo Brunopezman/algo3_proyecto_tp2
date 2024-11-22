@@ -2,8 +2,9 @@ package edu.fiuba.algo3.modelo.comodin;
 
 import edu.fiuba.algo3.modelo.mano.Mano;
 
-public class estrategiaSumarPuntos {
+public class EstrategiaSumarMultiplicador {
+
     void realizarModificacion(Mano mano, int multiplicador, int puntos){
-        mano.sumarPuntos(puntos);
+        mano.sumarMultiplicador(multiplicador);
     }
 }

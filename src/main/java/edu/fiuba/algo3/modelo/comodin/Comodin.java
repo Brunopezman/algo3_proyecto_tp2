@@ -6,7 +6,7 @@ public abstract class Comodin {
 
     protected int multiplicador;
     protected int  puntos;
-    protected estrategiaModificador estrategia;
+    protected EstrategiaModificador estrategia;
 
     public void setEstrategia(estrategiaModificador estrategia) { this.estrategia = estrategia; }
     public abstract void aplicarEfecto(Mano mano);
