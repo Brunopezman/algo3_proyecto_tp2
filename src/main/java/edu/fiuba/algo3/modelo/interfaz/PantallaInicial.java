@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -35,14 +36,34 @@ public class PantallaInicial {
         mediaPlayer.setAutoPlay(true);
 
         StackPane fondo = new StackPane();
-        fondo.setBackground(new Background(new BackgroundFill(Color.web("#28a745"), CornerRadii.EMPTY, null))); // Verde personalizado
+        String rutaImagen = "src/main/java/edu/fiuba/algo3/resources/fondo.jpg";
+        Image imagenFondo = new Image(Paths.get(rutaImagen).toUri().toString());
+        BackgroundImage backgroundImage = new BackgroundImage(
+                imagenFondo,
+                BackgroundRepeat.NO_REPEAT,   //evitar repetición horizontal
+                BackgroundRepeat.NO_REPEAT,   //evitar repetición vertical
+                BackgroundPosition.CENTER,    //centrar la imagen
+                new BackgroundSize(
+                        BackgroundSize.AUTO,
+                        BackgroundSize.AUTO,
+                        false,
+                        false,
+                        true,
+                        true
+                )
+        );
+        fondo.setBackground(new Background(backgroundImage));
+
+        //sin imagen de fondo
+        //StackPane fondo = new StackPane();
+        //fondo.setBackground(new Background(new BackgroundFill(Color.web("#28a745"), CornerRadii.EMPTY, null)));
 
         VBox contenido = new VBox();
         contenido.setAlignment(Pos.CENTER);
         contenido.setSpacing(50);
 
         Text titulo = new Text("B A L A T R O");
-        titulo.setFont(Font.font("Comic Sans MS", 120)); // Fuente personalizada (puedes cambiar el nombre por la fuente que desees)
+        titulo.setFont(Font.font("Comic Sans MS", 120));
         titulo.setFill(Color.YELLOW);  // Color amarillo
         titulo.setStyle("-fx-effect: dropshadow(gaussian, darkred, 5, 0.5, 0, 0);"); // Efecto sombra para resaltar
 
