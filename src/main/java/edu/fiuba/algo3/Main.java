@@ -35,15 +35,11 @@ public class Main extends Application {
         Scene escenaJuego = new Scene(pantallaUser.getRoot(), 800, 600);
         stage.setScene(escenaJuego);
     }
-    public void mostrarPantallaJuego() {
-        PantallaJuego pantallaJuego = new PantallaJuego(this);
+    public void mostrarPantallaJuego(String nombre) {
+        Jugador jugador = new Jugador(nombre);
+        PantallaJuego pantallaJuego = new PantallaJuego(this, jugador);
         Scene escenaJuego = new Scene(pantallaJuego.getRoot(), 800, 600);
         stage.setScene(escenaJuego);
-    }
-
-    public void registrarJugador(String nombre) {
-        jugador = new Jugador(nombre);
-        System.out.println("Jugador registrado: " + nombre);
     }
 
     public static void main(String[] args) {

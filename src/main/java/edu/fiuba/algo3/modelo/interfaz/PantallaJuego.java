@@ -1,8 +1,13 @@
 package edu.fiuba.algo3.modelo.interfaz;
 
 import edu.fiuba.algo3.Main;
+import edu.fiuba.algo3.modelo.juego.Jugador;
+import edu.fiuba.algo3.modelo.juego.Mazo;
+import edu.fiuba.algo3.modelo.juego.Ronda;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -10,58 +15,70 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ButtonBar;
+import javax.swing.text.Element;
+import java.awt.*;
+import java.nio.file.Paths;
 
 public class PantallaJuego {
     private BorderPane root;
+    private Mazo mazo;
+    private Ronda ronda;
+    private String nombre;
 
-    public PantallaJuego(Main main) {
+    public PantallaJuego(Main main, Jugador jugador) {
         root = new BorderPane();
+        mazo = new Mazo();
+        ronda = new Ronda(8,3,300,jugador);
+        root.setTop(crearTopArea());
+        root.setBottom(crearBottomArea());
+        root.setLeft(crearLeftArea(main));
+        root.setRight(crearRightArea());
+        root.setCenter(crearCenterArea());
+    }
 
+    private VBox crearTopArea() {
         VBox topArea = new VBox();
-        Text titulo = new Text("Pantalla de Juego");
-        titulo.setStyle("-fx-font-size: 24px; -fx-fill: black;");
-        topArea.getChildren().add(titulo);
+        int cantidadComodines = ronda.cantidadComodines();
+        Text cantidadComodinesText = new Text(cantidadComodines + "/5");
+        cantidadComodinesText.setStyle("-fx-font-size: 3em; -fx-fill: black;");
+        topArea.getChildren().add(cantidadComodinesText);
         topArea.setAlignment(Pos.CENTER);
-        root.setTop(topArea);
+        return topArea;
+    }
 
+    private VBox crearBottomArea() {
         VBox bottomArea = new VBox();
         Text textoInferior = new Text("Área inferior");
-        textoInferior.setStyle("-fx-font-size: 16px; -fx-fill: black;");
+        textoInferior.setStyle("-fx-font-size: 2em; -fx-fill: black;");
         bottomArea.getChildren().add(textoInferior);
-        bottomArea.setAlignment(Pos.CENTER);
-        root.setBottom(bottomArea);
-
+        bottomArea.setAlignment(Pos.TOP_CENTER);
+        return bottomArea;
+    }
+    private VBox crearLeftArea(Main main) {
         VBox leftArea = new VBox();
         leftArea.setAlignment(Pos.CENTER_LEFT);
         leftArea.setSpacing(15);
 
+        //PUNTAJE NECESARIO Y ACUMULADO
         StackPane puntajeNecesario = crearCuadrado("Puntaje necesario: 50", 50, 150, "lightblue");
-
         StackPane puntajeAcumulado = crearCuadrado("Puntaje acumulado: 20", 50, 150, "lightgreen");
-
         StackPane marcador = crearCuadrado("10 x 2", 100, 150, "lightyellow");
 
+        //TURNOS Y DESCARTES
         HBox turnosDescartes = new HBox();
         turnosDescartes.setSpacing(10);
-
         StackPane turnosRestantes = crearCuadrado("Turnos: 3", 100, 100, "lightcoral");
         StackPane descartesRestantes = crearCuadrado("Descartes: 2", 100, 100, "lightpink");
-
         turnosDescartes.getChildren().addAll(turnosRestantes, descartesRestantes);
 
+        //Ronda
         StackPane rondaActual = crearCuadrado("Ronda: 1 / 5", 50, 150, "lightgray");
 
-        StackPane botonSalir = crearCuadradoNodos(new Button("Salir"), 150, 50, "lightseagreen");
-        Button salir = (Button) botonSalir.getChildren().get(1);
-
-        salir.setOnAction(event -> mostrarConfirmacionSalir(main));
-
-        salir.setStyle("-fx-font-size: 14px; -fx-background-color: #ffcccc;");
+        // BOTON PARA SALIR
+        Button botonSalir = new Button("Salir");
+        botonSalir.setStyle("-fx-font-size: 14px; -fx-background-color: #ffcccc;");
+        AccionBoton accionSalir = new Salir(main);
+        botonSalir.setOnAction(new BotonHandler(accionSalir));
 
         leftArea.getChildren().addAll(
                 puntajeNecesario,
@@ -72,44 +89,35 @@ public class PantallaJuego {
                 botonSalir
         );
 
-        root.setLeft(leftArea);
-
-        // derecha - mazo
-        VBox rightArea = new VBox();
-        rightArea.setAlignment(Pos.CENTER);
-        rightArea.setSpacing(10);
-
-        Rectangle mazo = new Rectangle(100, 150);
-        mazo.setStyle("-fx-fill: darkblue; -fx-stroke: black; -fx-stroke-width: 2;");
-        Text cartasRestantes = new Text("40 / 52");
-        cartasRestantes.setFont(Font.font("Arial", 16));
-
-        rightArea.getChildren().addAll(mazo, cartasRestantes);
-        root.setRight(rightArea);
-
-        VBox centerArea = new VBox();
-        Text textoCentro = new Text("Área central de juego");
-        textoCentro.setStyle("-fx-font-size: 20px; -fx-fill: black;");
-        centerArea.getChildren().add(textoCentro);
-        centerArea.setAlignment(Pos.CENTER);
-        root.setCenter(centerArea);
+        return leftArea;
     }
 
-    private void mostrarConfirmacionSalir(Main main) {
-        Alert alerta = new Alert(AlertType.CONFIRMATION);
-        alerta.setTitle("Confirmación de salida");
-        alerta.setHeaderText("¿Seguro que deseas salir?");
-        alerta.setContentText("Al salir se perderán los avances actuales.");
+    // MAZO
+    private VBox crearRightArea() {
+        VBox rightArea = new VBox();
+        rightArea.setAlignment(Pos.CENTER);
+        rightArea.setSpacing(15);
 
-        ButtonType botonAceptar = new ButtonType("Aceptar");
-        ButtonType botonCancelar = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
-        alerta.getButtonTypes().setAll(botonAceptar, botonCancelar);
+//        String rutaImagen = "src/main/java/edu/fiuba/algo3/resources/reverso.jpg";
+//        Image imagen = new Image(Paths.get(rutaImagen).toUri().toString());
+//        ImageView imageView = new ImageView(imagen);
 
-        alerta.showAndWait().ifPresent(respuesta -> {
-            if (respuesta == botonAceptar) {
-                main.mostrarPantallaInicial(); // Volver al inicio
-            }
-        });
+        int cartasRestantes = mazo.cartasRestantes();
+        Text cartasRestantesText = new Text(cartasRestantes + "/52");
+        cartasRestantesText.setFont(Font.font("Arial", 16));
+
+        rightArea.getChildren().addAll(cartasRestantesText);
+
+        return rightArea;
+    }
+
+    private VBox crearCenterArea() {
+        VBox centerArea = new VBox();
+        Text textoCentro = new Text("Área central de juego");
+        textoCentro.setStyle("-fx-font-size: 2.5em; -fx-fill: black;");
+        centerArea.getChildren().add(textoCentro);
+        centerArea.setAlignment(Pos.CENTER);
+        return centerArea;
     }
 
     public BorderPane getRoot() {
@@ -125,10 +133,4 @@ public class PantallaJuego {
         return stack;
     }
 
-    private StackPane crearCuadradoNodos(Button boton, double altura, double anchura, String color) {
-        Rectangle rect = new Rectangle(anchura, altura);
-        rect.setStyle("-fx-fill: " + color + "; -fx-stroke: black; -fx-stroke-width: 1;");
-        StackPane stack = new StackPane(rect, boton);
-        return stack;
-    }
 }

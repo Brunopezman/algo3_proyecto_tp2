@@ -17,25 +17,24 @@ public class PantallaUser {
         this.main = main;
         this.root = new VBox();
 
-        root.setStyle("-fx-background-color: #4682B4;");  // Celeste oscuro
+        root.setStyle("-fx-background-color: #4682B4;");
 
         Text textoIngreseNombre = new Text("Ingrese su nombre:");
-        textoIngreseNombre.setFont(Font.font("Arial", 30));  // Aumentar tamaño de fuente
-        textoIngreseNombre.setStyle("-fx-fill: white;");  // Cambiar color a blanco para contraste
+        textoIngreseNombre.setFont(Font.font("Arial", 30));
+        textoIngreseNombre.setStyle("-fx-fill: white;");
 
         TextField campoNombre = new TextField();
         campoNombre.setPromptText("Tu nombre aquí...");
         campoNombre.setMaxWidth(250);
 
         Button botonConfirmar = new Button("Comenzar Partida");
-        botonConfirmar.setFont(Font.font("Verdana", 20));  // Aumentar tamaño de fuente
+        botonConfirmar.setFont(Font.font("Verdana", 20));
         botonConfirmar.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #fd0052;");
 
         botonConfirmar.setOnAction(event -> {
             String nombreIngresado = campoNombre.getText().trim();
             if (!nombreIngresado.isEmpty()) {
-                main.registrarJugador(nombreIngresado);
-                main.mostrarPantallaJuego();
+                main.mostrarPantallaJuego(nombreIngresado);
             } else {
                 textoIngreseNombre.setText("Por favor, ingrese su nombre.");
             }
