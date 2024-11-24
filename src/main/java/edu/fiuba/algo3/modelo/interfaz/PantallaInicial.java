@@ -1,13 +1,17 @@
 package edu.fiuba.algo3.modelo.interfaz;
 import edu.fiuba.algo3.Main;
 import javafx.animation.FadeTransition;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+
+import java.util.Objects;
 
 public class PantallaInicial {
     private StackPane root;
@@ -15,25 +19,24 @@ public class PantallaInicial {
 
     public PantallaInicial(Main main) {
         this.main = main;
-        this.root = new StackPane();
 
-        // Fondo
-//        ImageView fondo = new ImageView(new Image("edu/fiuba/algo3/resources/imagen.webp"));
+//        ImageView fondo = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/edu/fiuba/algo3/resources/fondo.jpg"))));
 //        fondo.setFitWidth(800);
 //        fondo.setFitHeight(600);
 //        fondo.setPreserveRatio(true);
 
-        // Título
+        VBox contenido = new VBox();
+        contenido.setAlignment(Pos.CENTER);
+        contenido.setSpacing(50);
+
         Text titulo = new Text("B A L A T R O");
         titulo.setFont(Font.font("Arial", 100));
         titulo.setStyle("-fx-fill: white; -fx-effect: dropshadow(gaussian, darkred, 5, 0.5, 0, 0);");
 
-        // Botón
         Button botonComencemos = new Button("COMENCEMOS");
         botonComencemos.setFont(Font.font("Arial", 25));
         botonComencemos.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #000000;");
 
-        // Animación del botón
         FadeTransition fade = new FadeTransition(Duration.seconds(0.8), botonComencemos);
         fade.setFromValue(1.0);
         fade.setToValue(0.3);
@@ -41,11 +44,11 @@ public class PantallaInicial {
         fade.setAutoReverse(true);
         fade.play();
 
-        botonComencemos.setOnAction(event -> main.mostrarPantallaJuego());
+        botonComencemos.setOnAction(event -> main.mostrarPantallaUser());
 
-        root.getChildren().addAll(titulo, botonComencemos);
-        StackPane.setAlignment(titulo, javafx.geometry.Pos.TOP_CENTER);
-        StackPane.setAlignment(botonComencemos, javafx.geometry.Pos.CENTER);
+        contenido.getChildren().addAll(titulo, botonComencemos);
+
+        root = new StackPane(contenido);
     }
 
     public StackPane getRoot() {
