@@ -11,13 +11,17 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ButtonBar;
+
 public class PantallaJuego {
     private BorderPane root;
 
     public PantallaJuego(Main main) {
         root = new BorderPane();
 
-        // Arriba
         VBox topArea = new VBox();
         Text titulo = new Text("Pantalla de Juego");
         titulo.setStyle("-fx-font-size: 24px; -fx-fill: black;");
@@ -25,7 +29,6 @@ public class PantallaJuego {
         topArea.setAlignment(Pos.CENTER);
         root.setTop(topArea);
 
-        // Abajo (Bottom)
         VBox bottomArea = new VBox();
         Text textoInferior = new Text("Área inferior");
         textoInferior.setStyle("-fx-font-size: 16px; -fx-fill: black;");
@@ -33,21 +36,16 @@ public class PantallaJuego {
         bottomArea.setAlignment(Pos.CENTER);
         root.setBottom(bottomArea);
 
-        // Izquierda - Información y controles
         VBox leftArea = new VBox();
         leftArea.setAlignment(Pos.CENTER_LEFT);
         leftArea.setSpacing(15);
 
-        // 1. Puntaje necesario
         StackPane puntajeNecesario = crearCuadrado("Puntaje necesario: 50", 50, 150, "lightblue");
 
-        // 2. Puntaje acumulado
         StackPane puntajeAcumulado = crearCuadrado("Puntaje acumulado: 20", 50, 150, "lightgreen");
 
-        // 3. Marcador
         StackPane marcador = crearCuadrado("10 x 2", 100, 150, "lightyellow");
 
-        // 4. Turnos restantes y descartes restantes
         HBox turnosDescartes = new HBox();
         turnosDescartes.setSpacing(10);
 
@@ -56,13 +54,13 @@ public class PantallaJuego {
 
         turnosDescartes.getChildren().addAll(turnosRestantes, descartesRestantes);
 
-        // 5. Número de ronda
         StackPane rondaActual = crearCuadrado("Ronda: 1 / 5", 50, 150, "lightgray");
 
-        // 6. Botón Salir
         StackPane botonSalir = crearCuadradoNodos(new Button("Salir"), 150, 50, "lightseagreen");
         Button salir = (Button) botonSalir.getChildren().get(1);
-        salir.setOnAction(event -> main.mostrarPantallaInicial());
+
+        salir.setOnAction(event -> mostrarConfirmacionSalir(main));
+
         salir.setStyle("-fx-font-size: 14px; -fx-background-color: #ffcccc;");
 
         leftArea.getChildren().addAll(
@@ -76,7 +74,7 @@ public class PantallaJuego {
 
         root.setLeft(leftArea);
 
-        // Derecha (Right) - Representación del mazo
+        // derecha - mazo
         VBox rightArea = new VBox();
         rightArea.setAlignment(Pos.CENTER);
         rightArea.setSpacing(10);
@@ -89,13 +87,29 @@ public class PantallaJuego {
         rightArea.getChildren().addAll(mazo, cartasRestantes);
         root.setRight(rightArea);
 
-        // Centro (Center)
         VBox centerArea = new VBox();
         Text textoCentro = new Text("Área central de juego");
         textoCentro.setStyle("-fx-font-size: 20px; -fx-fill: black;");
         centerArea.getChildren().add(textoCentro);
         centerArea.setAlignment(Pos.CENTER);
         root.setCenter(centerArea);
+    }
+
+    private void mostrarConfirmacionSalir(Main main) {
+        Alert alerta = new Alert(AlertType.CONFIRMATION);
+        alerta.setTitle("Confirmación de salida");
+        alerta.setHeaderText("¿Seguro que deseas salir?");
+        alerta.setContentText("Al salir se perderán los avances actuales.");
+
+        ButtonType botonAceptar = new ButtonType("Aceptar");
+        ButtonType botonCancelar = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alerta.getButtonTypes().setAll(botonAceptar, botonCancelar);
+
+        alerta.showAndWait().ifPresent(respuesta -> {
+            if (respuesta == botonAceptar) {
+                main.mostrarPantallaInicial(); // Volver al inicio
+            }
+        });
     }
 
     public BorderPane getRoot() {
@@ -118,5 +132,3 @@ public class PantallaJuego {
         return stack;
     }
 }
-
-
