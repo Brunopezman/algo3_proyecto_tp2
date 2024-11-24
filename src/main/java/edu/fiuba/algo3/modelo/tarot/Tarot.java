@@ -5,7 +5,7 @@ import edu.fiuba.algo3.modelo.mano.Mano;
 
 import java.util.List;
 
-abstract class Tarot {
+public abstract class Tarot {
     protected int puntaje;
     protected int multiplicador;
 

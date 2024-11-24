@@ -9,5 +9,6 @@ public abstract class Comodin {
     protected EstrategiaComodin estrategia;
 
     public void setEstrategia(EstrategiaComodin estrategia) { this.estrategia = estrategia; }
+
     public abstract void aplicarEfecto(Mano mano);
 }
