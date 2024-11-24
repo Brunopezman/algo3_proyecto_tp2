@@ -15,7 +15,7 @@ public class CartaTests {
         CartaNumerica carta = new CartaNumerica("10","Corazones");
         String valorEsperado = "10";
         //act
-        String valorObtenido = carta.getValor();
+        String valorObtenido = carta.valor();
         //assert
         assertEquals(valorEsperado, valorObtenido);
     }
@@ -26,7 +26,7 @@ public class CartaTests {
         CartaNumerica carta = new CartaNumerica("10","Corazones");
         int puntajeEsperado = 10;
         //act
-        int puntajeObtenido = carta.getPuntaje();
+        int puntajeObtenido = carta.puntaje();
         //assert
         assertEquals(puntajeEsperado, puntajeObtenido);
     }
@@ -160,7 +160,7 @@ public class CartaTests {
         CartaNoNumerica carta = new CartaNoNumerica("J","Corazones");
         String valorEsperado = "J";
         //act
-        String valorObtenido = carta.getValor();
+        String valorObtenido = carta.valor();
         //assert
         assertEquals(valorEsperado, valorObtenido);
     }
@@ -171,7 +171,7 @@ public class CartaTests {
         CartaNoNumerica carta = new CartaNoNumerica("J","Corazones");
         int puntajeEsperado = 10;
         //act
-        int puntajeObtenido = carta.getPuntaje();
+        int puntajeObtenido = carta.puntaje();
         //assert
         assertEquals(puntajeEsperado, puntajeObtenido);
     }
