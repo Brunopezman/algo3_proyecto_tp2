@@ -18,15 +18,18 @@ public class Ronda {
 
 
     public Ronda(int cantTurnos, int cantDescartes, int puntASuperar, Jugador jugadorActual) {
-        turnos = new ArrayList<Turno>();
-        turnoActual = INICIO;
-        comodines = new ArrayList <Comodin>();
-        cantidadTurnos = cantTurnos;
-        puntajeASuperar = puntASuperar;
+        this.turnos = new ArrayList<Turno>();
+        this.turnoActual = INICIO;
+        this.comodines = new ArrayList <Comodin>();
+        this.cantidadTurnos = cantTurnos;
+        this.puntajeASuperar = puntASuperar;
         jugadorActual.setDescartesMaximos(cantDescartes);
     }
 
     public Turno iniciarRonda(){
+        /*
+        ACA SE HARIA LA ELECCION DE LA TIENDA
+        */
         for(int i = INICIO; i<cantidadTurnos; i++){
             turnos.add(new Turno(comodines));
         }
