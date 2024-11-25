@@ -5,6 +5,8 @@ import edu.fiuba.algo3.modelo.datos.LectorJson;
 import edu.fiuba.algo3.modelo.datos.Parser;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 public class JuegoTest {
     @Test
     public void juegoTest(){

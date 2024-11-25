@@ -3,7 +3,9 @@ import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import edu.fiuba.algo3.modelo.carta.Carta;
 import edu.fiuba.algo3.modelo.juego.Juego;
+import edu.fiuba.algo3.modelo.juego.Mazo;
 import edu.fiuba.algo3.modelo.juego.Ronda;
+import edu.fiuba.algo3.modelo.juego.Turno;
 
 import java.io.FileReader;
 import java.util.List;
@@ -14,19 +16,21 @@ public class Parser {
 
     public void cargarInformacion(Juego juego, JsonObject informacion){
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(Carta.class, new CartaAdapter()) // Registrar adaptador
+                .registerTypeAdapter(Carta.class, new CartaAdapter())
+                .registerTypeAdapter(Ronda.class, new RondaAdapter())// Registrar adaptador
                 .create();
         for (Map.Entry<String, JsonElement> entry : informacion.entrySet()) {
             String nombreSeccion = entry.getKey();
             JsonElement contenidoSeccion = entry.getValue();
             if (nombreSeccion.equals("rondas")) {
-                List<Ronda> rondas = new Gson().fromJson(contenidoSeccion, new TypeToken<List<Ronda>>(){}.getType());
+                List<Ronda> rondas = gson.fromJson(contenidoSeccion, new TypeToken<List<Ronda>>(){}.getType());
                 juego.setRondas(rondas);
                 System.out.println("Cargadas " + rondas.size() + " rondas.");
             }else if(nombreSeccion.equals("mazo")){
-                List<Carta> mazo = gson.fromJson(contenidoSeccion, new TypeToken<List<Carta>>(){}.getType());
-                juego.setMazo(mazo);
-                System.out.println("Cargadas " + mazo.size() + " cartas en el mazo.");
+                List<Carta> cartas = gson.fromJson(contenidoSeccion, new TypeToken<List<Carta>>(){}.getType());
+               // Mazo mazo = new Mazo(cartas);
+                juego.setMazo(cartas);
+                System.out.println("Cargadas " + cartas.size() + " cartas en el mazo.");
             }else {return;}
         }
     }

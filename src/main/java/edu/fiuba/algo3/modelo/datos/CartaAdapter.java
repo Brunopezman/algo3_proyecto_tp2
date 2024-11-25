@@ -17,6 +17,7 @@ class CartaAdapter implements JsonDeserializer<Carta> {
         // Calcular el consecutivo
         String consecutivo = calcularConsecutivo(valor);
 
+        System.out.println("Cargo el numero: " + valor);
         // Crear una instancia de Carta con los valores calculados
         return new Carta(valor, consecutivo, palo);
     }

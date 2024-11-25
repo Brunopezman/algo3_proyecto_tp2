@@ -16,11 +16,4 @@ public class Juego {
     public List<Carta> getMazo() { return mazo; }
     public void setMazo(List<Carta> mazo) { this.mazo = mazo; }
 
-    @Override
-    public String toString() {
-        return "Juego{" +
-                "rondas=" + rondas +
-                ", mazo=" + mazo +
-                '}';
-    }
 }
