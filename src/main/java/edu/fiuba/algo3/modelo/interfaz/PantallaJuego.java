@@ -4,77 +4,57 @@ import edu.fiuba.algo3.Main;
 import edu.fiuba.algo3.modelo.juego.Jugador;
 import edu.fiuba.algo3.modelo.juego.Mazo;
 import edu.fiuba.algo3.modelo.juego.Ronda;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javax.swing.text.Element;
-import java.awt.*;
 import java.nio.file.Paths;
 
 public class PantallaJuego {
-    private BorderPane root;
+    private GridPane root;
     private Mazo mazo;
     private Ronda ronda;
-    private String nombre;
 
     public PantallaJuego(Main main, Jugador jugador) {
-        root = new BorderPane();
+        root = new GridPane();
         mazo = new Mazo();
-        ronda = new Ronda(8,3,300,jugador);
-        root.setTop(crearTopArea());
-        root.setBottom(crearBottomArea());
-        root.setLeft(crearLeftArea(main));
-        root.setRight(crearRightArea());
-        root.setCenter(crearCenterArea());
+        ronda = new Ronda(8, 3, 300, jugador);
+
+        root.setHgap(10);
+        root.setVgap(10);
+
+        root.add(crearLeftArea(main), 0, 0);
+        root.add(crearRightArea(),1,0);
+
+        // Crear ScrollPane solo para la parte que necesita desplazarse
+        ScrollPane scrollPane = new ScrollPane(root);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
     }
 
-    private VBox crearTopArea() {
-        VBox topArea = new VBox();
-        int cantidadComodines = ronda.cantidadComodines();
-        Text cantidadComodinesText = new Text(cantidadComodines + "/5");
-        cantidadComodinesText.setStyle("-fx-font-size: 3em; -fx-fill: black;");
-        topArea.getChildren().add(cantidadComodinesText);
-        topArea.setAlignment(Pos.CENTER);
-        return topArea;
-    }
-
-    private VBox crearBottomArea() {
-        VBox bottomArea = new VBox();
-        Text textoInferior = new Text("Área inferior");
-        textoInferior.setStyle("-fx-font-size: 2em; -fx-fill: black;");
-        bottomArea.getChildren().add(textoInferior);
-        bottomArea.setAlignment(Pos.TOP_CENTER);
-        return bottomArea;
-    }
     private VBox crearLeftArea(Main main) {
         VBox leftArea = new VBox();
         leftArea.setAlignment(Pos.CENTER_LEFT);
         leftArea.setSpacing(15);
 
-        //PUNTAJE NECESARIO Y ACUMULADO
         StackPane puntajeNecesario = crearCuadrado("Puntaje necesario: 50", 50, 150, "lightblue");
         StackPane puntajeAcumulado = crearCuadrado("Puntaje acumulado: 20", 50, 150, "lightgreen");
         StackPane marcador = crearCuadrado("10 x 2", 100, 150, "lightyellow");
 
-        //TURNOS Y DESCARTES
         HBox turnosDescartes = new HBox();
         turnosDescartes.setSpacing(10);
-        StackPane turnosRestantes = crearCuadrado("Turnos: 3", 100, 100, "lightcoral");
+        StackPane turnosRestantes = crearCuadrado("Turnos:" + ronda.turnoActual() + "/" + ronda.cantidadDeTurnos(), 100, 100, "lightcoral");
         StackPane descartesRestantes = crearCuadrado("Descartes: 2", 100, 100, "lightpink");
         turnosDescartes.getChildren().addAll(turnosRestantes, descartesRestantes);
 
-        //Ronda
         StackPane rondaActual = crearCuadrado("Ronda: 1 / 5", 50, 150, "lightgray");
 
-        // BOTON PARA SALIR
         Button botonSalir = new Button("Salir");
         botonSalir.setStyle("-fx-font-size: 14px; -fx-background-color: #ffcccc;");
         AccionBoton accionSalir = new Salir(main);
@@ -89,38 +69,84 @@ public class PantallaJuego {
                 botonSalir
         );
 
+        leftArea.setPadding(new Insets(20, 10, 20, 20));
         return leftArea;
     }
 
-    // MAZO
-    private VBox crearRightArea() {
-        VBox rightArea = new VBox();
-        rightArea.setAlignment(Pos.CENTER);
-        rightArea.setSpacing(15);
+    private BorderPane crearRightArea() {
+        BorderPane rightArea = new BorderPane();
 
-//        String rutaImagen = "src/main/java/edu/fiuba/algo3/resources/reverso.jpg";
-//        Image imagen = new Image(Paths.get(rutaImagen).toUri().toString());
-//        ImageView imageView = new ImageView(imagen);
+        // Comodines y Tarots (zona superior)
+        HBox comodinesTarots = new HBox();
+        comodinesTarots.setSpacing(50);
+        comodinesTarots.setAlignment(Pos.CENTER);  // Centrado en la parte superior
+
+        int cantidadComodines = ronda.cantidadComodines();
+        int cantidadTarots = 0;
+
+        // Comodines
+        Rectangle comodines = new Rectangle(200, 80);
+        comodines.setStyle("-fx-fill: #ffffff; -fx-stroke: black; -fx-stroke-width: 1;");
+        Text cantidadComodinesText = new Text(cantidadComodines + "/5");
+        cantidadComodinesText.setStyle("-fx-font-size: 0.8em; -fx-fill: #101010;");
+        VBox comodinesBox = new VBox(comodines, cantidadComodinesText);
+        comodinesBox.setAlignment(Pos.TOP_LEFT);
+        comodinesBox.setSpacing(5);
+
+        // Tarots
+        Rectangle tarots = new Rectangle(120, 80);
+        tarots.setStyle("-fx-fill: #ffffff; -fx-stroke: black; -fx-stroke-width: 1;");
+        Text cantidadTarotsText = new Text(cantidadTarots + "/2");
+        cantidadTarotsText.setStyle("-fx-font-size: 0.8em; -fx-fill: #101010;");
+        VBox tarotsBox = new VBox(tarots, cantidadTarotsText);
+        tarotsBox.setAlignment(Pos.TOP_RIGHT);
+        tarotsBox.setSpacing(5);
+
+        comodinesTarots.getChildren().addAll(comodinesBox, tarotsBox);
+        rightArea.setTop(comodinesTarots);
+
+        // Botones y Cartas (zona inferior)
+        HBox botonesYCartas = new HBox();
+        botonesYCartas.setSpacing(20);
+        botonesYCartas.setAlignment(Pos.CENTER_LEFT);  // Los botones alineados a la izquierda
+
+        Button botonJugarMano = new Button("Jugar Mano");
+        Button botonDescartar = new Button("Descartar");
+        botonJugarMano.setStyle("-fx-font-size: 20px; -fx-background-color: #104ec1;");
+        botonDescartar.setStyle("-fx-font-size: 20px; -fx-background-color: #ec1111;");
+        AccionBoton accionJugarMano = new JugarMano();
+        AccionBoton accionDescartar = new Descartar();
+        botonJugarMano.setOnAction(new BotonHandler(accionJugarMano));
+        botonDescartar.setOnAction(new BotonHandler(accionDescartar));
+
+        botonesYCartas.getChildren().addAll(botonJugarMano, botonDescartar);
+
+        // Imagen de carta restante (zona derecha)
+        String rutaImagen = "src/main/java/edu/fiuba/algo3/resources/reverso.jpg";
+        Image imagen = new Image(Paths.get(rutaImagen).toUri().toString());
+        ImageView imageView = new ImageView(imagen);
+        imageView.setFitWidth(100);
+        imageView.setFitHeight(150);
 
         int cartasRestantes = mazo.cartasRestantes();
         Text cartasRestantesText = new Text(cartasRestantes + "/52");
         cartasRestantesText.setFont(Font.font("Arial", 16));
 
-        rightArea.getChildren().addAll(cartasRestantesText);
+        // Agregar la imagen y el texto de cartas restantes a la derecha
+        VBox imagenYTexto = new VBox(10, imageView, cartasRestantesText);
+        imagenYTexto.setAlignment(Pos.CENTER_RIGHT);  // Alineación de la imagen a la derecha
+
+        // Añadir el HBox con los botones y la imagen
+        HBox contenidoInferior = new HBox(40, botonesYCartas, imagenYTexto);
+        contenidoInferior.setAlignment(Pos.CENTER_RIGHT);  // Centrado de los elementos dentro del HBox
+        rightArea.setBottom(contenidoInferior);
+
+        rightArea.setPadding(new Insets(10));
 
         return rightArea;
     }
-
-    private VBox crearCenterArea() {
-        VBox centerArea = new VBox();
-        Text textoCentro = new Text("Área central de juego");
-        textoCentro.setStyle("-fx-font-size: 2.5em; -fx-fill: black;");
-        centerArea.getChildren().add(textoCentro);
-        centerArea.setAlignment(Pos.CENTER);
-        return centerArea;
-    }
-
-    public BorderPane getRoot() {
+    
+    public GridPane getRoot() {
         return root;
     }
 
@@ -132,5 +158,4 @@ public class PantallaJuego {
         StackPane stack = new StackPane(rect, text);
         return stack;
     }
-
 }
