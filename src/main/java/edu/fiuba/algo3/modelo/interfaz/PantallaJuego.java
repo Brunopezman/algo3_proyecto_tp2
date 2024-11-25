@@ -1,11 +1,13 @@
 package edu.fiuba.algo3.modelo.interfaz;
 
 import edu.fiuba.algo3.Main;
+import edu.fiuba.algo3.modelo.carta.Carta;
 import edu.fiuba.algo3.modelo.juego.Jugador;
 import edu.fiuba.algo3.modelo.juego.Mazo;
 import edu.fiuba.algo3.modelo.juego.Ronda;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -15,16 +17,24 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PantallaJuego {
     private GridPane root;
     private Mazo mazo;
     private Ronda ronda;
+    private Jugador jugador;
+    private List<Carta> cartas;
+    private List<Carta> cartasSeleccionadas;
 
     public PantallaJuego(Main main, Jugador jugador) {
-        root = new GridPane();
-        mazo = new Mazo();
-        ronda = new Ronda(8, 3, 300, jugador);
+        this.root = new GridPane();
+        this.mazo = new Mazo();
+        this.ronda = new Ronda(8, 3, 300, jugador);
+        this.jugador = jugador;
+        this.cartas = jugador.recibirCartas(mazo);
+        this.cartasSeleccionadas = new ArrayList<>();
 
         root.setHgap(10);
         root.setVgap(10);
@@ -43,7 +53,7 @@ public class PantallaJuego {
         leftArea.setAlignment(Pos.CENTER_LEFT);
         leftArea.setSpacing(15);
 
-        StackPane puntajeNecesario = crearCuadrado("Puntaje necesario: 50", 50, 150, "lightblue");
+        StackPane puntajeNecesario = crearCuadrado("Puntaje necesario: 300", 50, 150, "lightblue");
         StackPane puntajeAcumulado = crearCuadrado("Puntaje acumulado: 20", 50, 150, "lightgreen");
         StackPane marcador = crearCuadrado("10 x 2", 100, 150, "lightyellow");
 
@@ -53,7 +63,7 @@ public class PantallaJuego {
         StackPane descartesRestantes = crearCuadrado("Descartes: 2", 100, 100, "lightpink");
         turnosDescartes.getChildren().addAll(turnosRestantes, descartesRestantes);
 
-        StackPane rondaActual = crearCuadrado("Ronda: 1 / 5", 50, 150, "lightgray");
+        StackPane rondaActual = crearCuadrado("Ronda: 1 / 8", 50, 150, "lightgray");
 
         Button botonSalir = new Button("Salir");
         botonSalir.setStyle("-fx-font-size: 14px; -fx-background-color: #ffcccc;");
@@ -105,23 +115,26 @@ public class PantallaJuego {
         comodinesTarots.getChildren().addAll(comodinesBox, tarotsBox);
         rightArea.setTop(comodinesTarots);
 
-        // Botones y Cartas (zona inferior)
-        HBox botonesYCartas = new HBox();
-        botonesYCartas.setSpacing(20);
-        botonesYCartas.setAlignment(Pos.CENTER_LEFT);  // Los botones alineados a la izquierda
+        // Cartas del jugador
+        HBox visualCartas = crearVisualCartas();
+        rightArea.setCenter(visualCartas);
+
+        HBox botones = new HBox();
+        botones.setSpacing(20);
+        botones.setAlignment(Pos.CENTER_LEFT);  // Los botones alineados a la izquierda
 
         Button botonJugarMano = new Button("Jugar Mano");
         Button botonDescartar = new Button("Descartar");
         botonJugarMano.setStyle("-fx-font-size: 20px; -fx-background-color: #104ec1;");
         botonDescartar.setStyle("-fx-font-size: 20px; -fx-background-color: #ec1111;");
-        AccionBoton accionJugarMano = new JugarMano();
+        AccionBoton accionJugarMano = new JugarMano(jugador, cartasSeleccionadas, this);
         AccionBoton accionDescartar = new Descartar();
         botonJugarMano.setOnAction(new BotonHandler(accionJugarMano));
         botonDescartar.setOnAction(new BotonHandler(accionDescartar));
 
-        botonesYCartas.getChildren().addAll(botonJugarMano, botonDescartar);
+        botones.getChildren().addAll(botonJugarMano, botonDescartar);
 
-        // Imagen de carta restante (zona derecha)
+        //Mazo
         String rutaImagen = "src/main/java/edu/fiuba/algo3/resources/reverso.jpg";
         Image imagen = new Image(Paths.get(rutaImagen).toUri().toString());
         ImageView imageView = new ImageView(imagen);
@@ -137,7 +150,8 @@ public class PantallaJuego {
         imagenYTexto.setAlignment(Pos.CENTER_RIGHT);  // Alineación de la imagen a la derecha
 
         // Añadir el HBox con los botones y la imagen
-        HBox contenidoInferior = new HBox(40, botonesYCartas, imagenYTexto);
+        HBox botonesYMazo = new HBox(40, botones, imagenYTexto);
+        VBox contenidoInferior = new VBox(botonesYMazo);
         contenidoInferior.setAlignment(Pos.CENTER_RIGHT);  // Centrado de los elementos dentro del HBox
         rightArea.setBottom(contenidoInferior);
 
@@ -145,7 +159,33 @@ public class PantallaJuego {
 
         return rightArea;
     }
-    
+
+    private HBox crearVisualCartas() {
+        HBox visualCartas = new HBox();
+        visualCartas.setSpacing(10);
+        visualCartas.setAlignment(Pos.CENTER);
+
+        for (Carta carta : cartas) {
+            ImageView imagenCarta = new ImageView(new Image(Paths.get("src/main/java/edu/fiuba/algo3/resources/" + carta.puntaje() + "_"+carta.getPalo() + ".jpg").toUri().toString()));
+            imagenCarta.setFitWidth(80);
+            imagenCarta.setFitHeight(120);
+
+            imagenCarta.setOnMouseClicked(event -> {
+                if (cartasSeleccionadas.contains(carta)) {
+                    cartasSeleccionadas.remove(carta);
+                    imagenCarta.setStyle("-fx-effect: null;");
+                } else if (cartasSeleccionadas.size() < 5) {
+                    cartasSeleccionadas.add(carta);
+                    imagenCarta.setStyle("-fx-effect: dropshadow(gaussian, blue, 10, 0.5, 0, 0);");
+                }
+            });
+
+            visualCartas.getChildren().add(imagenCarta);
+        }
+
+        return visualCartas;
+    }
+
     public GridPane getRoot() {
         return root;
     }
@@ -158,4 +198,5 @@ public class PantallaJuego {
         StackPane stack = new StackPane(rect, text);
         return stack;
     }
+
 }
