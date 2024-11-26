@@ -36,7 +36,7 @@ public class PantallaInicial {
 //        mediaPlayer.setAutoPlay(true);
 
         StackPane fondo = new StackPane();
-        String rutaImagen = "src/main/java/edu/fiuba/algo3/resources/fondo.jpg";
+        String rutaImagen = "src/main/java/edu/fiuba/algo3/resources/fondo_rya.jpeg";
         Image imagenFondo = new Image(Paths.get(rutaImagen).toUri().toString());
         BackgroundImage backgroundImage = new BackgroundImage(
                 imagenFondo,
