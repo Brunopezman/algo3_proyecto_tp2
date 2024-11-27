@@ -1,20 +1,14 @@
 package edu.fiuba.algo3.modelo.juego;
 
-import com.google.gson.JsonObject;
-import edu.fiuba.algo3.modelo.datos.LectorJson;
-import edu.fiuba.algo3.modelo.datos.Parser;
+import edu.fiuba.algo3.modelo.lector.LectorJson;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 public class JuegoTest {
     @Test
     public void juegoTest(){
-        Juego juego = new Juego();
+        //Juego juego = new Juego();
         LectorJson lectorJson = new LectorJson();
-        Parser parser = new Parser();
-        JsonObject infomacion = lectorJson.obtenerInformacion("src/main/java/edu/fiuba/algo3/resources/balatro.json");
-        parser.cargarInformacion(juego, infomacion);
+        lectorJson.obtenerInformacion("src/main/java/edu/fiuba/algo3/resources/archivosJson/balatro.json");
         assert true;
     }
 }

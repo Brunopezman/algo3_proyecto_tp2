@@ -1,4 +1,4 @@
-package edu.fiuba.algo3.modelo.datos;
+package edu.fiuba.algo3.modelo.lector;
 
 import com.google.gson.*;
 import edu.fiuba.algo3.modelo.carta.Carta;

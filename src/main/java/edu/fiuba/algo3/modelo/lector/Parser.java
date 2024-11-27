@@ -1,13 +1,10 @@
-package edu.fiuba.algo3.modelo.datos;
+package edu.fiuba.algo3.modelo.lector;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import edu.fiuba.algo3.modelo.carta.Carta;
 import edu.fiuba.algo3.modelo.juego.Juego;
-import edu.fiuba.algo3.modelo.juego.Mazo;
 import edu.fiuba.algo3.modelo.juego.Ronda;
-import edu.fiuba.algo3.modelo.juego.Turno;
 
-import java.io.FileReader;
 import java.util.List;
 import java.util.Map;
 
