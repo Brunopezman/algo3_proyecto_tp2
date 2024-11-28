@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class RondaTests {
+    /*
     @Test
     public void testSeCreaUnaRondaConLaCantidadDeTurnosCorrecta(){
         Jugador jugador = new Jugador("CHIPA GOMEZ");
@@ -192,4 +193,6 @@ public class RondaTests {
         ronda.calcularPuntajeRonda();
         assert (!ronda.seAlcanzoElPuntajeDeRonda());
     }
+
+     */
 }

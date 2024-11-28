@@ -9,14 +9,17 @@ import java.util.List;
 public class Ronda {
     private static final int INICIO = 0;
 
+    private int nroRonda;
     private List<Turno> turnos;
     private List <Comodin> comodines;
     private int turnoActual;
     private int cantidadTurnos;
     private int puntajeAlcanzado;
     private int puntajeASuperar;
+    private int descartesRestantes;
+    private Tienda tienda;
 
-
+    /*
     public Ronda(int cantTurnos, int cantDescartes, int puntASuperar, Jugador jugadorActual) {
         this.turnos = new ArrayList<Turno>();
         this.turnoActual = INICIO;
@@ -25,17 +28,31 @@ public class Ronda {
         this.puntajeASuperar = puntASuperar;
         jugadorActual.setDescartesMaximos(cantDescartes);
     }
+    */
 
+    public Ronda(int nro,int manos,int descartes, int puntajeAObtener, Tienda tienda){
+        this.nroRonda = nro;
+        this.turnos = new ArrayList<>();
+        for(int i = INICIO; i < manos; i++){
+            turnos.add(new Turno());
+        }
+        this.descartesRestantes = descartes;
+        this.puntajeASuperar = puntajeAObtener;
+        this.tienda = tienda;
+    }
+
+    /*
     public Turno iniciarRonda(){
-        /*
-        ACA SE HARIA LA ELECCION DE LA TIENDA
-        */
+
+        //ACA SE HARIA LA ELECCION DE LA TIENDA
+
         for(int i = INICIO; i<cantidadTurnos; i++){
             turnos.add(new Turno(comodines));
         }
         turnoActual++;
         return turnos.get(INICIO);
     }
+    */
 
     public void agregarComodin(Comodin comodin) {
         comodines.add(comodin);

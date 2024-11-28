@@ -13,6 +13,7 @@ public class Turno {
     private int puntaje;
     private int cantidadDescartes;
 
+    /*
     public Turno(List<Comodin> comodines) {
         this.manosJugables = new ArrayList<>();
         this.puntaje = 0;
@@ -29,6 +30,23 @@ public class Turno {
         this.cantidadDescartes = 0;
         this.comodines = comodines;
     }
+    */
+    public Turno() {
+        this.manosJugables = new ArrayList<>();
+        this.puntaje = 0;
+        this.manosJugables.add(new EscaleraReal());
+        this.manosJugables.add(new EscaleraColor());
+        this.manosJugables.add(new Poker());
+        this.manosJugables.add(new FullHouse());
+        this.manosJugables.add(new Color());
+        this.manosJugables.add(new Escalera());
+        this.manosJugables.add(new Trio());
+        this.manosJugables.add(new DoblePar());
+        this.manosJugables.add(new Par());
+        this.manosJugables.add(new CartaAlta());
+        this.cantidadDescartes = 0;
+    }
+
 
     public void calcularJugada(Mano mano){
         for (Comodin comodin: comodines) {

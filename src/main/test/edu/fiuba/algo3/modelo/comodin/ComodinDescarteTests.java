@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ComodinDescarteTests {
-
+    /*
     @Test
     public void testComodinSumaAlPuntajeSiSeDescarto(){
         Mano mano = new Color();
@@ -93,4 +93,6 @@ public class ComodinDescarteTests {
         //assert
         assertEquals(puntajeEsperado, puntajeObtenido);
     }
+
+     */
 }

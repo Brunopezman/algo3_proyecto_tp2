@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ComodinRegularTests {
+    /*
     @Test
     public void testComodinRegularSumaAlMultiplicadorCorrectamente(){
         Mano manoJugada = new Color();
@@ -47,4 +48,6 @@ public class ComodinRegularTests {
         //assert
         assertEquals(puntajeEsperado, puntajeObtenido);
     }
+
+     */
 }

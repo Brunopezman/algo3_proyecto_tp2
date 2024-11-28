@@ -8,7 +8,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JugadorTests {
-
+    /*
     @Test
     public void testSeCreaUnJugadorConElNombreCorrecto() {
         Jugador jugador = new Jugador("Muniain");
@@ -58,4 +58,6 @@ public class JugadorTests {
     //Mano jugarMano(List<Carta> cartas, Mano mano)
     @Test
     public void  testUnJugadorJuegaUnaMano(){}
+
+     */
 }

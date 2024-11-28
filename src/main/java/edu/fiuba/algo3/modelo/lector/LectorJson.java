@@ -22,16 +22,6 @@ public class LectorJson {
     }
 
     public <T> List<T> obtenerInformacionDe(String seccion) {
-//        JsonObject jsonObject = null;
-//        try (FileReader reader = new FileReader(rutaDelArchivo)) {
-//            jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
-        //return jsonObject.getAsJsonArray(seccion);
-        //return jsonObject;
-
         JsonArray jsonArray = jsonObject.getAsJsonArray(seccion);
         if (seccion == "rondas"){
             return gson.fromJson(jsonArray, new TypeToken<List<RondaDTO>>(){}.getType());
