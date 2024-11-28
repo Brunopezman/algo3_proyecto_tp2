@@ -206,12 +206,12 @@ package edu.fiuba.algo3.modelo.interfaz;
 
 import edu.fiuba.algo3.Main;
 import edu.fiuba.algo3.modelo.carta.Carta;
-import edu.fiuba.algo3.modelo.juego.Jugador;
-import edu.fiuba.algo3.modelo.juego.Mazo;
-import edu.fiuba.algo3.modelo.juego.Ronda;
+import edu.fiuba.algo3.modelo.comodin.Comodin;
+import edu.fiuba.algo3.modelo.juego.*;
 import edu.fiuba.algo3.modelo.mano.Mano;
 import edu.fiuba.algo3.modelo.mano.Color;
 import edu.fiuba.algo3.modelo.mano.Escalera;
+import edu.fiuba.algo3.modelo.tarot.Tarot;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -243,9 +243,14 @@ public class PantallaJuego {
     private HBox visualCartas;
 
     public PantallaJuego(Main main, Jugador jugador) {
+
+        /*
+        ESTA HARCODEADO CON "Juego" PARA QUE NO ROMPA Y PUEDA PROBAR LOS JSONS, ROMPE EL JUEGO DESPUES DE PONER NOMBRE
+        */
+        Juego juego = new Juego("src/main/java/edu/fiuba/algo3/resources/archivosJson/balatro.json");
         this.root = new GridPane();
-        this.mazo = new Mazo();
-        this.ronda = new Ronda(8, 3, 300, jugador);
+        this.mazo = juego.getMazo();
+        this.ronda = juego.getRondas().get(0);
         this.jugador = jugador;
         this.cartas = new ArrayList<>(); // Vacío al inicio
         this.cartasSeleccionadas = new ArrayList<>();

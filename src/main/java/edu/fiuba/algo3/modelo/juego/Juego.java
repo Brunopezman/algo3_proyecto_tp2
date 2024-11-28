@@ -1,8 +1,6 @@
 package edu.fiuba.algo3.modelo.juego;
 
-import edu.fiuba.algo3.modelo.carta.Carta;
-import edu.fiuba.algo3.modelo.juego.Ronda;
-import edu.fiuba.algo3.modelo.lector.LectorJson;
+import edu.fiuba.algo3.modelo.fabrica.JuegoFabrica;
 
 import java.util.List;
 
@@ -11,7 +9,7 @@ public class Juego {
     private Mazo mazo;
 
     public Juego(String rutaDeJson){
-        JuegoFactory fabrica = new JuegoFactory(rutaDeJson);
+        JuegoFabrica fabrica = new JuegoFabrica(rutaDeJson);
         this.rondas = fabrica.inicializarRondas();
         this.mazo = fabrica.inicializarMazo();
     }

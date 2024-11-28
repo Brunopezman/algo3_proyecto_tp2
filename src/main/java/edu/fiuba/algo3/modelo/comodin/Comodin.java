@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.modelo.comodin;
 
 import edu.fiuba.algo3.modelo.mano.Mano;
+import edu.fiuba.algo3.modelo.mano.Trio;
 
 public abstract class Comodin {
     protected String nombre;
@@ -11,16 +12,16 @@ public abstract class Comodin {
 
     public static Comodin con (String nombre, String descripcion, String activacion, int puntajeDelComodin, int multiplicadorDelComodin){
         if (activacion.equals("Descarte")){
-            return new ComodinDescarte();
-        }else if (activacion.equals("Siempre"){
-            return new ComodinRegular();
+            return new ComodinDescarte(1,1,new EstrategiaMultiplicarMultiplicador());
+        }else if (activacion.equals("Siempre")){
+            return new ComodinRegular(1,1,new EstrategiaMultiplicarMultiplicador());
         }
         try {
             // Convertir un String numérico a int
             int probabilidad = Integer.parseInt(activacion);
-            return new ComodinAleatorio();
+            return new ComodinAleatorio(1,1,new EstrategiaMultiplicarMultiplicador(), probabilidad);
         } catch (NumberFormatException e) {
-            return new ComodinManoEspecifica();
+            return new ComodinManoEspecifica(1,1, new EstrategiaMultiplicarMultiplicador(), new Trio());
         }
 
     }
