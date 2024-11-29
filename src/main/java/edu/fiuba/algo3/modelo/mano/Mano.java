@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class Mano {
-
+    protected String nombre;
     protected int puntaje;
     protected int multiplicador;
     protected Operador operador;
@@ -16,40 +16,62 @@ public abstract class Mano {
 
     abstract public boolean esJugable(List<Carta> cartas);
 
-    protected void setPuntaje(int nuevoPuntaje){ puntaje = nuevoPuntaje; }
+    protected void setPuntaje(int nuevoPuntaje) {
+        puntaje = nuevoPuntaje;
+    }
 
-    protected void setMultiplicador (int nuevoMultiplicador){ multiplicador = nuevoMultiplicador; }
+    protected void setMultiplicador(int nuevoMultiplicador) {
+        multiplicador = nuevoMultiplicador;
+    }
 
-    public int getPuntaje(){ return puntaje; };
+    public int getPuntaje() {
+        return puntaje;
+    }
 
-    public int getMultiplicador(){ return multiplicador; };
+    ;
 
-    public int calcularPuntaje(int valor){ return (this.puntaje + valor)*this.multiplicador; };
+    public int getMultiplicador() {
+        return multiplicador;
+    }
 
-    public void modificarPuntaje (int valor){ this.setPuntaje(valor); }
+    ;
 
-    public void modificarMultiplicador(int valor){ this.setMultiplicador(valor); }
+    public int calcularPuntaje(int valor) {
+        return (this.puntaje + valor) * this.multiplicador;
+    }
 
-    public boolean esMismaMano(Mano manoRecibida){ return this.getClass().equals(manoRecibida.getClass()); }
+    ;
+
+    public void modificarPuntaje(int valor) {
+        this.setPuntaje(valor);
+    }
+
+    public void modificarMultiplicador(int valor) {
+        this.setMultiplicador(valor);
+    }
+
+    public boolean esMismaMano(String manoRecibida) {
+        return this.nombre.equals(manoRecibida);
+    }
 
     public void sumarMultiplicador(int multiplicador) {
-        this.setMultiplicador(this.multiplicador+multiplicador);
+        this.setMultiplicador(this.multiplicador + multiplicador);
     }
 
     public void multiplicarMultiplicador(int multiplicador) {
-        this.setMultiplicador(this.multiplicador*multiplicador);
+        this.setMultiplicador(this.multiplicador * multiplicador);
     }
 
     public void sumarPuntos(int puntos) {
         this.puntaje += puntos;
     }
 
-    public void sumarDescartes(int descartes){
+    public void sumarDescartes(int descartes) {
         this.descartes += descartes;
     }
 
     public int puntajeFinal() {
-        return (puntaje*multiplicador);
+        return (puntaje * multiplicador);
     }
 
     public int cantidadDescartes() {
@@ -59,6 +81,11 @@ public abstract class Mano {
     public void aumentarAtributos(int puntaje, int multiplicador) {
         this.puntaje += puntaje;
         this.multiplicador += multiplicador;
+    }
+
+    public void aumentarYMultiplicar(int puntos, int multiplicador) {
+        this.puntaje += puntos;
+        this.multiplicador *= multiplicador;
     }
 }
 

@@ -13,6 +13,7 @@ public class EscaleraReal extends Mano{
     public static int MULTIPLICADOR_INICIAL = 8;
 
     public EscaleraReal(){
+        this.nombre = "escalera real";
         this.puntaje = PUNTAJE_INICIAL;
         this.multiplicador = MULTIPLICADOR_INICIAL;
         this.operador = new Operador();

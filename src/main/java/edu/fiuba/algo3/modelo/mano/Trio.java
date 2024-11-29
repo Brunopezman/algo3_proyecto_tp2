@@ -11,6 +11,7 @@ public class Trio extends Mano{
     public static int MULTIPLICADOR_INICIAL = 3;
 
     public Trio() {
+        this.nombre = "trio";
         this.puntaje = PUNTAJE_INICIAL;
         this.multiplicador = MULTIPLICADOR_INICIAL;
         this.operador = new Operador();

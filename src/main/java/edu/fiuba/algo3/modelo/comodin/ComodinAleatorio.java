@@ -21,6 +21,6 @@ public class ComodinAleatorio extends Comodin{
     public void aplicarEfecto(Mano mano) {
         Random aleatorio = new Random();
         int randomActual = aleatorio.nextInt(probabilidad);
-        if(valorParaEjecucion == randomActual){ estrategia.realizarModificacion(mano,multiplicador,puntos); }
+        if(valorParaEjecucion == randomActual){ estrategia.realizarModificacion(puntos, multiplicador, mano); }
     }
 }

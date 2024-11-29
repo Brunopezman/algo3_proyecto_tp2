@@ -12,16 +12,16 @@ public abstract class Comodin {
 
     public static Comodin con (String nombre, String descripcion, String activacion, int puntajeDelComodin, int multiplicadorDelComodin){
         if (activacion.equals("Descarte")){
-            return new ComodinDescarte(1,1,new EstrategiaMultiplicarMultiplicador());
+            return new ComodinDescarte(multiplicadorDelComodin,puntajeDelComodin,new EstrategiaSumarMultiplicar());
         }else if (activacion.equals("Siempre")){
-            return new ComodinRegular(1,1,new EstrategiaMultiplicarMultiplicador());
+            return new ComodinRegular(multiplicadorDelComodin,puntajeDelComodin,new EstrategiaSumarMultiplicar());
         }
         try {
             // Convertir un String numérico a int
             int probabilidad = Integer.parseInt(activacion);
-            return new ComodinAleatorio(1,1,new EstrategiaMultiplicarMultiplicador(), probabilidad);
+            return new ComodinAleatorio(multiplicadorDelComodin,puntajeDelComodin,new EstrategiaSumarMultiplicar(), probabilidad);
         } catch (NumberFormatException e) {
-            return new ComodinManoEspecifica(1,1, new EstrategiaMultiplicarMultiplicador(), new Trio());
+            return new ComodinManoEspecifica(multiplicadorDelComodin,puntajeDelComodin, new EstrategiaSumaSuma(), activacion);
         }
 
     }

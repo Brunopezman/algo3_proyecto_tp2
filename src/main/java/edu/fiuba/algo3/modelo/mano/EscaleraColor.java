@@ -13,6 +13,7 @@ public class EscaleraColor extends Mano{
     private Escalera escalera;
 
     public EscaleraColor() {
+        this.nombre = "escalera de color";
         this.puntaje = PUNTAJE_INICIAL;
         this.multiplicador = MULTIPLICADOR_INICIAL;
         this.escalera = new Escalera();

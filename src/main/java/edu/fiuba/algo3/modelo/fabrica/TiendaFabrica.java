@@ -13,7 +13,7 @@ import java.util.List;
 
 public class TiendaFabrica {
     public static Tienda inicializar(TiendaDTO informacion){
-        ComodinFabrica fabricaComodin = new ComodinFabrica();
+        //ComodinFabrica fabricaComodin = new ComodinFabrica();
 
         List<Comodin> comodines = new ArrayList<>();
         for (ComodinDTO comodinParaCargar : informacion.getComodines()){

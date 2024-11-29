@@ -11,6 +11,7 @@ public class DoblePar extends Mano{
     public static int MULTIPLICADOR_INICIAL = 2;
 
     public DoblePar() {
+        this.nombre = "doble par";
         this.puntaje = PUNTAJE_INICIAL;
         this.multiplicador = MULTIPLICADOR_INICIAL;
         this.operador = new Operador();

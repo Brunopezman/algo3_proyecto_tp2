@@ -10,6 +10,7 @@ public class CartaAlta extends Mano {
     public static int MULTIPLICADOR_INICIAL = 4;
 
     public CartaAlta() {
+        this.nombre = "carta alta";
         this.puntaje = PUNTAJE_INICIAL;
         this.multiplicador = MULTIPLICADOR_INICIAL;
     }

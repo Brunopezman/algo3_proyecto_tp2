@@ -12,6 +12,6 @@ public class ComodinRegular extends Comodin {
 
     @Override
     public void aplicarEfecto(Mano mano) {
-        estrategia.realizarModificacion(mano, multiplicador, puntos);
+        estrategia.realizarModificacion(puntos, multiplicador, mano);
     }
 }
