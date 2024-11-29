@@ -1,8 +1,7 @@
 package edu.fiuba.algo3.modelo.lector;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-import edu.fiuba.algo3.modelo.dtos.CartaDTO;
-import edu.fiuba.algo3.modelo.dtos.RondaDTO;
+import edu.fiuba.algo3.modelo.dtos.*;
 
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -13,7 +12,9 @@ public class LectorJson {
     private JsonObject jsonObject;
 
     public LectorJson(String rutaDelArchivo) {
-        gson = new GsonBuilder().create();
+        gson = new GsonBuilder()
+                .registerTypeAdapter(ComodinBaseDTO.class, new ComodinDeserializador())
+                .create();
         try (FileReader reader = new FileReader(rutaDelArchivo)) {
             jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
         } catch (Exception e) {
@@ -52,29 +53,63 @@ public class LectorJson {
             System.out.println("Tienda: ");
             System.out.println(" -Comodin: ");
             System.out.println("    *" + rondaDTO.getTienda().getComodines().get(0).getNombre());
-            if (rondaDTO.getTienda().getComodines().get(0).getActivacion().isJsonPrimitive()) {
-                // Caso 1: Es una cadena (e.g., "Descarte")
-                System.out.println("     " + rondaDTO.getTienda().getComodines().get(0).getActivacion().getAsString());
-            } else if (rondaDTO.getTienda().getComodines().get(0).getActivacion().isJsonObject()) {
-                // Caso 2: Es un objeto JSON (e.g., { "Mano Jugada": "color" } o { "1 en": 250 })
-                JsonObject activacionObj = rondaDTO.getTienda().getComodines().get(0).getActivacion().getAsJsonObject();
-                String clave = activacionObj.entrySet().iterator().next().getKey();
-                System.out.println("     " + activacionObj.get(clave).getAsString());
-            } else {
-                throw new IllegalArgumentException("Tipo inesperado en activación: " + rondaDTO.getTienda().getComodines().get(0).getActivacion());
+            if (rondaDTO.getTienda().getComodines().get(0).getClass().equals(ComodinSimpleDTO.class)) {
+                if (rondaDTO.getTienda().getComodines().get(0).getActivacion().isJsonPrimitive()) {
+                    // Caso 1: Es una cadena (e.g., "Descarte")
+                    System.out.println("     Activacion:" + rondaDTO.getTienda().getComodines().get(0).getActivacion().getAsString());
+                } else if (rondaDTO.getTienda().getComodines().get(0).getActivacion().isJsonObject()) {
+                    // Caso 2: Es un objeto JSON (e.g., { "Mano Jugada": "color" } o { "1 en": 250 })
+                    JsonObject activacionObj = rondaDTO.getTienda().getComodines().get(0).getActivacion().getAsJsonObject();
+                    String clave = activacionObj.entrySet().iterator().next().getKey();
+                    System.out.println("     Activacion:" + activacionObj.get(clave).getAsString());
+                } else {
+                    throw new IllegalArgumentException("Tipo inesperado en activación: " + rondaDTO.getTienda().getComodines().get(0).getActivacion());
+                }
+
+            }else{
+                for (ComodinBaseDTO comodin : rondaDTO.getTienda().getComodines().get(0).getComodines()){
+                    if (comodin.getActivacion().isJsonPrimitive()) {
+                        // Caso 1: Es una cadena (e.g., "Descarte")
+                        System.out.println("     Activacion:" + comodin.getActivacion().getAsString());
+                    } else if (comodin.getActivacion().isJsonObject()) {
+                        // Caso 2: Es un objeto JSON (e.g., { "Mano Jugada": "color" } o { "1 en": 250 })
+                        JsonObject activacionObj = comodin.getActivacion().getAsJsonObject();
+                        String clave = activacionObj.entrySet().iterator().next().getKey();
+                        System.out.println("     Activacion:" + activacionObj.get(clave).getAsString());
+                    } else {
+                        throw new IllegalArgumentException("Tipo inesperado en activación: " + rondaDTO.getTienda().getComodines().get(0).getActivacion());
+                    }
+                }
             }
 
             System.out.println("    *" + rondaDTO.getTienda().getComodines().get(1).getNombre());
-            if (rondaDTO.getTienda().getComodines().get(1).getActivacion().isJsonPrimitive()) {
-                // Caso 1: Es una cadena (e.g., "Descarte")
-                System.out.println("     " + rondaDTO.getTienda().getComodines().get(1).getActivacion().getAsString());
-            } else if (rondaDTO.getTienda().getComodines().get(1).getActivacion().isJsonObject()) {
-                // Caso 2: Es un objeto JSON (e.g., { "Mano Jugada": "color" } o { "1 en": 250 })
-                JsonObject activacionObj = rondaDTO.getTienda().getComodines().get(1).getActivacion().getAsJsonObject();
-                String clave = activacionObj.entrySet().iterator().next().getKey();
-                System.out.println("     " + activacionObj.get(clave).getAsString());
-            } else {
-                throw new IllegalArgumentException("Tipo inesperado en activación: " + rondaDTO.getTienda().getComodines().get(1).getActivacion());
+            if (rondaDTO.getTienda().getComodines().get(1).getClass().equals(ComodinSimpleDTO.class)) {
+                if (rondaDTO.getTienda().getComodines().get(1).getActivacion().isJsonPrimitive()) {
+                    // Caso 1: Es una cadena (e.g., "Descarte")
+                    System.out.println("     Activacion:" + rondaDTO.getTienda().getComodines().get(1).getActivacion().getAsString());
+                } else if (rondaDTO.getTienda().getComodines().get(1).getActivacion().isJsonObject()) {
+                    // Caso 2: Es un objeto JSON (e.g., { "Mano Jugada": "color" } o { "1 en": 250 })
+                    JsonObject activacionObj = rondaDTO.getTienda().getComodines().get(1).getActivacion().getAsJsonObject();
+                    String clave = activacionObj.entrySet().iterator().next().getKey();
+                    System.out.println("     Activacion:" + activacionObj.get(clave).getAsString());
+                } else {
+                    throw new IllegalArgumentException("Tipo inesperado en activación: " + rondaDTO.getTienda().getComodines().get(1).getActivacion());
+                }
+
+            }else{
+                for (ComodinBaseDTO comodin : rondaDTO.getTienda().getComodines().get(1).getComodines()){
+                    if (comodin.getActivacion().isJsonPrimitive()) {
+                        // Caso 1: Es una cadena (e.g., "Descarte")
+                        System.out.println("     Activacion:" + comodin.getActivacion().getAsString());
+                    } else if (comodin.getActivacion().isJsonObject()) {
+                        // Caso 2: Es un objeto JSON (e.g., { "Mano Jugada": "color" } o { "1 en": 250 })
+                        JsonObject activacionObj = comodin.getActivacion().getAsJsonObject();
+                        String clave = activacionObj.entrySet().iterator().next().getKey();
+                        System.out.println("     Activacion:" + activacionObj.get(clave).getAsString());
+                    } else {
+                        throw new IllegalArgumentException("Tipo inesperado en activación: " + rondaDTO.getTienda().getComodines().get(1).getActivacion());
+                    }
+                }
             }
             System.out.println(" -Tarots: ");
             System.out.println("    *" + rondaDTO.getTienda().getTarots().get(0).getNombre());

@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.vistas.pantalla;
 
 import edu.fiuba.algo3.modelo.carta.Carta;
+import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.modelo.juego.Jugador;
 import edu.fiuba.algo3.modelo.juego.Mazo;
 import edu.fiuba.algo3.modelo.juego.Ronda;
@@ -41,8 +42,11 @@ public class PantallaJuego {
     public PantallaJuego(Jugador jugador, Stage stage) {
         this.stage = stage; // Guarda el Stage pasado como argumento
         this.root = new GridPane();
-        this.mazo = new Mazo();
-        this.ronda = new Ronda(8, 3, 300, jugador);
+        //this.mazo = new Mazo();
+        //this.ronda = new Ronda(8, 3, 300, jugador);
+        Juego juego = new Juego("src/main/java/edu/fiuba/algo3/resources/archivosJson/balatro.json");
+        this.mazo = juego.getMazo();
+        this.ronda = juego.getRondas().get(0);
         this.jugador = jugador;
         this.cartas = new ArrayList<>(); // Vacío al inicio
         this.cartasSeleccionadas = new ArrayList<>();

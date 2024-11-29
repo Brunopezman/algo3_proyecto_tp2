@@ -39,6 +39,8 @@ public class Ronda {
         this.descartesRestantes = descartes;
         this.puntajeASuperar = puntajeAObtener;
         this.tienda = tienda;
+        this.comodines = new ArrayList <Comodin>();
+
     }
 
     /*
