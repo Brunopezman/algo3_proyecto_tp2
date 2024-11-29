@@ -7,7 +7,9 @@ module edu.fiuba.algo3 {
     exports edu.fiuba.algo3;
     exports edu.fiuba.algo3.vistas;
 
-//    requires javafx.media;
-    exports edu.fiuba.algo3.modelo.interfaz;
+    //requires javafx.media;
+    //exports edu.fiuba.algo3.modelo.interfaz;
     opens edu.fiuba.algo3.modelo.lector to com.google.gson;
+    exports edu.fiuba.algo3.vistas.boton;
+    exports edu.fiuba.algo3.vistas.pantalla;
 }

@@ -1,9 +1,8 @@
-package edu.fiuba.algo3.modelo.interfaz;
+package edu.fiuba.algo3.vistas.boton;
 
 import edu.fiuba.algo3.modelo.carta.Carta;
 import edu.fiuba.algo3.modelo.juego.Jugador;
-import edu.fiuba.algo3.modelo.mano.Color;
-import edu.fiuba.algo3.modelo.mano.Mano;
+import edu.fiuba.algo3.vistas.pantalla.PantallaJuego;
 
 import java.util.List;
 

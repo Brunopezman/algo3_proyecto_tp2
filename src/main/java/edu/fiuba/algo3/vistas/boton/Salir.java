@@ -1,16 +1,16 @@
-package edu.fiuba.algo3.modelo.interfaz;
+package edu.fiuba.algo3.vistas.boton;
 
-import edu.fiuba.algo3.Main;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Stage;
 
 public class Salir implements AccionBoton {
-    private Main main;
+    private Stage stage;
 
-    public Salir(Main main) {
-        this.main = main;
+    public Salir(Stage stage) {
+        this.stage = stage;
     }
 
     @Override
@@ -26,7 +26,7 @@ public class Salir implements AccionBoton {
 
         alerta.showAndWait().ifPresent(respuesta -> {
             if (respuesta == botonAceptar) {
-                main.mostrarPantallaInicial();
+                stage.close(); // Cierra la ventana actual
             }
         });
     }

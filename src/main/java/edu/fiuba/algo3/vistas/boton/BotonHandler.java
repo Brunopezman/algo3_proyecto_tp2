@@ -1,4 +1,4 @@
-package edu.fiuba.algo3.modelo.interfaz;
+package edu.fiuba.algo3.vistas.boton;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

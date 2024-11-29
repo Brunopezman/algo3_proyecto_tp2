@@ -1,4 +1,4 @@
-package edu.fiuba.algo3.modelo.interfaz;
+package edu.fiuba.algo3.vistas.boton;
 
 import edu.fiuba.algo3.Main;
 
