@@ -4,7 +4,6 @@ import edu.fiuba.algo3.vistas.boton.AccionBoton;
 import edu.fiuba.algo3.vistas.boton.BotonHandler;
 import edu.fiuba.algo3.vistas.boton.MostrarReglas;
 import edu.fiuba.algo3.vistas.boton.Salir;
-import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;

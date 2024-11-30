@@ -11,12 +11,10 @@ public class JugarMano implements AccionBoton {
 
     private final Jugador jugador;
     private final List<Carta> cartasSeleccionadas;
-    private final PantallaJuego pantallaJuego;
 
-    public JugarMano(Jugador jugador, List<Carta> cartasSeleccionadas, PantallaJuego pantallaJuego) {
+    public JugarMano(Jugador jugador, List<Carta> cartasSeleccionadas) {
         this.jugador = jugador;
         this.cartasSeleccionadas = cartasSeleccionadas;
-        this.pantallaJuego = pantallaJuego;
     }
 
     @Override
