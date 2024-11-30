@@ -45,7 +45,7 @@ public class Salir implements AccionBoton {
                 };
 
                 // Crear y mostrar la pantalla inicial
-                PantallaInicial pantallaInicial = new PantallaInicial(accionComenzar, accionComoJugar);
+                PantallaInicial pantallaInicial = new PantallaInicial(accionComenzar);
                 stage.setScene(new Scene(pantallaInicial.getRoot()));
                 stage.show();
             }

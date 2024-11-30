@@ -22,7 +22,7 @@ public class PantallaInicial {
     //mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
     //mediaPlayer.setAutoPlay(true);
 
-    public PantallaInicial(Runnable accionComenzar, Runnable accionComoJugar) {
+    public PantallaInicial(Runnable accionComenzar) {
         //fondo de pantalla
         String rutaImagen = "src/main/java/edu/fiuba/algo3/resources/fondo_rya.jpeg";
         Image imagenFondo = new Image(Paths.get(rutaImagen).toUri().toString());
@@ -41,19 +41,6 @@ public class PantallaInicial {
                 )
         );
         Background fondo = new Background(backgroundImage);
-
-        //barra superior (botones como "¿Cómo Jugar?")
-        HBox barraSuperior = new HBox();
-        barraSuperior.setAlignment(Pos.TOP_RIGHT);
-        barraSuperior.setSpacing(10);
-        barraSuperior.setPadding(new javafx.geometry.Insets(10));
-
-        Button botonComoJugar = new Button("¿CÓMO JUGAR?");
-        botonComoJugar.setFont(Font.font("Arial", 12));
-        botonComoJugar.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-border-radius: 15; -fx-padding: 5px 10px;");
-        botonComoJugar.setOnAction(event -> accionComoJugar.run());
-
-        barraSuperior.getChildren().add(botonComoJugar);
 
         //contenido principal
         VBox contenido = new VBox();
@@ -83,7 +70,6 @@ public class PantallaInicial {
         //BorderPane para organizar los elementos
         root = new BorderPane();
         root.setBackground(fondo);
-        root.setTop(barraSuperior);
         root.setCenter(contenido);
     }
 
