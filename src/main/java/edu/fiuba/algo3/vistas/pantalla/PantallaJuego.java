@@ -23,6 +23,10 @@ import javafx.scene.text.Text;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.List;
+import javafx.scene.layout.VBox;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 
 import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
@@ -38,6 +42,7 @@ public class PantallaJuego {
     private Stage stage;
 
     private HBox visualCartas;
+    private Text mensajeInicio;
 
     public PantallaJuego(Jugador jugador, Stage stage) {
         this.stage = stage; // Guarda el Stage pasado como argumento
@@ -53,6 +58,15 @@ public class PantallaJuego {
 
         root.setHgap(10);
         root.setVgap(10);
+
+//        // Inicializar el mensaje de inicio
+//        mensajeInicio = new Text("Haz clic en el mazo para comenzar");
+//        mensajeInicio.setFont(new Font(20));
+//        mensajeInicio.setStyle("-fx-fill: #ff0000; -fx-font-weight: bold;");
+//
+//        // Añadir el mensaje de inicio a la parte superior de la pantalla
+//        GridPane.setColumnSpan(mensajeInicio, 2);
+//        root.add(mensajeInicio, 0, 0);
 
         root.add(crearLeftArea(), 0, 0);
         root.add(crearRightArea(), 1, 0);
@@ -101,8 +115,102 @@ public class PantallaJuego {
         return leftArea;
     }
 
+    //antes del agregado el mensaje de tocar las cartas
+//    private BorderPane crearRightArea() {
+//        BorderPane rightArea = new BorderPane();
+//
+//        // Comodines y Tarots
+//        HBox comodinesTarots = new HBox();
+//        comodinesTarots.setSpacing(50);
+//        comodinesTarots.setAlignment(Pos.CENTER);
+//
+//        int cantidadComodines = ronda.cantidadComodines();
+//        int cantidadTarots = 0;
+//
+//        // Comodines
+//        Rectangle comodines = new Rectangle(200, 80);
+//        comodines.setStyle("-fx-fill: #ffffff; -fx-stroke: black; -fx-stroke-width: 1;");
+//        Text cantidadComodinesText = new Text(cantidadComodines + "/5");
+//        cantidadComodinesText.setStyle("-fx-font-size: 0.8em; -fx-fill: #101010;");
+//        VBox comodinesBox = new VBox(comodines, cantidadComodinesText);
+//        comodinesBox.setAlignment(Pos.TOP_LEFT);
+//        comodinesBox.setSpacing(5);
+//
+//        // Tarots
+//        Rectangle tarots = new Rectangle(120, 80);
+//        tarots.setStyle("-fx-fill: #ffffff; -fx-stroke: black; -fx-stroke-width: 1;");
+//        Text cantidadTarotsText = new Text(cantidadTarots + "/2");
+//        cantidadTarotsText.setStyle("-fx-font-size: 0.8em; -fx-fill: #101010;");
+//        VBox tarotsBox = new VBox(tarots, cantidadTarotsText);
+//        tarotsBox.setAlignment(Pos.TOP_RIGHT);
+//        tarotsBox.setSpacing(5);
+//
+//        comodinesTarots.getChildren().addAll(comodinesBox, tarotsBox);
+//        rightArea.setTop(comodinesTarots);
+//
+//        // Cartas del jugador: inicialmente vacío
+//        visualCartas = new HBox();
+//        visualCartas.setSpacing(10);
+//        visualCartas.setAlignment(Pos.CENTER);
+//
+//        rightArea.setCenter(visualCartas);
+//
+//        // Botones y Mazo
+//        HBox botones = new HBox();
+//        botones.setSpacing(20);
+//        botones.setAlignment(Pos.CENTER_LEFT);
+//
+//        Button botonJugarMano = new Button("Jugar Mano");
+//        Button botonDescartar = new Button("Descartar");
+//        botonJugarMano.setStyle("-fx-font-size: 20px; -fx-background-color: #104ec1;");
+//        botonDescartar.setStyle("-fx-font-size: 20px; -fx-background-color: #ec1111;");
+//        AccionBoton accionJugarMano = new JugarMano(jugador, cartasSeleccionadas, this);
+//        AccionBoton accionDescartar = new Descartar();
+//        botonJugarMano.setOnAction(new BotonHandler(accionJugarMano));
+//        botonDescartar.setOnAction(new BotonHandler(accionDescartar));
+//
+//        botones.getChildren().addAll(botonJugarMano, botonDescartar);
+//
+//        // Mazo
+//        String rutaImagen = "src/main/java/edu/fiuba/algo3/resources/reverso.jpg";
+//        Image imagen = new Image(Paths.get(rutaImagen).toUri().toString());
+//        ImageView imageView = new ImageView(imagen);
+//        imageView.setFitWidth(100);
+//        imageView.setFitHeight(150);
+//
+//        int cartasRestantes = mazo.cartasRestantes();
+//        cartasRestantesText = new Text(cartasRestantes + "/52");
+//        cartasRestantesText.setFont(Font.font("Arial", 16));
+//
+//        // Evento al hacer clic en el mazo
+//        imageView.setOnMouseClicked(event -> repartirCartas());
+//
+//        VBox imagenYTexto = new VBox(10, imageView, cartasRestantesText);
+//        imagenYTexto.setAlignment(Pos.CENTER_RIGHT);
+//
+//        // Añadir el HBox con los botones y la imagen
+//        HBox botonesYMazo = new HBox(40, botones, imagenYTexto);
+//        VBox contenidoInferior = new VBox(botonesYMazo);
+//        contenidoInferior.setAlignment(Pos.CENTER_RIGHT);
+//        rightArea.setBottom(contenidoInferior);
+//
+//        rightArea.setPadding(new Insets(10));
+//        return rightArea;
+//    }
+
     private BorderPane crearRightArea() {
         BorderPane rightArea = new BorderPane();
+
+        // Crear un StackPane para el mensaje inicial
+        StackPane mensajeCentro = new StackPane();
+        Text mensajeInstruccion = new Text("Tocá el mazo para comenzar");
+        mensajeInstruccion.setStyle("-fx-fill: #ff0000; -fx-font-weight: bold;");
+        mensajeInstruccion.setFont(new Font(20));
+        mensajeCentro.getChildren().add(mensajeInstruccion);
+        mensajeCentro.setAlignment(Pos.CENTER);
+
+        // Colocar el StackPane en el centro de la pantalla
+        rightArea.setCenter(mensajeCentro);
 
         // Comodines y Tarots
         HBox comodinesTarots = new HBox();
@@ -138,8 +246,6 @@ public class PantallaJuego {
         visualCartas.setSpacing(10);
         visualCartas.setAlignment(Pos.CENTER);
 
-        rightArea.setCenter(visualCartas);
-
         // Botones y Mazo
         HBox botones = new HBox();
         botones.setSpacing(20);
@@ -168,7 +274,15 @@ public class PantallaJuego {
         cartasRestantesText.setFont(Font.font("Arial", 16));
 
         // Evento al hacer clic en el mazo
-        imageView.setOnMouseClicked(event -> repartirCartas());
+        imageView.setOnMouseClicked(event -> {
+            if (rightArea.getCenter() != null) {
+                // Eliminar el mensaje de instrucción al hacer clic en el mazo por primera vez
+                rightArea.setCenter(null);
+                // Mostrar las cartas después de hacer clic por primera vez
+                rightArea.setCenter(visualCartas);
+                repartirCartas();
+            }
+        });
 
         VBox imagenYTexto = new VBox(10, imageView, cartasRestantesText);
         imagenYTexto.setAlignment(Pos.CENTER_RIGHT);

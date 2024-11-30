@@ -83,8 +83,8 @@ public class PantallaInicial {
         //BorderPane para organizar los elementos
         root = new BorderPane();
         root.setBackground(fondo);
-        root.setTop(barraSuperior); // Barra superior
-        root.setCenter(contenido);  // Contenido principal
+        root.setTop(barraSuperior);
+        root.setCenter(contenido);
     }
 
     public BorderPane getRoot() {
