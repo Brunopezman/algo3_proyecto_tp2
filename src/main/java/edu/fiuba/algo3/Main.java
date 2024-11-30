@@ -3,6 +3,7 @@ package edu.fiuba.algo3;
 import edu.fiuba.algo3.vistas.pantalla.PantallaInicial;
 import edu.fiuba.algo3.vistas.pantalla.PantallaJuego;
 import edu.fiuba.algo3.vistas.pantalla.PantallaUser;
+import edu.fiuba.algo3.vistas.pantalla.PantallaReglas;
 import edu.fiuba.algo3.modelo.juego.Jugador;
 import edu.fiuba.algo3.vistas.App;
 import javafx.application.Application;
@@ -24,9 +25,22 @@ public class Main extends Application {
     }
 
     public void mostrarPantallaInicial() {
-        PantallaInicial pantallaInicial = new PantallaInicial(this::mostrarPantallaUser);
+        // Acción para el botón "COMENCEMOS"
+        Runnable accionComenzar = this::mostrarPantallaUser;
+
+        // Acción para el botón "¿CÓMO JUGAR?"
+        Runnable accionComoJugar = () -> { mostrarTextoReglas(); };
+
+        // Pasar ambas acciones al constructor de PantallaInicial
+        PantallaInicial pantallaInicial = new PantallaInicial(accionComenzar, accionComoJugar);
         Scene escenaInicial = new Scene(pantallaInicial.getRoot(), 800, 600);
         stage.setScene(escenaInicial);
+    }
+
+    public void mostrarTextoReglas() {
+        PantallaReglas pantallaReglas = new PantallaReglas(() -> mostrarPantallaInicial());
+        Scene escenaReglas = new Scene(pantallaReglas.getRoot(), 800, 600);
+        stage.setScene(escenaReglas);
     }
 
     public void mostrarPantallaUser() {

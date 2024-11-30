@@ -4,8 +4,6 @@ import javafx.animation.FadeTransition;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-//import javafx.scene.media.Media;
-//import javafx.scene.media.MediaPlayer;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -15,7 +13,7 @@ import javafx.util.Duration;
 import java.nio.file.Paths;
 
 public class PantallaInicial {
-    private final StackPane root;
+    private final BorderPane root;
 
     //musica
     //String musicaRuta = "src/main/java/edu/fiuba/algo3/resources/musica.mp3";
@@ -24,10 +22,8 @@ public class PantallaInicial {
     //mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
     //mediaPlayer.setAutoPlay(true);
 
-    // Constructor recibe un Runnable para manejar la acción del botón
-    public PantallaInicial(Runnable accionComenzar) {
-        // Crear el fondo de pantalla
-        StackPane fondo = new StackPane();
+    public PantallaInicial(Runnable accionComenzar, Runnable accionComoJugar) {
+        //fondo de pantalla
         String rutaImagen = "src/main/java/edu/fiuba/algo3/resources/fondo_rya.jpeg";
         Image imagenFondo = new Image(Paths.get(rutaImagen).toUri().toString());
         BackgroundImage backgroundImage = new BackgroundImage(
@@ -44,33 +40,37 @@ public class PantallaInicial {
                         true
                 )
         );
-        fondo.setBackground(new Background(backgroundImage));
+        Background fondo = new Background(backgroundImage);
 
-        //sin imagen de fondo
-        //StackPane fondo = new StackPane();
-        //fondo.setBackground(new Background(new BackgroundFill(Color.web("#28a745"), CornerRadii.EMPTY, null)));
+        //barra superior (botones como "¿Cómo Jugar?")
+        HBox barraSuperior = new HBox();
+        barraSuperior.setAlignment(Pos.TOP_RIGHT);
+        barraSuperior.setSpacing(10);
+        barraSuperior.setPadding(new javafx.geometry.Insets(10));
 
+        Button botonComoJugar = new Button("¿CÓMO JUGAR?");
+        botonComoJugar.setFont(Font.font("Arial", 12));
+        botonComoJugar.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-border-radius: 15; -fx-padding: 5px 10px;");
+        botonComoJugar.setOnAction(event -> accionComoJugar.run());
 
-        // Contenido principal de la pantalla
+        barraSuperior.getChildren().add(botonComoJugar);
+
+        //contenido principal
         VBox contenido = new VBox();
         contenido.setAlignment(Pos.CENTER);
         contenido.setSpacing(50);
 
-        // Título del juego
         Text titulo = new Text("B A L A T R O");
         titulo.setFont(Font.font("Comic Sans MS", 120));
-        titulo.setFill(Color.YELLOW);  // Color amarillo
-        titulo.setStyle("-fx-effect: dropshadow(gaussian, darkred, 5, 0.5, 0, 0);"); // Efecto sombra para resaltar
+        titulo.setFill(Color.YELLOW);
+        titulo.setStyle("-fx-effect: dropshadow(gaussian, darkred, 5, 0.5, 0, 0);");
 
-        // Botón "Comencemos"
         Button botonComencemos = new Button("COMENCEMOS");
         botonComencemos.setFont(Font.font("Arial", 25));
         botonComencemos.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #000000; -fx-border-radius: 15; -fx-padding: 10px 20px;");
-
-        // Manejador del evento usando el Runnable
         botonComencemos.setOnAction(event -> accionComenzar.run());
 
-        // Efecto de transición en el botón
+        //efecto de transición en el botón
         FadeTransition fade = new FadeTransition(Duration.seconds(0.8), botonComencemos);
         fade.setFromValue(1.0);
         fade.setToValue(0.3);
@@ -78,15 +78,16 @@ public class PantallaInicial {
         fade.setAutoReverse(true);
         fade.play();
 
-        // Agregar los componentes al contenedor principal
         contenido.getChildren().addAll(titulo, botonComencemos);
-        fondo.getChildren().add(contenido);
 
-        root = fondo;
+        //BorderPane para organizar los elementos
+        root = new BorderPane();
+        root.setBackground(fondo);
+        root.setTop(barraSuperior); // Barra superior
+        root.setCenter(contenido);  // Contenido principal
     }
 
-    // Método para obtener el nodo raíz de la vista
-    public StackPane getRoot() {
+    public BorderPane getRoot() {
         return root;
     }
 }
