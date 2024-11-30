@@ -5,12 +5,10 @@ public class Valor {
     private String consecutivo;
     private int puntaje;
 
-    public Valor(String numero, String consecutivo) {
+    public Valor(String numero, String consecutivo, int puntos) {
         this.numero = numero;
         this.consecutivo = consecutivo;
-        if (numero.equals("Jota") || numero.equals("Reina") || numero.equals("Rey")) {this.puntaje = 10;}
-        else if(numero.equals("As")){this.puntaje = 11;}
-        else this.puntaje = Integer.parseInt(numero);
+        this.puntaje = puntos;
     }
 
     public String getNumero() { return numero; }

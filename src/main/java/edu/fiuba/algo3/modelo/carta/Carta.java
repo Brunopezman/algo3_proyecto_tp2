@@ -1,12 +1,19 @@
 package edu.fiuba.algo3.modelo.carta;
 
 public class Carta {
-
+    private String nombre;
     private Valor valor;
     private Palo palo;
 
+    /*
     public Carta(String valor, String consecutivo, String palo) {
         this.valor = new Valor(valor, consecutivo);
+        this.palo = new Palo(palo);
+    }
+    */
+    public Carta(String nombre, String palo, String numero, String consecutivo, int puntos){
+        this.nombre = nombre;
+        this.valor = new Valor(numero, consecutivo, puntos);
         this.palo = new Palo(palo);
     }
 
@@ -16,7 +23,7 @@ public class Carta {
 
     public int puntaje() { return this.valor.getPuntaje(); }
 
-    public boolean esConsecutiva(Carta otraCarta) { return valor.sonConsecutivos(valor.getNumero()); }
+    public boolean esConsecutiva(Carta otraCarta) { return valor.sonConsecutivos(otraCarta.numero()); }
 
     public boolean esIgual(Carta otraCarta){ return (this.tieneMismoPalo(otraCarta) && this.tieneMismoNumero(otraCarta)); };
 

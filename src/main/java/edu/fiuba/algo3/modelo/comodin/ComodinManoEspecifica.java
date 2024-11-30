@@ -4,19 +4,19 @@ import edu.fiuba.algo3.modelo.mano.Mano;
 
 public class ComodinManoEspecifica extends Comodin{
 
-    private Mano manoQueAfecta;
+    private String manoQueAfecta;
 
-    public ComodinManoEspecifica(int valorMultiplicador, int valorPuntos, EstrategiaComodin estrategia, Mano mano) {
+    public ComodinManoEspecifica(int valorMultiplicador, int valorPuntos, EstrategiaComodin estrategia, String nombreMano) {
         this.multiplicador = valorMultiplicador;
         this.puntos = valorPuntos;
         this.estrategia = estrategia;
-        this.manoQueAfecta = mano;
+        this.manoQueAfecta = nombreMano;
     }
 
     @Override
     public void aplicarEfecto(Mano mano) {
         if(mano.esMismaMano(manoQueAfecta)){
-            estrategia.realizarModificacion(mano, multiplicador, puntos);
+            estrategia.realizarModificacion(puntos, multiplicador, mano);
         }
     }
 }

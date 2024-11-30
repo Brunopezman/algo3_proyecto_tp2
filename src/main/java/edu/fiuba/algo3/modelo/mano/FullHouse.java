@@ -11,6 +11,7 @@ public class FullHouse extends Mano {
     public static int MULTIPLICADOR_INICIAL = 4;
 
     public FullHouse() {
+        this.nombre = "full";
         this.puntaje = PUNTAJE_INICIAL;
         this.multiplicador = MULTIPLICADOR_INICIAL;
         this.operador = new Operador();

@@ -8,10 +8,10 @@ import java.util.List;
 public class Mazo {
 
     private List<Carta> cartas;
-
+    /*
     public Mazo(){
         this.cartas = new ArrayList<Carta>();
-        String[] valores = {"K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2", "A"};
+        String[] valores = {"Rey", "Reina", "Jota", "10", "9", "8", "7", "6", "5", "4", "3", "2", "As"};
         String[] palos = {"Corazones", "Diamantes", "Treboles", "Picas"};
         for (String palo : palos) {
             String consecutivo = "A";
@@ -22,6 +22,10 @@ public class Mazo {
             }
         }
         //this.barajar(cartas);
+    }
+    */
+    public Mazo(List<Carta> cartasParaElMazo) {
+        this.cartas = cartasParaElMazo;
     }
 
     public List<Carta> darCartas(int cantidad) {

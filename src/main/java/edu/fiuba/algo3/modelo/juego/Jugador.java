@@ -12,13 +12,12 @@ public class Jugador {
 
     private String nombre;
     private List<Carta> cartasActuales;
-    private List<Comodin> comodines;
-    private int descartes;
+    private int descartesMaximos;
+    private int descartesActuales;
 
     public Jugador(String nombre) {
         this.nombre = nombre;
         this.cartasActuales = new ArrayList<>();
-        //this.comodines = new ArrayList<>();
     }
 
     public List<Carta> recibirCartas(Mazo mazo) {
@@ -60,12 +59,12 @@ public class Jugador {
         }
 
         mano.sumarPuntos(puntaje);
-        mano.sumarDescartes(descartes);
+        mano.sumarDescartes(descartesActuales);
         return mano;
     }
 
     public void descartar(Mazo mazo, List<Carta> cartasADescartar){
-        if (this.descartes == 3 ) {
+        if (this.descartesActuales >= descartesMaximos ) {
             throw new IllegalArgumentException("No puede realizar más descartes en este turno.");
         }
 
@@ -73,7 +72,7 @@ public class Jugador {
             throw new IllegalArgumentException("Algunas cartas no están en la mano.");
         }
 
-        this.descartes++;
+        this.descartesActuales++;
 
         // Descartar cada carta
         for (Carta carta : cartasADescartar) {
@@ -87,4 +86,10 @@ public class Jugador {
             this.cartasActuales.add(nuevasCartas.get(i));
         }
     }
+
+    public String getNombre() { return nombre; }
+
+    public int cantidadCartasActuales(){ return cartasActuales.size(); }
+
+    public void setDescartesMaximos(int cantDescartes) { descartesMaximos = cantDescartes; }
 }

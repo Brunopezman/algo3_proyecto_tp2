@@ -13,7 +13,7 @@ public class ComodinDescarte extends Comodin {
     @Override
     public void aplicarEfecto(Mano mano) {
         for (int i = 0; i < mano.cantidadDescartes(); i++) {
-            estrategia.realizarModificacion(mano, multiplicador, puntos);
+            estrategia.realizarModificacion(puntos, multiplicador,mano);
         }
     }
 

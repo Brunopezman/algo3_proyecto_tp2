@@ -11,6 +11,7 @@ public class Color extends Mano{
     public static int MULTIPLICADOR_INICIAL = 4;
 
     public Color(){
+        this.nombre = "color";
         this.puntaje = PUNTAJE_INICIAL;
         this.multiplicador = MULTIPLICADOR_INICIAL;
         this.operador = new Operador();
