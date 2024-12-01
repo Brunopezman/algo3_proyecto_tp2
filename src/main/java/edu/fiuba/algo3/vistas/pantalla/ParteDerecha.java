@@ -68,7 +68,7 @@ public class ParteDerecha {
         Rectangle comodines = new Rectangle(200, 80);
         comodines.setStyle("-fx-fill: #ffffff; -fx-stroke: black; -fx-stroke-width: 1;");
         Text cantidadComodinesText = new Text(cantidadComodines + "/5");
-        cantidadComodinesText.setStyle("-fx-font-size: 0.8em; -fx-fill: #101010;");
+        cantidadComodinesText.setStyle("-fx-font-size: 0.8em; -fx-fill: #efe7e7;");
         VBox comodinesBox = new VBox(comodines, cantidadComodinesText);
         comodinesBox.setAlignment(Pos.TOP_LEFT);
         comodinesBox.setSpacing(5);
@@ -77,7 +77,7 @@ public class ParteDerecha {
         Rectangle tarots = new Rectangle(120, 80);
         tarots.setStyle("-fx-fill: #ffffff; -fx-stroke: black; -fx-stroke-width: 1;");
         Text cantidadTarotsText = new Text(cantidadTarots + "/2");
-        cantidadTarotsText.setStyle("-fx-font-size: 0.8em; -fx-fill: #101010;");
+        cantidadTarotsText.setStyle("-fx-font-size: 0.8em; -fx-fill: #ffffff;");
         VBox tarotsBox = new VBox(tarots, cantidadTarotsText);
         tarotsBox.setAlignment(Pos.TOP_RIGHT);
         tarotsBox.setSpacing(5);
@@ -97,8 +97,8 @@ public class ParteDerecha {
 
         Button botonJugarMano = new Button("Jugar Mano");
         Button botonDescartar = new Button("Descartar");
-        botonJugarMano.setStyle("-fx-font-size: 20px; -fx-background-color: #104ec1;");
-        botonDescartar.setStyle("-fx-font-size: 20px; -fx-background-color: #ec1111;");
+        botonJugarMano.setStyle("-fx-font-size: 20px; -fx-background-color: #104ec1; -fx-text-fill: white;");
+        botonDescartar.setStyle("-fx-font-size: 20px; -fx-background-color: #ec1111; -fx-text-fill: white;");
         AccionBoton accionJugarMano = new JugarMano(jugador, cartasSeleccionadas);
         AccionBoton accionDescartar = new Descartar();
         botonJugarMano.setOnAction(new BotonHandler(accionJugarMano));
@@ -116,6 +116,7 @@ public class ParteDerecha {
         int cartasRestantes = mazo.cartasRestantes();
         cartasRestantesText = new Text(cartasRestantes + "/52");
         cartasRestantesText.setFont(Font.font("Arial", 16));
+        cartasRestantesText.setStyle("-fx-font-size: 0.8em; -fx-fill: #ffffff;");
 
         // Evento al hacer clic en el mazo
         HBox finalVisualCartas = visualCartas;
@@ -139,34 +140,6 @@ public class ParteDerecha {
         parteDerecha.setBottom(contenidoInferior);
 
         parteDerecha.setPadding(new Insets(10));
-    }
-
-    private HBox crearVisualCartas() {
-        HBox visualCartas = new HBox();
-        visualCartas.setSpacing(10);
-        visualCartas.setAlignment(Pos.CENTER);
-
-        for (Carta carta : cartas) {
-            ImageView imagenCarta = new ImageView(new Image(Paths.get("src/main/java/edu/fiuba/algo3/resources/" + carta.numero() + "_" + carta.getPalo() + ".jpg").toUri().toString()));
-            imagenCarta.setFitWidth(80);
-            imagenCarta.setFitHeight(120);
-
-            imagenCarta.setOnMouseClicked(event -> {
-                if (cartasSeleccionadas.contains(carta)) {
-                    cartasSeleccionadas.remove(carta);
-                    imagenCarta.setStyle("-fx-effect: null;");
-                } else if (cartasSeleccionadas.size() < 5) {
-                    cartasSeleccionadas.add(carta);
-                    imagenCarta.setStyle("-fx-effect: dropshadow(gaussian, blue, 10, 0.5, 0, 0);");
-                } else {
-                    System.out.println("No puedes seleccionar más de 5 cartas.");
-                }
-            });
-
-            visualCartas.getChildren().add(imagenCarta);
-        }
-
-        return visualCartas;
     }
 
     private void repartirCartas() {

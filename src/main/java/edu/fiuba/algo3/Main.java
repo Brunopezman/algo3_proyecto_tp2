@@ -1,5 +1,6 @@
 package edu.fiuba.algo3;
 
+import edu.fiuba.algo3.vistas.boton.Salir;
 import edu.fiuba.algo3.vistas.pantalla.PantallaInicial;
 import edu.fiuba.algo3.vistas.pantalla.PantallaJuego;
 import edu.fiuba.algo3.vistas.pantalla.PantallaUser;
@@ -32,7 +33,7 @@ public class Main extends Application {
         // Acción para el botón "COMENCEMOS"
         Runnable accionComenzar = this::mostrarPantallaUser;
 
-        // Pasar ambas acciones al constructor de PantallaInicial
+        // Crear la pantalla inicial con ambas acciones
         PantallaInicial pantallaInicial = new PantallaInicial(accionComenzar);
         Scene escenaInicial = new Scene(pantallaInicial.getRoot(), 800, 600);
         stage.setScene(escenaInicial);
