@@ -24,7 +24,6 @@ public class Main extends Application {
         stage.setWidth(800); //por ahora lo dejo asi, se va a cambiar
         stage.setHeight(600);
         stage.setResizable(false); //evita el redimensionamiento manual
-        this.juego = new Juego("src/main/java/edu/fiuba/algo3/resources/archivosJson/balatro.json");
         mostrarPantallaInicial();
 
         stage.setTitle("Balatro");
@@ -49,7 +48,6 @@ public class Main extends Application {
 
     public void mostrarPantallaJuego(String nombre) {
         Jugador jugador = new Jugador(nombre);
-        juego.
         PantallaJuego pantallaJuego = new PantallaJuego(jugador, stage);
         Scene escenaJuego = new Scene(pantallaJuego.getRoot(), 800, 600);
         stage.setScene(escenaJuego);

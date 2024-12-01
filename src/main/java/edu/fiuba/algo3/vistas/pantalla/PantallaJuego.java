@@ -34,8 +34,6 @@ public class PantallaJuego {
         this.root = new VBox();
         this.contenidoJuego = new GridPane();
         this.menuJuego = new MenuJuego(stage);
-        //this.mazo = new Mazo();
-        //this.ronda = new Ronda(8, 3, 300, jugador);
         Juego juego = new Juego("src/main/java/edu/fiuba/algo3/resources/archivosJson/balatro.json");
         this.mazo = juego.getMazo();
         this.ronda = juego.getRondas().get(0);
