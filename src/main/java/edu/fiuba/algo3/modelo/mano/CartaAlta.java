@@ -16,6 +16,6 @@ public class CartaAlta extends Mano {
     }
     @Override
     public Mano esJugable(List<Carta> cartas) {
-        return null;
+        return new CartaAlta();
     }
 }
