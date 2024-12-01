@@ -15,7 +15,7 @@ public class CartaAlta extends Mano {
         this.multiplicador = MULTIPLICADOR_INICIAL;
     }
     @Override
-    public boolean esJugable(List<Carta> cartas) {
-        return true;
+    public Mano esJugable(List<Carta> cartas) {
+        return null;
     }
 }

@@ -18,7 +18,7 @@ public class DoblePar extends Mano{
     }
 
     @Override
-    public boolean esJugable(List<Carta> cartas) {
+    public Mano esJugable(List<Carta> cartas) {
         // Mapa para contar la cantidad de cartas por cada valor
         Map<String, Integer> conteoValores = this.operador.contarPorValor(cartas);
         // Contar cuántos pares tenemos
@@ -32,6 +32,9 @@ public class DoblePar extends Mano{
         }
 
         // Si encontramos exactamente 2 pares, devolvemos true
-        return pares == 2;
+        if(pares == 2){
+            return new DoblePar();
+        }
+        return null;
     }
 }

@@ -20,7 +20,7 @@ public class EscaleraReal extends Mano{
     }
 
     @Override
-    public boolean esJugable(List<Carta> cartas) {
+    public Mano esJugable(List<Carta> cartas) {
 
         Map<String, List<Carta>> cartasPorPalo = operador.separarPorPalo(cartas);
 
@@ -28,9 +28,9 @@ public class EscaleraReal extends Mano{
             List<String> valoresRequeridos = List.of("10", "J", "Q", "K", "A");
             List<String> valoresEnPalo = cartasDelMismoPalo.stream().map(Carta::numero).collect(Collectors.toList());
             if (valoresEnPalo.containsAll(valoresRequeridos)) {
-                return true;
+                return new EscaleraReal();
             }
         }
-        return false;
+        return null;
     }
 }

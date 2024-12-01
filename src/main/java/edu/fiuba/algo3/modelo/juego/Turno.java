@@ -13,7 +13,6 @@ public class Turno {
     private int puntaje;
     private int cantidadDescartes;
 
-    /*
     public Turno(List<Comodin> comodines) {
         this.manosJugables = new ArrayList<>();
         this.puntaje = 0;
@@ -30,7 +29,7 @@ public class Turno {
         this.cantidadDescartes = 0;
         this.comodines = comodines;
     }
-    */
+    /*
     public Turno() {
         this.manosJugables = new ArrayList<>();
         this.puntaje = 0;
@@ -45,7 +44,7 @@ public class Turno {
         this.manosJugables.add(new Par());
         this.manosJugables.add(new CartaAlta());
         this.cantidadDescartes = 0;
-    }
+    }*/
 
 
     public void calcularJugada(Mano mano){
@@ -55,14 +54,15 @@ public class Turno {
         puntaje = mano.puntajeFinal();
     }
 
-    public boolean existeManoJugable(List<Carta> cartas){
-        boolean existe = false;
-        for (Mano mano : this.manosJugables){
-            if (mano.esJugable(cartas)){
-                existe = true;
+    public Mano existeManoJugable(List<Carta> cartas){
+        Mano mano = null;
+        for (Mano manoPosible : this.manosJugables){
+            mano = manoPosible.esJugable(cartas);
+            if(mano != null){
+                break;
             }
         }
-        return existe;
+        return mano;
     }
 
     public int puntajeDelTurno(){

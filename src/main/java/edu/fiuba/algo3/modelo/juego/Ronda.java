@@ -1,7 +1,10 @@
 package edu.fiuba.algo3.modelo.juego;
 
 import edu.fiuba.algo3.modelo.NoHayMasTurnosException;
+import edu.fiuba.algo3.modelo.carta.Carta;
 import edu.fiuba.algo3.modelo.comodin.Comodin;
+import edu.fiuba.algo3.modelo.mano.Mano;
+import edu.fiuba.algo3.modelo.tarot.Tarot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +15,7 @@ public class Ronda {
     private int nroRonda;
     private List<Turno> turnos;
     private List <Comodin> comodines;
+    private List <Tarot> tarots;
     private int turnoActual;
     private int cantidadTurnos;
     private int puntajeAlcanzado;
@@ -32,40 +36,40 @@ public class Ronda {
 
     public Ronda(int nro,int manos,int descartes, int puntajeAObtener, Tienda tienda){
         this.nroRonda = nro;
-        this.turnos = new ArrayList<>();
-        for(int i = INICIO; i < manos; i++){
-            turnos.add(new Turno());
-        }
+        this.turnos = new ArrayList<Turno>();
         this.descartesRestantes = descartes;
         this.puntajeASuperar = puntajeAObtener;
         this.tienda = tienda;
         this.comodines = new ArrayList <Comodin>();
-
+        this.tarots = new ArrayList<Tarot>();
     }
 
-    /*
+    public void cargarComodinesRonda(List<Comodin> comodinesElegidos){
+        comodines.addAll(comodinesElegidos);
+    }
+
+    public void cargarTarotsRonda(ArrayList<Tarot> tarotsElegidos) {
+        tarots.addAll(tarotsElegidos);
+    }
+
     public Turno iniciarRonda(){
-
-        //ACA SE HARIA LA ELECCION DE LA TIENDA
-
         for(int i = INICIO; i<cantidadTurnos; i++){
             turnos.add(new Turno(comodines));
         }
         turnoActual++;
         return turnos.get(INICIO);
     }
-    */
 
     public void agregarComodin(Comodin comodin) {
         comodines.add(comodin);
     }
 
-    public Turno avanzarTurno(){
+    public boolean avanzarTurno(){
         if (turnoActual >= 5){ //esto debería controlarse desde la entidad que contiene las rondas
             throw new NoHayMasTurnosException();
         }
         turnoActual++;
-        return turnos.get(turnoActual-1);
+        return true;
     }
 
     public int cantidadTurnos(){ return turnos.size(); }
@@ -88,4 +92,23 @@ public class Ronda {
     public boolean seAlcanzoElPuntajeDeRonda() { return (puntajeAlcanzado >= puntajeASuperar); }
 
     public int cantidadDeTurnos(){ return cantidadTurnos; }
+
+    public Tienda getTienda(){ return tienda; }
+
+    public void transferirComodines(Ronda ronda) {
+        ronda.cargarComodinesRonda(comodines);
+    }
+
+    public int jugarTurno(List<Carta> posibleMano, Jugador jugador) {
+        Turno turno = this.getTurno(turnoActual);
+        Mano mano = turno.existeManoJugable(posibleMano);
+
+        if(mano != null){
+            jugador.jugarMano(posibleMano,mano);
+            turno.calcularJugada(mano); //carga puntaje final en turno;
+        }
+
+        return turno.puntajeDelTurno();
+
+    }
 }

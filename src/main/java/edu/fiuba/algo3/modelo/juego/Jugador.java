@@ -3,6 +3,7 @@ package edu.fiuba.algo3.modelo.juego;
 import edu.fiuba.algo3.modelo.carta.Carta;
 import edu.fiuba.algo3.modelo.comodin.Comodin;
 import edu.fiuba.algo3.modelo.mano.Mano;
+import edu.fiuba.algo3.modelo.tarot.Tarot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ public class Jugador {
 
     private String nombre;
     private List<Carta> cartasActuales;
+    private List<Tarot> tarots;
     private int descartesMaximos;
     private int descartesActuales;
 
@@ -86,6 +88,8 @@ public class Jugador {
             this.cartasActuales.add(nuevasCartas.get(i));
         }
     }
+
+    public void agregarCartas(ArrayList<Carta> cartasElegidas){ cartasActuales.addAll(cartasElegidas); }
 
     public String getNombre() { return nombre; }
 
