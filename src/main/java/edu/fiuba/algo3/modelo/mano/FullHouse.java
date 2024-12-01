@@ -18,7 +18,7 @@ public class FullHouse extends Mano {
     }
 
     @Override
-    public boolean esJugable(List<Carta> cartas) {
+    public Mano esJugable(List<Carta> cartas) {
         // Mapa para contar la cantidad de cartas por cada valor
         Map<String, Integer> conteoValores = this.operador.contarPorValor(cartas);
 
@@ -39,6 +39,9 @@ public class FullHouse extends Mano {
                 tieneDos = true;
             }
         }
-        return (tieneTres && tieneDos);
+        if(tieneTres && tieneDos){
+            return new FullHouse();
+        }
+        return null;
     }
 }
