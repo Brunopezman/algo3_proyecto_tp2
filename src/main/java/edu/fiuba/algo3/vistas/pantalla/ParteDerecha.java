@@ -29,13 +29,13 @@ import java.util.Set;
 
 public class ParteDerecha {
     private final BorderPane parteDerecha;
-    private Mazo mazo;
-    private Jugador jugador;
-    private Ronda ronda;
-    private List<Carta> cartasSeleccionadas;
-    private Text cartasRestantesText;
+    private final Mazo mazo;
+    private final Jugador jugador;
+    private final Ronda ronda;
+    private final List<Carta> cartasSeleccionadas;
+    private final List<Carta> cartas;
     private HBox visualCartas;
-    private List<Carta> cartas;
+    private Text cartasRestantesText;
 
     public ParteDerecha(Mazo mazo, Ronda ronda, Jugador jugador, List<Carta> cartas, List<Carta> cartasSeleccionadas) {
         this.parteDerecha = new BorderPane();
@@ -44,61 +44,84 @@ public class ParteDerecha {
         this.ronda = ronda;
         this.cartas = cartas;
         this.cartasSeleccionadas = cartasSeleccionadas;
+        inicializarUI();
+    }
 
-        // Crear un BorderPane para el mensaje inicial
+    private void inicializarUI() {
+
+        // Crear un StackPane para apilar las cartas y el mensaje
+        StackPane centro = new StackPane();
+
+        // Mensaje inicial
+        StackPane mensajeCentro = crearMensajeCentro();
+        centro.getChildren().add(mensajeCentro);
+
+        // Cartas del jugador: inicialmente vacío
+        visualCartas = new HBox();
+        visualCartas.setSpacing(5);
+        visualCartas.setAlignment(Pos.CENTER);
+        centro.getChildren().add(visualCartas);  // Las cartas se agregarán al StackPane
+
+        parteDerecha.setCenter(centro);  // Coloca el StackPane en el centro del BorderPane
+
+        // Comodines y Tarots
+        HBox comodinesTarots = crearComodinesTarots();
+        parteDerecha.setTop(comodinesTarots);
+
+        // Botones y Mazo
+        HBox contenidoInferior = crearContenidoInferior();
+        parteDerecha.setBottom(contenidoInferior);
+
+        parteDerecha.setPadding(new Insets(10));
+    }
+
+
+    private StackPane crearMensajeCentro() {
         StackPane mensajeCentro = new StackPane();
         Text mensajeInstruccion = new Text("Tocá el mazo para comenzar");
-        mensajeInstruccion.setStyle("-fx-fill: #ff0000; -fx-font-weight: bold;");
+        mensajeInstruccion.setStyle("-fx-fill: #ffffff; -fx-font-weight: bold;");
         mensajeInstruccion.setFont(new Font(20));
         mensajeCentro.getChildren().add(mensajeInstruccion);
         mensajeCentro.setAlignment(Pos.CENTER);
+        return mensajeCentro;
+    }
 
-        // Colocar el StackPane en el centro de la pantalla
-        parteDerecha.setCenter(mensajeCentro);
-
-        // Comodines y Tarots
+    private HBox crearComodinesTarots() {
         HBox comodinesTarots = new HBox();
-        comodinesTarots.setSpacing(50);
+        comodinesTarots.setSpacing(20);
         comodinesTarots.setAlignment(Pos.CENTER);
-
-        int cantidadComodines = ronda.cantidadComodines();
-        int cantidadTarots = 0;
 
         // Comodines
         Rectangle comodines = new Rectangle(200, 80);
         comodines.setStyle("-fx-fill: #ffffff; -fx-stroke: black; -fx-stroke-width: 1;");
+        int cantidadComodines = ronda.cantidadComodines();
         Text cantidadComodinesText = new Text(cantidadComodines + "/5");
         cantidadComodinesText.setStyle("-fx-font-size: 0.8em; -fx-fill: #efe7e7;");
         VBox comodinesBox = new VBox(comodines, cantidadComodinesText);
-        comodinesBox.setAlignment(Pos.TOP_LEFT);
-        comodinesBox.setSpacing(5);
 
         // Tarots
         Rectangle tarots = new Rectangle(120, 80);
         tarots.setStyle("-fx-fill: #ffffff; -fx-stroke: black; -fx-stroke-width: 1;");
+        int cantidadTarots = 0;
         Text cantidadTarotsText = new Text(cantidadTarots + "/2");
         cantidadTarotsText.setStyle("-fx-font-size: 0.8em; -fx-fill: #ffffff;");
         VBox tarotsBox = new VBox(tarots, cantidadTarotsText);
-        tarotsBox.setAlignment(Pos.TOP_RIGHT);
-        tarotsBox.setSpacing(5);
 
         comodinesTarots.getChildren().addAll(comodinesBox, tarotsBox);
-        parteDerecha.setTop(comodinesTarots);
+        return comodinesTarots;
+    }
 
-        // Cartas del jugador: inicialmente vacío
-        visualCartas = new HBox();
-        visualCartas.setSpacing(10);
-        visualCartas.setAlignment(Pos.CENTER);
-
-        // Botones y Mazo
+    private HBox crearContenidoInferior() {
+        HBox contenidoInferior = new HBox();
         HBox botones = new HBox();
         botones.setSpacing(20);
-        botones.setAlignment(Pos.CENTER_LEFT);
+        botones.setAlignment(Pos.CENTER);
 
         Button botonJugarMano = new Button("Jugar Mano");
         Button botonDescartar = new Button("Descartar");
-        botonJugarMano.setStyle("-fx-font-size: 20px; -fx-background-color: #104ec1; -fx-text-fill: white;");
-        botonDescartar.setStyle("-fx-font-size: 20px; -fx-background-color: #ec1111; -fx-text-fill: white;");
+        botonJugarMano.setStyle("-fx-font-size: 20px;-fx-background-color: \"#333333\"; -fx-font-weight: bold; -fx-text-fill: white;");
+        botonDescartar.setStyle("-fx-font-size: 20px; -fx-background-color: \"#333333\"; -fx-font-weight: bold; -fx-text-fill: white;");
+
         AccionBoton accionJugarMano = new JugarMano(jugador, cartasSeleccionadas);
         AccionBoton accionDescartar = new Descartar();
         botonJugarMano.setOnAction(new BotonHandler(accionJugarMano));
@@ -113,19 +136,14 @@ public class ParteDerecha {
         imageView.setFitWidth(100);
         imageView.setFitHeight(150);
 
-        int cartasRestantes = mazo.cartasRestantes();
-        cartasRestantesText = new Text(cartasRestantes + "/52");
+        cartasRestantesText = new Text(mazo.cartasRestantes() + "/52");
         cartasRestantesText.setFont(Font.font("Arial", 16));
         cartasRestantesText.setStyle("-fx-font-size: 0.8em; -fx-fill: #ffffff;");
 
-        // Evento al hacer clic en el mazo
-        HBox finalVisualCartas = visualCartas;
         imageView.setOnMouseClicked(event -> {
             if (parteDerecha.getCenter() != null) {
-                // Eliminar el mensaje de instrucción al hacer clic en el mazo por primera vez
                 parteDerecha.setCenter(null);
-                // Mostrar las cartas después de hacer clic por primera vez
-                parteDerecha.setCenter(finalVisualCartas);
+                parteDerecha.setCenter(visualCartas);
                 repartirCartas();
             }
         });
@@ -133,59 +151,43 @@ public class ParteDerecha {
         VBox imagenYTexto = new VBox(10, imageView, cartasRestantesText);
         imagenYTexto.setAlignment(Pos.CENTER_RIGHT);
 
-        // Añadir el HBox con los botones y la imagen
-        HBox botonesYMazo = new HBox(40, botones, imagenYTexto);
-        VBox contenidoInferior = new VBox(botonesYMazo);
-        contenidoInferior.setAlignment(Pos.CENTER_RIGHT);
-        parteDerecha.setBottom(contenidoInferior);
+        HBox botonesYMazo = new HBox(80, botones, imagenYTexto);
+        contenidoInferior.getChildren().add(botonesYMazo);
 
-        parteDerecha.setPadding(new Insets(10));
+        return contenidoInferior;
     }
 
     private void repartirCartas() {
-        // Verificar cuántas cartas hay actualmente en pantalla
         if (cartas.size() >= 8) {
             System.out.println("Ya tienes 8 cartas en pantalla, no puedes repartir más.");
-            return; // No repartir más cartas si ya hay 8 en pantalla
+            return;
         }
 
-        // Calcular cuántas cartas necesitamos repartir
         int cartasNecesarias = 8 - cartas.size();
+        Set<String> cartasEnPantalla = new HashSet<>();
 
-        // Usar un Set para evitar cartas duplicadas
-        Set<String> cartasEnPantalla = new HashSet<>(); // Usamos un Set para guardar los identificadores únicos de las cartas
-
-        // Agregar las cartas actuales de la pantalla al Set (con identificador único)
         for (Carta carta : cartas) {
             cartasEnPantalla.add(carta.numero() + "_" + carta.getPalo());
         }
 
-        // Repartir cartas sin duplicados
         List<Carta> nuevasCartas = new ArrayList<>();
         while (nuevasCartas.size() < cartasNecesarias) {
-            // Dar una carta desde el mazo
-            Carta carta = mazo.darCartas(1).get(0); // darCartas(1) da una carta a la vez
-
-            // Crear un identificador único para la carta
+            Carta carta = mazo.darCartas(1).get(0);
             String idCarta = carta.puntaje() + "_" + carta.getPalo();
 
-            // Verificar si la carta ya ha sido repartida o si ya está en la pantalla
             if (!cartasEnPantalla.contains(idCarta)) {
-                nuevasCartas.add(carta);  // Añadir la carta a la lista de nuevas cartas
-                cartasEnPantalla.add(idCarta); // Añadir al Set para evitar duplicados en el futuro
+                nuevasCartas.add(carta);
+                cartasEnPantalla.add(idCarta);
             }
         }
 
-        // Si se obtuvieron cartas, agregar al listado de cartas en la pantalla
         if (!nuevasCartas.isEmpty()) {
-            cartas.addAll(nuevasCartas); // Agregar las nuevas cartas a la lista
-            actualizarVisualCartas();    // Actualizar la visualización de las cartas
+            cartas.addAll(nuevasCartas);
+            actualizarVisualCartas();
         }
 
-        // Actualizar el texto con las cartas restantes
         cartasRestantesText.setText(mazo.cartasRestantes() + "/52");
     }
-
 
     private void actualizarVisualCartas() {
         // Limpiar la visualización actual
@@ -194,8 +196,8 @@ public class ParteDerecha {
         // Agregar las cartas nuevas
         for (Carta carta : cartas) {
             ImageView imagenCarta = new ImageView(new Image(Paths.get("src/main/java/edu/fiuba/algo3/resources/" + carta.puntaje() + "_" + carta.getPalo() + ".jpg").toUri().toString()));
-            imagenCarta.setFitWidth(80);
-            imagenCarta.setFitHeight(120);
+            imagenCarta.setFitWidth(56);
+            imagenCarta.setFitHeight(84);
 
             imagenCarta.setOnMouseClicked(event -> {
                 if (cartasSeleccionadas.contains(carta)) {
