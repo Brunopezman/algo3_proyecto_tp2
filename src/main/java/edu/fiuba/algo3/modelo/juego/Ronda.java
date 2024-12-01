@@ -20,7 +20,7 @@ public class Ronda {
     private int cantidadTurnos;
     private int puntajeAlcanzado;
     private int puntajeASuperar;
-    private int descartesRestantes;
+    private int descartes;
     private Tienda tienda;
 
     /*
@@ -34,14 +34,18 @@ public class Ronda {
     }
     */
 
-    public Ronda(int nro,int manos,int descartes, int puntajeAObtener, Tienda tienda){
+    public Ronda(int nro,int manos,int descartesMaximos, int puntajeAObtener, Tienda tienda){
         this.nroRonda = nro;
         this.turnos = new ArrayList<Turno>();
-        this.descartesRestantes = descartes;
+        this.descartes = descartesMaximos;
         this.puntajeASuperar = puntajeAObtener;
         this.tienda = tienda;
         this.comodines = new ArrayList <Comodin>();
         this.tarots = new ArrayList<Tarot>();
+    }
+
+    public int getDescartesDisponibles(){
+        return descartes;
     }
 
     public void cargarComodinesRonda(List<Comodin> comodinesElegidos){
@@ -81,6 +85,10 @@ public class Ronda {
     public int cantidadComodines(){ return comodines.size(); }
 
     public Turno getTurno(int numeroTurno){ return turnos.get(numeroTurno-1); }
+
+    public int getPuntajeNecesario(){
+        return puntajeASuperar;
+    }
 
     public int calcularPuntajeRonda() {
         for(Turno turno : turnos){
