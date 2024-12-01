@@ -96,4 +96,8 @@ public class Jugador {
     public int cantidadCartasActuales(){ return cartasActuales.size(); }
 
     public void setDescartesMaximos(int cantDescartes) { descartesMaximos = cantDescartes; }
+
+    public int getDescartesActuales() {
+        return descartesActuales;
+    }
 }

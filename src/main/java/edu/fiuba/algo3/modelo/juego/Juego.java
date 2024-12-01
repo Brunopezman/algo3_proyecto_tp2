@@ -51,6 +51,7 @@ public class Juego {
         return rondas.get(numeroRondaActual);
     }
 
+
     //JUGADOR
 
     public void inicializarJugador(Jugador jugador) {
@@ -59,6 +60,10 @@ public class Juego {
 
     public void repartirCartasJugador() {
         jugador.recibirCartas(mazo);
+    }
+
+    public int descartesActuales(){
+        return jugador.getDescartesActuales();
     }
 
     //TIENDA
@@ -72,13 +77,10 @@ public class Juego {
         getRondaActual().cargarComodinesRonda(comodinesElegidos);
     }
 
+
     //RONDA
     public Ronda inicializarRonda() {
         return getRondaActual();
-    }
-
-    public int comodinesRonda() {
-        return getRondaActual().cantidadComodines();
     }
 
     public void cargarComodinesActuales() {
@@ -99,9 +101,30 @@ public class Juego {
         mazo = fabrica.inicializarMazo();
     }
 
+    public int comodinesRonda() {
+        return getRondaActual().cantidadComodines();
+    }
+
     public int puntajeRonda(){
         return this.getRondaActual().calcularPuntajeRonda();
     }
+
+    public int puntajeNecesarioRonda(){
+        return this.getRondaActual().getPuntajeNecesario();
+    }
+
+    public int descartesDisponibles(){
+        return this.getRondaActual().getDescartesDisponibles();
+    }
+
+    public int turnosTotales(){
+        return this.getRondaActual().cantidadTurnos();
+    }
+
+    public int turnoActual(){
+        return this.getRondaActual().turnoActual();
+    }
+
 
     //TURNO
     public boolean avanzarTurno() {
@@ -120,8 +143,14 @@ public class Juego {
         return puntajeManoJugada;
     }
 
-    //FIN JUEGO
+    //JUEGO
+    public int rondaActual(){
+        return this.numeroRondaActual;
+    }
 
+    public int rondasTotales(){
+        return rondas.size();
+    }
 
     /*
 ORDEN:
