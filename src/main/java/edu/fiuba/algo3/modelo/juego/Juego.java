@@ -136,11 +136,7 @@ public class Juego {
     }
 
     public int jugarMano(List<Carta> posibleMano) {
-        int puntajeManoJugada = this.getRondaActual().jugarTurno(posibleMano, jugador);
-        if (puntajeManoJugada == 0) {
-            throw new ManoInvalidaException();
-        }
-        return puntajeManoJugada;
+        return this.getRondaActual().jugarTurno(posibleMano, jugador);
     }
 
     //JUEGO
@@ -165,7 +161,7 @@ CICLO POR CADA RONDA:
 
 CICLO POR TURNO:
 6- jugarMano(List<Carta> posibleMano) --> mandan las cartas seleccionadas y se analiza la mano. Devuelvo el puntaje
-por si quieren mostrar que puntaje logró en esa jugada. Si tiro la excepcion es xq no puede jugar ninguna mano (invalida).
+por si quieren mostrar que puntaje logró en esa jugada.
 7- avanzarTurno --> si devuelve true: avanzó , si devuelve false: se ganó la ronda (se alcanzó puntaje) o no hay más turnos
 en la Ronda actual, entonces se debe probar avanzarRonda(), ya que si esta devuelve true significa se supero la ronda o false
 en caso que no.
