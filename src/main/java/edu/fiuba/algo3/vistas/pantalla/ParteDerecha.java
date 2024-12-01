@@ -173,7 +173,7 @@ public class ParteDerecha {
         List<Carta> nuevasCartas = new ArrayList<>();
         while (nuevasCartas.size() < cartasNecesarias) {
             Carta carta = mazo.darCartas(1).get(0);
-            String idCarta = carta.puntaje() + "_" + carta.getPalo();
+            String idCarta = carta.numero() + "_" + carta.getPalo();
 
             if (!cartasEnPantalla.contains(idCarta)) {
                 nuevasCartas.add(carta);
@@ -195,7 +195,7 @@ public class ParteDerecha {
 
         // Agregar las cartas nuevas
         for (Carta carta : cartas) {
-            ImageView imagenCarta = new ImageView(new Image(Paths.get("src/main/java/edu/fiuba/algo3/resources/" + carta.puntaje() + "_" + carta.getPalo() + ".jpg").toUri().toString()));
+            ImageView imagenCarta = new ImageView(new Image(Paths.get("src/main/java/edu/fiuba/algo3/resources/" + carta.numero() + "_" + carta.getPalo() + ".jpg").toUri().toString()));
             imagenCarta.setFitWidth(56);
             imagenCarta.setFitHeight(84);
 
