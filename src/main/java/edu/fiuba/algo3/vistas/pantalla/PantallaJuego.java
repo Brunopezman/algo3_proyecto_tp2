@@ -2,6 +2,7 @@ package edu.fiuba.algo3.vistas.pantalla;
 
 import edu.fiuba.algo3.modelo.carta.Carta;
 import edu.fiuba.algo3.modelo.juego.Juego;
+import edu.fiuba.algo3.vistas.menu.MenuJuego;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -11,6 +12,7 @@ import java.util.List;
 
 public class PantallaJuego {
 
+    private final MenuJuego menuJuego;
     private VBox root;
     private GridPane contenidoJuego;
     private ParteIzquierda parteIzquierda;
@@ -20,7 +22,7 @@ public class PantallaJuego {
     public PantallaJuego(String nombre, Juego juego, Stage stage) {
         this.root = new VBox();
         this.contenidoJuego = new GridPane();
-
+        this.menuJuego = new MenuJuego(stage);
         // Inicializar las partes
         this.parteIzquierda = new ParteIzquierda(nombre, juego.puntajeNecesarioRonda(), juego.puntajeRonda(), juego.turnosTotales(), juego.descartesActuales(), juego.rondaActual());
         this.parteDerecha = new ParteDerecha(juego, juego.repartirCartasJugador(), this.parteIzquierda);
@@ -37,7 +39,7 @@ public class PantallaJuego {
         contenidoJuego.add(parteIzquierda.crearParteIzquierda(), 0, 0);
         contenidoJuego.add(parteDerecha.crearParteDerecha(), 1, 0);
         setFondoConTransparenciaOscura(contenidoJuego);
-        root.getChildren().addAll(contenidoJuego);
+        root.getChildren().addAll(menuJuego.getMenuBar(), contenidoJuego);
 
     }
 
