@@ -55,8 +55,8 @@ public class Juego {
 
     //JUGADOR
 
-    public void inicializarJugador(Jugador jugador) {
-        this.jugador = jugador;
+    public void inicializarJugador(String nombreJugador) {
+        this.jugador = new Jugador(nombreJugador);
     }
 
     public List<Carta> repartirCartasJugador() {
@@ -157,7 +157,7 @@ public class Juego {
 
 ORDEN:
 
-1- iniciarJugador(jugador) --> UNICA VEZ AL INICIO
+1- iniciarJugador( nombreJugador) --> UNICA VEZ AL INICIO
 
 CICLO POR CADA RONDA:
 2- repartirCartas()
