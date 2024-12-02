@@ -1,6 +1,5 @@
 package edu.fiuba.algo3;
 
-import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.vistas.boton.Salir;
 import edu.fiuba.algo3.vistas.pantalla.PantallaInicial;
 import edu.fiuba.algo3.vistas.pantalla.PantallaJuego;
@@ -14,7 +13,6 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     private Stage stage;
-    private Juego juego;
 
     @Override
     public void start(Stage stage) {
@@ -24,6 +22,7 @@ public class Main extends Application {
         stage.setWidth(800); //por ahora lo dejo asi, se va a cambiar
         stage.setHeight(600);
         stage.setResizable(false); //evita el redimensionamiento manual
+
         mostrarPantallaInicial();
 
         stage.setTitle("Balatro");
