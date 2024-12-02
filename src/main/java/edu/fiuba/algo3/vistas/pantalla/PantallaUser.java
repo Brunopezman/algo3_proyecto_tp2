@@ -32,7 +32,7 @@ public class PantallaUser {
 
         // Crear el VBox para el contenido
         VBox contenido = new VBox();
-        contenido.setStyle("-fx-background-color: rgba(70, 130, 180, 0.7);"); // semi-transparente
+        contenido.setStyle("-fx-background-color: rgba(70, 130, 180, 0.25);"); // semi-transparente
 
         // Texto de encabezado
         Text textoIngreseNombre = new Text("Ingrese su nombre:");
