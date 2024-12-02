@@ -4,6 +4,7 @@ import edu.fiuba.algo3.modelo.ManoInvalidaException;
 import edu.fiuba.algo3.modelo.carta.Carta;
 import edu.fiuba.algo3.modelo.comodin.Comodin;
 import edu.fiuba.algo3.modelo.fabrica.JuegoFabrica;
+import edu.fiuba.algo3.modelo.mano.Mano;
 import edu.fiuba.algo3.modelo.tarot.Tarot;
 
 import java.util.ArrayList;
@@ -58,12 +59,8 @@ public class Juego {
         this.jugador = jugador;
     }
 
-    public void repartirCartasJugador() {
-        jugador.recibirCartas(mazo);
-    }
-
-    public int descartesActuales(){
-        return jugador.getDescartesActuales();
+    public List<Carta> repartirCartasJugador() {
+        return jugador.recibirCartas(mazo);
     }
 
     //TIENDA
@@ -117,6 +114,10 @@ public class Juego {
         return this.getRondaActual().getDescartesDisponibles();
     }
 
+    public int descartesActuales(){
+        return this.getRondaActual().getDescartesActuales();
+    }
+
     public int turnosTotales(){
         return this.getRondaActual().cantidadTurnos();
     }
@@ -135,8 +136,8 @@ public class Juego {
         return true;
     }
 
-    public int jugarMano(List<Carta> posibleMano) {
-        return this.getRondaActual().jugarTurno(posibleMano, jugador);
+    public int jugarMano(List<Carta> posibleMano, Mano manoJugada) {
+        return this.getRondaActual().jugarTurno(posibleMano, manoJugada);
     }
 
     //JUEGO
@@ -148,7 +149,12 @@ public class Juego {
         return rondas.size();
     }
 
+    public List<Carta> descartarCartas(List<Carta> cartasActuales, List<Carta> cartasADescartar){
+        return this.getRondaActual().descartar(mazo,cartasActuales,cartasADescartar);
+    }
+
     /*
+
 ORDEN:
 
 1- iniciarJugador(jugador) --> UNICA VEZ AL INICIO

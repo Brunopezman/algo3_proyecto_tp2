@@ -12,6 +12,7 @@ import java.util.List;
 public class Ronda {
     private static final int INICIO = 0;
 
+    private int descartesActuales;
     private int nroRonda;
     private List<Turno> turnos;
     private List <Comodin> comodines;
@@ -20,7 +21,7 @@ public class Ronda {
     private int cantidadTurnos;
     private int puntajeAlcanzado;
     private int puntajeASuperar;
-    private int descartes;
+    private int descartesMaximos;
     private Tienda tienda;
 
     /*
@@ -37,7 +38,9 @@ public class Ronda {
     public Ronda(int nro,int manos,int descartesMaximos, int puntajeAObtener, Tienda tienda){
         this.nroRonda = nro;
         this.turnos = new ArrayList<Turno>();
-        this.descartes = descartesMaximos;
+        this.turnoActual = INICIO;
+        this.descartesMaximos = descartesMaximos;
+        this.descartesActuales = 0;
         this.puntajeASuperar = puntajeAObtener;
         this.tienda = tienda;
         this.comodines = new ArrayList <Comodin>();
@@ -45,7 +48,11 @@ public class Ronda {
     }
 
     public int getDescartesDisponibles(){
-        return descartes;
+        return descartesMaximos;
+    }
+
+    public int getDescartesActuales(){
+        return descartesActuales;
     }
 
     public void cargarComodinesRonda(List<Comodin> comodinesElegidos){
@@ -64,10 +71,6 @@ public class Ronda {
         return turnos.get(INICIO);
     }
 
-    public void agregarComodin(Comodin comodin) {
-        comodines.add(comodin);
-    }
-
     public boolean avanzarTurno(){
         if (turnoActual >= 5){ //esto debería controlarse desde la entidad que contiene las rondas
             throw new NoHayMasTurnosException();
@@ -80,7 +83,7 @@ public class Ronda {
 
     public int turnoActual(){ return turnoActual; }
 
-    public int puntosTurnoActual(){ return turnos.get(turnoActual-1).puntajeDelTurno(); }
+    public int puntosTurnoActual(){ return this.getTurno(turnoActual).puntajeDelTurno(); }
 
     public int cantidadComodines(){ return comodines.size(); }
 
@@ -107,16 +110,47 @@ public class Ronda {
         ronda.cargarComodinesRonda(comodines);
     }
 
-    public int jugarTurno(List<Carta> posibleMano, Jugador jugador) {
+    public Mano existeMano(List<Carta> posibleMano){
         Turno turno = this.getTurno(turnoActual);
-        Mano mano = turno.existeManoJugable(posibleMano);
+        return turno.existeManoJugable(posibleMano);
+    }
 
-        if(mano != null){
-            jugador.jugarMano(posibleMano,mano);
-            turno.calcularJugada(mano); //carga puntaje final en turno;
+    public int jugarTurno(List<Carta> posibleMano, Mano mano) {
+        int puntaje = 0;
+
+        for (Carta carta : posibleMano) {;
+            puntaje += carta.puntaje();
+        }
+        mano.sumarPuntos(puntaje);
+        mano.sumarDescartes(descartesActuales);
+        Turno turno = this.getTurno(turnoActual);
+
+        return turno.calcularJugada(mano); //carga puntaje final en turno y devolvemos valor;
+    }
+
+    public List<Carta> descartar(Mazo mazo, List<Carta> cartasActuales, List<Carta> cartasADescartar){
+        if (this.descartesActuales >= descartesMaximos ) {
+            throw new IllegalArgumentException("No puede realizar más descartes en este turno.");
         }
 
-        return turno.puntajeDelTurno();
+        /*if (!this.verificarExistenciaDeCartas(cartasADescartar)) {
+            throw new IllegalArgumentException("Algunas cartas no están en la mano.");
+        }*/
 
+        this.descartesActuales++;
+
+        // Descartar cada carta
+        for (Carta carta : cartasADescartar) {
+            cartasActuales.remove(carta);
+        }
+
+        //dar nuevamente la cantidad de cartas que descartó
+        int cantidadARecibir = cartasADescartar.size();
+        List<Carta> nuevasCartas= mazo.darCartas(cantidadARecibir);
+        for (int i = 0; i < cantidadARecibir; i++) {
+            cartasActuales.add(nuevasCartas.get(i));
+        }
+
+        return cartasActuales;
     }
 }
