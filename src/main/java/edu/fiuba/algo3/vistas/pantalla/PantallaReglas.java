@@ -1,21 +1,28 @@
 package edu.fiuba.algo3.vistas.pantalla;
 
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.Priority;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class PantallaReglas {
-    private final StackPane root;
+    private final Stage stage;
 
-    public PantallaReglas(Runnable accionVolver) {
+    public PantallaReglas(Stage owner) {
+        this.stage = new Stage();
+        stage.initOwner(owner); // Configurar como hijo del `Stage` principal
+        stage.initModality(Modality.APPLICATION_MODAL); // Modalidad bloqueante
+        stage.setTitle("Reglas del Juego");
+
+        // Contenido de las reglas
         Text textoReglas = new Text("¿Qué es el Balatro?\n" +
                 "La aplicación consiste en un juego por turnos, “roguelike”, de un solo jugador que busca ir perfeccionando un mazo de cartas, sumando puntos por manos jugadas.\n" +
                 "El juego está dividido en hasta N rondas donde en cada ronda al jugador se le reparte una mano al azar de su mazo y este debe conformar manos de poker para sumar puntos.\n" +
@@ -36,42 +43,34 @@ public class PantallaReglas {
                 "-\tDoble Par: combinación de dos pares diferentes.\n" +
                 "-\tPar: combinación de un par del mismo palo.\n" +
                 "-\tCarta Alta: las cinco cartas no interactúan entre sí.");
-        textoReglas.setStyle("-fx-font-size: 18px; -fx-fill: black;");
+        textoReglas.setStyle("-fx-font-size: 18px;");
 
-        //TextFlow para que el texto sea responsivo
+        // TextFlow para mostrar texto con desplazamiento
         TextFlow contenedorTexto = new TextFlow(textoReglas);
-        contenedorTexto.setMaxWidth(700); // Ancho máximo opcional
+        contenedorTexto.setMaxWidth(600);
         contenedorTexto.setStyle("-fx-padding: 20px;");
 
-        //botón para volver a la pantalla principal
-        Button botonVolver = new Button("Volver");
-        botonVolver.setFont(Font.font("Arial", 20));
-        botonVolver.setStyle("-fx-background-color: YELLOW; -fx-text-fill: #000000; -fx-border-radius: 15; -fx-padding: 10px 20px;");
-        botonVolver.setOnAction(event -> accionVolver.run());
+        // Botón para cerrar la ventana
+        Button botonCerrar = new Button("Cerrar");
+        botonCerrar.setFont(Font.font("Arial", 20));
+        botonCerrar.setOnAction(event -> stage.close());
 
-        //espaciador dinámico
-        Region espacio = new Region();
-        VBox.setVgrow(espacio, Priority.ALWAYS);
+        // Diseño vertical
+        VBox layout = new VBox(20, contenedorTexto, botonCerrar);
+        layout.setAlignment(Pos.CENTER);
+        layout.setStyle("-fx-background-color: lightblue; -fx-padding: 20px;");
+        VBox.setVgrow(contenedorTexto, Priority.ALWAYS);
 
-        //contenedor vertical
-        VBox contenido = new VBox();
-        contenido.setSpacing(20);
-        contenido.setAlignment(Pos.CENTER);
-        contenido.getChildren().addAll(contenedorTexto, espacio, botonVolver);
+        // ScrollPane para manejar texto largo
+        ScrollPane scrollPane = new ScrollPane(layout);
+        scrollPane.setFitToWidth(true);
 
-        //agregar contenido dentro de un ScrollPane
-        ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setContent(contenido);
-        scrollPane.setFitToWidth(true); //contenido se ajusta al ancho del ScrollPane
-        scrollPane.setPannable(true); //desplazamiento con el mouse
-        scrollPane.setStyle("-fx-background: lightblue; -fx-border-color: transparent;");
-
-        root = new StackPane();
-        root.getChildren().add(scrollPane);
-        root.setStyle("-fx-background-color: lightblue;");
+        // Configurar y mostrar la escena
+        Scene scene = new Scene(new StackPane(scrollPane), 800, 600);
+        stage.setScene(scene);
     }
 
-    public StackPane getRoot() {
-        return root;
+    public void mostrar() {
+        stage.showAndWait();
     }
 }
