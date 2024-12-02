@@ -2,12 +2,8 @@ package edu.fiuba.algo3.vistas.pantalla;
 
 import edu.fiuba.algo3.modelo.carta.Carta;
 import edu.fiuba.algo3.modelo.juego.Juego;
-import edu.fiuba.algo3.modelo.juego.Jugador;
 import edu.fiuba.algo3.modelo.juego.Mazo;
 import edu.fiuba.algo3.modelo.juego.Ronda;
-import edu.fiuba.algo3.vistas.boton.AccionBoton;
-import edu.fiuba.algo3.vistas.boton.BotonHandler;
-import edu.fiuba.algo3.vistas.boton.Descartar;
 import edu.fiuba.algo3.vistas.boton.JugarMano;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -24,20 +20,23 @@ import javafx.scene.text.Text;
 
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ParteDerecha {
     private final BorderPane parteDerecha;
+    private final Juego juego;
     private final Mazo mazo;
     private final Ronda ronda;
     private final List<Carta> cartasSeleccionadas;
     private final List<Carta> cartas;
+    private final ParteIzquierda parteIzquierda;
     private HBox visualCartas;
     private Text cartasRestantesText;
+    private PantallaJuego pantallaJuego;
 
-    public ParteDerecha(Juego juego, List<Carta> cartas, List<Carta> cartasSeleccionadas) {
+    public ParteDerecha(Juego juego, List<Carta> cartas,ParteIzquierda parteIzquierda) {
+        this.juego = juego;
+        this.parteIzquierda = parteIzquierda;
         this.parteDerecha = new BorderPane();
         this.mazo = juego.getMazo();
         this.ronda = juego.inicializarRonda();
@@ -106,13 +105,23 @@ public class ParteDerecha {
 
         Button botonJugarMano = new Button("Jugar Mano");
         Button botonDescartar = new Button("Descartar");
+
         botonJugarMano.setStyle("-fx-font-size: 20px;-fx-background-color: \"#333333\"; -fx-font-weight: bold; -fx-text-fill: white;");
         botonDescartar.setStyle("-fx-font-size: 20px; -fx-background-color: \"#333333\"; -fx-font-weight: bold; -fx-text-fill: white;");
 
-        AccionBoton accionJugarMano = new JugarMano();
-        AccionBoton accionDescartar = new Descartar();
-        botonJugarMano.setOnAction(new BotonHandler(accionJugarMano));
-        botonDescartar.setOnAction(new BotonHandler(accionDescartar));
+        JugarMano accionJugarMano = new JugarMano();
+
+        // Configurar el evento para el botón "Jugar Mano"
+        botonJugarMano.setOnAction(event -> {
+            if (!cartasSeleccionadas.isEmpty()) {
+
+                // Actualizar el puntaje de la ronda en la vista
+                parteIzquierda.actualizarPuntajeRonda(juego.jugarMano(cartasSeleccionadas,juego.queManoEs(cartasSeleccionadas)));
+
+            } else {
+                System.out.println("No has seleccionado ninguna carta.");
+            }
+        });
 
         botones.getChildren().addAll(botonJugarMano, botonDescartar);
 

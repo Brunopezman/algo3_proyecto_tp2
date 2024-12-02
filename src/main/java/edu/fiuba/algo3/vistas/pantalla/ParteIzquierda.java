@@ -16,6 +16,7 @@ import javafx.scene.shape.Rectangle;
 public class ParteIzquierda {
 
     private final VBox parteIzquierda;
+    private StackPane puntajeAcumuladoBox;
 
     public ParteIzquierda(String nombreJugador, int puntajeMin, int puntajeRonda, int turnos, int descartes, int rondaActual) {
         this.parteIzquierda = new VBox();
@@ -36,7 +37,7 @@ public class ParteIzquierda {
         puntajeSection.getChildren().add(puntajeBox);
 
         // Puntaje acumulado
-        StackPane puntajeAcumuladoBox = crearCuadroConValor("Puntaje Ronda", String.valueOf(puntajeRonda), 100, 200, "#333333", "#555555");
+        puntajeAcumuladoBox = crearCuadroConValor("Puntaje Ronda", String.valueOf(puntajeRonda), 100, 200, "#333333", "#555555");
 
         // Marcador de cartas
         VBox marcadorSection = new VBox();
@@ -144,4 +145,10 @@ public class ParteIzquierda {
 
         return new StackPane(fondoLabel, contenido);
     }
+    public void actualizarPuntajeRonda(int nuevoPuntajeRonda) {
+        // Asumiendo que tienes un Label o un Text para mostrar el puntaje de la ronda
+        this.puntajeAcumuladoBox.getChildren().clear();  // Limpiar contenido anterior
+        this.puntajeAcumuladoBox.getChildren().add(crearCuadroConValor("Puntaje Ronda", String.valueOf(nuevoPuntajeRonda), 100, 200, "#333333", "#555555"));
+    }
+
 }

@@ -52,7 +52,6 @@ public class Juego {
         return rondas.get(numeroRondaActual);
     }
 
-
     //JUGADOR
 
     public void inicializarJugador(String nombreJugador) {
@@ -138,6 +137,10 @@ public class Juego {
 
     public int jugarMano(List<Carta> posibleMano, Mano manoJugada) {
         return this.getRondaActual().jugarTurno(posibleMano, manoJugada);
+    }
+
+    public Mano queManoEs(List<Carta> cartas) {
+        return this.getRondaActual().existeMano(cartas);
     }
 
     //JUEGO
