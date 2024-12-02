@@ -47,11 +47,12 @@ public class Turno {
     }*/
 
 
-    public void calcularJugada(Mano mano){
+    public int calcularJugada(Mano mano){
         for (Comodin comodin: comodines) {
             comodin.aplicarEfecto(mano);
         }
         puntaje = mano.puntajeFinal();
+        return puntaje;
     }
 
     public Mano existeManoJugable(List<Carta> cartas){
