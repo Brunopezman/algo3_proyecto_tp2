@@ -1,7 +1,5 @@
 package edu.fiuba.algo3.vistas.pantalla;
 
-import edu.fiuba.algo3.modelo.juego.Jugador;
-import edu.fiuba.algo3.modelo.juego.Ronda;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -15,8 +13,9 @@ import javafx.scene.shape.Rectangle;
 public class ParteIzquierda {
 
     private final VBox parteIzquierda;
+    private StackPane puntajeAcumuladoBox;
 
-    public ParteIzquierda(Ronda ronda, Jugador jugador) {
+    public ParteIzquierda(String nombreJugador, int puntajeMin, int puntajeRonda, int turnos, int descartes, int rondaActual) {
         this.parteIzquierda = new VBox();
         parteIzquierda.setAlignment(Pos.TOP_CENTER);
         parteIzquierda.setSpacing(15);
@@ -30,12 +29,12 @@ public class ParteIzquierda {
         puntajeSection.setAlignment(Pos.CENTER);
         puntajeSection.setSpacing(5);
 
-        StackPane puntajeBox = crearCuadroConValor("Puntaje Min", "300", 100, 200, "#444444", "#666666");
+        StackPane puntajeBox = crearCuadroConValor("Puntaje Min", String.valueOf(puntajeMin), 100, 200, "#444444", "#666666");
 
         puntajeSection.getChildren().add(puntajeBox);
 
         // Puntaje acumulado
-        StackPane puntajeAcumuladoBox = crearCuadroConValor("Puntaje Ronda", String.valueOf(ronda.calcularPuntajeRonda()), 100, 200, "#333333", "#555555");
+        puntajeAcumuladoBox = crearCuadroConValor("Puntaje Ronda", String.valueOf(puntajeRonda), 100, 200, "#333333", "#555555");
 
         // Marcador de cartas
         VBox marcadorSection = new VBox();
@@ -67,8 +66,8 @@ public class ParteIzquierda {
         turnosDescartes.setAlignment(Pos.CENTER);
         turnosDescartes.setSpacing(10);
 
-        StackPane turnosBox = crearCuadroConValor("Turnos", String.valueOf(ronda.turnoActual()), 80, 100, "#444444", "#666666");
-        StackPane descartesBox = crearCuadroConValor("Descartes", "3", 80, 100, "#444444", "#666666");
+        StackPane turnosBox = crearCuadroConValor("Turnos", String.valueOf(turnos), 80, 100, "#444444", "#666666");
+        StackPane descartesBox = crearCuadroConValor("Descartes", String.valueOf(descartes), 80, 100, "#444444", "#666666");
 
         turnosDescartes.getChildren().addAll(turnosBox, descartesBox);
 
@@ -77,8 +76,8 @@ public class ParteIzquierda {
         rondaYnombre.setAlignment(Pos.CENTER);
         rondaYnombre.setSpacing(10);
 
-        StackPane nombre = crearCuadroConValor("Nombre", jugador.getNombre(), 80, 100, "#444444", "#666666");
-        StackPane rondaBox = crearCuadroConValor("Round", "1 / 8", 80, 100, "#444444", "#666666");
+        StackPane nombre = crearCuadroConValor("Nombre", nombreJugador, 70, 100, "#444444", "#666666");
+        StackPane rondaBox = crearCuadroConValor("Round", rondaActual+ " / 8", 70, 100, "#444444", "#666666");
 
         rondaYnombre.getChildren().addAll(nombre, rondaBox);
 
@@ -143,4 +142,10 @@ public class ParteIzquierda {
 
         return new StackPane(fondoLabel, contenido);
     }
+    public void actualizarPuntajeRonda(int nuevoPuntajeRonda) {
+        // Asumiendo que tienes un Label o un Text para mostrar el puntaje de la ronda
+        this.puntajeAcumuladoBox.getChildren().clear();  // Limpiar contenido anterior
+        this.puntajeAcumuladoBox.getChildren().add(crearCuadroConValor("Puntaje Ronda", String.valueOf(nuevoPuntajeRonda), 100, 200, "#333333", "#555555"));
+    }
+
 }
