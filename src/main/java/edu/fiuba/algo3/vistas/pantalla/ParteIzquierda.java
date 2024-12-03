@@ -41,7 +41,7 @@ public class ParteIzquierda {
         marcadorSection.setAlignment(Pos.CENTER);
         marcadorSection.setSpacing(5);
 
-        Label pairLabel = new Label("Par lvl. 1");
+        Label pairLabel = new Label("Par");
         pairLabel.setStyle(estiloTextoBlanco);
 
         HBox valoresCartas = new HBox();

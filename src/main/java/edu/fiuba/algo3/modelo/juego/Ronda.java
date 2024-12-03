@@ -59,7 +59,7 @@ public class Ronda {
         comodines.addAll(comodinesElegidos);
     }
 
-    public void cargarTarotsRonda(ArrayList<Tarot> tarotsElegidos) {
+    public void cargarTarotsRonda(List<Tarot> tarotsElegidos) {
         tarots.addAll(tarotsElegidos);
     }
 
@@ -115,17 +115,19 @@ public class Ronda {
         return turno.existeManoJugable(posibleMano);
     }
 
-    public int jugarTurno(List<Carta> posibleMano, Mano mano) {
+    public int jugarTurno(List<Carta> cartas, Mano mano) {
+        /*
         int puntaje = 0;
-
         for (Carta carta : posibleMano) {;
             puntaje += carta.puntaje();
         }
         mano.sumarPuntos(puntaje);
         mano.sumarDescartes(descartesActuales);
+        */
+        mano.sumarDescartes(descartesActuales);
         Turno turno = this.getTurno(turnoActual);
 
-        return turno.calcularJugada(mano); //carga puntaje final en turno y devolvemos valor;
+        return turno.calcularJugada(cartas,mano); //carga puntaje final en turno y devolvemos valor;
     }
 
     public List<Carta> descartar(Mazo mazo, List<Carta> cartasActuales, List<Carta> cartasADescartar){
@@ -153,4 +155,26 @@ public class Ronda {
 
         return cartasActuales;
     }
+
+    private void eliminarTarotPorUso(Tarot tarotUsado){
+        for (Tarot tarotActual : tarots){
+            if(tarotActual.esElegido(tarotUsado)){
+                tarots.remove(tarotActual);
+                break;
+            }
+        }
+    }
+
+    public void agregarTarotEsteTurno(Tarot tarotElegido){
+        this.eliminarTarotPorUso(tarotElegido);
+        Turno turno = this.getTurno(turnoActual);
+        turno.agregarTarot(tarotElegido);
+    }
+
+    public void seleccionarTarotEsteTurno(Tarot tarotElegido, Carta carta){
+        this.eliminarTarotPorUso(tarotElegido);
+        tarotElegido.modificarAQueAplica(carta.getNombre());
+    }
+
+
 }
