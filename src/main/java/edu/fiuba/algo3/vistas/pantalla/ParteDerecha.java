@@ -2,9 +2,6 @@ package edu.fiuba.algo3.vistas.pantalla;
 
 import edu.fiuba.algo3.modelo.carta.Carta;
 import edu.fiuba.algo3.modelo.juego.Juego;
-import edu.fiuba.algo3.modelo.juego.Mazo;
-import edu.fiuba.algo3.modelo.juego.Ronda;
-import edu.fiuba.algo3.vistas.boton.JugarMano;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -25,28 +22,21 @@ import java.util.List;
 public class ParteDerecha {
     private final BorderPane parteDerecha;
     private final Juego juego;
-    private final Mazo mazo;
-    private final Ronda ronda;
     private final List<Carta> cartasSeleccionadas;
-    private final List<Carta> cartas;
     private final ParteIzquierda parteIzquierda;
     private HBox visualCartas;
     private Text cartasRestantesText;
     private PantallaJuego pantallaJuego;
 
-    public ParteDerecha(Juego juego, List<Carta> cartas,ParteIzquierda parteIzquierda) {
+    public ParteDerecha(Juego juego, ParteIzquierda parteIzquierda) {
         this.juego = juego;
         this.parteIzquierda = parteIzquierda;
         this.parteDerecha = new BorderPane();
-        this.mazo = juego.getMazo();
-        this.ronda = juego.inicializarRonda();
-        this.cartas = cartas;
         this.cartasSeleccionadas = new ArrayList<>();
         inicializarUI();
     }
 
     private void inicializarUI() {
-        // Crear un StackPane para apilar las cartas y el mensaje
         StackPane centro = new StackPane();
 
         // Cartas del jugador: inicialmente vacío, pero se llenará automáticamente
@@ -57,8 +47,8 @@ public class ParteDerecha {
         // Llama a repartirCartas para inicializar las cartas desde el comienzo
         repartirCartas();
 
-        centro.getChildren().add(visualCartas); // Las cartas se agregarán al StackPane
-        parteDerecha.setCenter(centro);        // Coloca el StackPane en el centro del BorderPane
+        centro.getChildren().add(visualCartas);
+        parteDerecha.setCenter(centro);
 
         // Comodines y Tarots
         HBox comodinesTarots = crearComodinesTarots();
@@ -80,7 +70,7 @@ public class ParteDerecha {
         // Comodines
         Rectangle comodines = new Rectangle(200, 80);
         comodines.setStyle("-fx-fill: #ffffff; -fx-stroke: black; -fx-stroke-width: 1;");
-        int cantidadComodines = ronda.cantidadComodines();
+        int cantidadComodines = juego.comodinesRonda();
         Text cantidadComodinesText = new Text(cantidadComodines + "/5");
         cantidadComodinesText.setStyle("-fx-font-size: 0.8em; -fx-fill: #efe7e7;");
         VBox comodinesBox = new VBox(comodines, cantidadComodinesText);
@@ -109,8 +99,6 @@ public class ParteDerecha {
         botonJugarMano.setStyle("-fx-font-size: 20px;-fx-background-color: \"#333333\"; -fx-font-weight: bold; -fx-text-fill: white;");
         botonDescartar.setStyle("-fx-font-size: 20px; -fx-background-color: \"#333333\"; -fx-font-weight: bold; -fx-text-fill: white;");
 
-        JugarMano accionJugarMano = new JugarMano();
-
         // Configurar el evento para el botón "Jugar Mano"
         botonJugarMano.setOnAction(event -> {
             if (!cartasSeleccionadas.isEmpty()) {
@@ -132,17 +120,9 @@ public class ParteDerecha {
         imageView.setFitWidth(100);
         imageView.setFitHeight(150);
 
-        cartasRestantesText = new Text(mazo.cartasRestantes() + "/52");
+        cartasRestantesText = new Text(juego.getMazo().cartasRestantes() + "/52");
         cartasRestantesText.setFont(Font.font("Arial", 16));
         cartasRestantesText.setStyle("-fx-font-size: 0.8em; -fx-fill: #ffffff;");
-
-        imageView.setOnMouseClicked(event -> {
-            if (parteDerecha.getCenter() != null) {
-                parteDerecha.setCenter(null);
-                parteDerecha.setCenter(visualCartas);
-                repartirCartas();
-            }
-        });
 
         VBox imagenYTexto = new VBox(10, imageView, cartasRestantesText);
         imagenYTexto.setAlignment(Pos.CENTER_RIGHT);
@@ -156,21 +136,14 @@ public class ParteDerecha {
     private void repartirCartas() {
         actualizarVisualCartas();
 
-        if (cartas.size() >= 8) {
+        if (juego.descartesActuales() == 0) {
             System.out.println("Ya tienes 8 cartas en pantalla, no puedes repartir más.");
             return;
         }
 
-        int cartasNecesarias = 8 - cartas.size();
-        List<Carta> nuevasCartas = mazo.darCartas(cartasNecesarias);
+        juego.repartirCartasJugador();
 
-        for (Carta carta : nuevasCartas) {
-            if (!cartas.contains(carta)) {
-                cartas.add(carta);
-            }
-        }
-
-        cartasRestantesText.setText(mazo.cartasRestantes() + "/52");
+        cartasRestantesText.setText(juego.getMazo().cartasRestantes() + "/52");
     }
 
     private void actualizarVisualCartas() {
@@ -178,7 +151,7 @@ public class ParteDerecha {
         visualCartas.getChildren().clear();
 
         // Agregar las cartas nuevas
-        for (Carta carta : cartas) {
+        for (Carta carta : juego.repartirCartasJugador()) {
             ImageView imagenCarta = new ImageView(new Image(Paths.get("src/main/java/edu/fiuba/algo3/resources/" + carta.numero() + "_" + carta.getPalo() + ".jpg").toUri().toString()));
             imagenCarta.setFitWidth(56);
             imagenCarta.setFitHeight(84);

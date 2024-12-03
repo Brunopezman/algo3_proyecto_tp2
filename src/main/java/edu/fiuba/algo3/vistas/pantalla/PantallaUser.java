@@ -72,7 +72,6 @@ public class PantallaUser {
         this.root = fondo;
     }
 
-    // Método para obtener el layout raíz
     public StackPane getRoot() {
         return root;
     }
