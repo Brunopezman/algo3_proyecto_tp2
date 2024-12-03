@@ -53,13 +53,13 @@ public class MenuJuego {
         Menu menuMusica = new Menu("Música");
 
         MenuItem reproducirMusica1 = new MenuItem("Música 1");
-        reproducirMusica1.setOnAction(event -> reproducirMusica("src/main/java/edu/fiuba/algo3/resources/musica1.mp3"));
+        reproducirMusica1.setOnAction(event -> reproducirMusica("src/main/java/edu/fiuba/algo3/resources/sonidos/musica1.mp3"));
 
         MenuItem reproducirMusica2 = new MenuItem("Música 2");
-        reproducirMusica2.setOnAction(event -> reproducirMusica("src/main/java/edu/fiuba/algo3/resources/musica2.mp3"));
+        reproducirMusica2.setOnAction(event -> reproducirMusica("src/main/java/edu/fiuba/algo3/resources/sonidos/musica2.mp3"));
 
         MenuItem reproducirMusica3 = new MenuItem("Música 3");
-        reproducirMusica3.setOnAction(event -> reproducirMusica("src/main/java/edu/fiuba/algo3/resources/musica3.mp3"));
+        reproducirMusica3.setOnAction(event -> reproducirMusica("src/main/java/edu/fiuba/algo3/resources/sonidos/musica3.mp3"));
 
         MenuItem detenerMusica = new MenuItem("Detener Música");
         detenerMusica.setOnAction(event -> detenerMusica());
