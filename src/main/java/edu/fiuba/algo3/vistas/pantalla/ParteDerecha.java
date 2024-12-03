@@ -104,7 +104,7 @@ public class ParteDerecha {
             if (!cartasSeleccionadas.isEmpty()) {
 
                 // Actualizar el puntaje de la ronda en la vista
-                parteIzquierda.actualizarPuntajeRonda(juego.jugarMano(cartasSeleccionadas,juego.queManoEs(cartasSeleccionadas)));
+//                parteIzquierda.actualizarPuntajeRonda(juego.jugarMano(cartasSeleccionadas,juego.queManoEs(cartasSeleccionadas)));
 
             } else {
                 System.out.println("No has seleccionado ninguna carta.");
