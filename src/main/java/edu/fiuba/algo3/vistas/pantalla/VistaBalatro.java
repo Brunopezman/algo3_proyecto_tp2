@@ -1,5 +1,9 @@
 package edu.fiuba.algo3.vistas.pantalla;
 
+import edu.fiuba.algo3.controllers.ControladorPantallaInicial;
+import edu.fiuba.algo3.eventos.EventoPantallaInicial;
+
+
 import edu.fiuba.algo3.modelo.juego.Juego;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -17,10 +21,8 @@ public class VistaBalatro {
 
     /**
      * Constructor de la vista principal del juego Balatro
-     * @param stage stage donde el juego se mostrara
-     * @param modelo modelo del juego que se esta jugando
-     * @param filas cantidad filas del tablero
-     * @param columnas cantidad de columnas del tablero
+     * @param stage el escenario donde se mostrará el juego
+     * @param juego el modelo del juego
      */
 
     public VistaBalatro(Stage stage, Juego juego) {
@@ -44,9 +46,14 @@ public class VistaBalatro {
      * En controlador habria que hacer las cosas pasen y se vayan actualizando.
      */
 
+    /**
+     * Muestra la pantalla inicial.
+     */
     public void mostrarPantallaInicial() {
-        Runnable accionComenzar = this::mostrarPantallaUser;
-        PantallaInicial pantallaInicial = new PantallaInicial(accionComenzar);
+        ControladorPantallaInicial controladorPantallaInicial = new ControladorPantallaInicial(this); // 'this' si VistaBalatro implementa la interfaz necesaria
+        EventoPantallaInicial eventosPantallaInicial = new EventoPantallaInicial(controladorPantallaInicial);
+
+        PantallaInicial pantallaInicial = new PantallaInicial(eventosPantallaInicial);
         Scene escenaInicial = new Scene(pantallaInicial.getRoot(), ANCHO, ALTO);
         stage.setScene(escenaInicial);
     }

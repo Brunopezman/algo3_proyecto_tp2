@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.media.AudioClip;
 
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -114,7 +115,7 @@ public class ParteDerecha {
         botones.getChildren().addAll(botonJugarMano, botonDescartar);
 
         // Mazo
-        String rutaImagen = "src/main/java/edu/fiuba/algo3/resources/reverso.jpg";
+        String rutaImagen = "src/main/java/edu/fiuba/algo3/resources/cartas/reverso.jpg";
         Image imagen = new Image(Paths.get(rutaImagen).toUri().toString());
         ImageView imageView = new ImageView(imagen);
         imageView.setFitWidth(100);
@@ -150,23 +151,44 @@ public class ParteDerecha {
         // Limpiar la visualización actual
         visualCartas.getChildren().clear();
 
+        // Cargar el sonido para reproducir al hacer clic en las cartas
+        String rutaSonido = "src/main/java/edu/fiuba/algo3/resources/sonidos/click.mp3"; // Cambia "click2.mp3" por tu archivo de sonido
+        AudioClip sonido = new AudioClip(Paths.get(rutaSonido).toUri().toString());
+
         // Agregar las cartas nuevas
         for (Carta carta : juego.repartirCartasJugador()) {
-            ImageView imagenCarta = new ImageView(new Image(Paths.get("src/main/java/edu/fiuba/algo3/resources/" + carta.numero() + "_" + carta.getPalo() + ".jpg").toUri().toString()));
+            ImageView imagenCarta = new ImageView(new Image(Paths.get("src/main/java/edu/fiuba/algo3/resources/cartas/" + carta.numero() + "_" + carta.getPalo() + ".jpg").toUri().toString()));
             imagenCarta.setFitWidth(56);
             imagenCarta.setFitHeight(84);
 
             imagenCarta.setOnMouseClicked(event -> {
                 if (cartasSeleccionadas.contains(carta)) {
+                    // Si la carta ya está seleccionada, la deseleccionamos
                     cartasSeleccionadas.remove(carta);
                     imagenCarta.setStyle("-fx-effect: null;");
                 } else if (cartasSeleccionadas.size() < 5) {
+                    // Si la carta no está seleccionada y se puede seleccionar más, la agregamos
                     cartasSeleccionadas.add(carta);
                     imagenCarta.setStyle("-fx-effect: dropshadow(gaussian, blue, 10, 0.5, 0, 0);");
+                    sonido.play(); // Reproduce el sonido solo si la carta se selecciona efectivamente
                 } else {
+                    // Si ya se han seleccionado 5 cartas, no se puede seleccionar más
                     System.out.println("No puedes seleccionar más de 5 cartas.");
                 }
             });
+
+            //sin sonido
+//            imagenCarta.setOnMouseClicked(event -> {
+//                if (cartasSeleccionadas.contains(carta)) {
+//                    cartasSeleccionadas.remove(carta);
+//                    imagenCarta.setStyle("-fx-effect: null;");
+//                } else if (cartasSeleccionadas.size() < 5) {
+//                    cartasSeleccionadas.add(carta);
+//                    imagenCarta.setStyle("-fx-effect: dropshadow(gaussian, blue, 10, 0.5, 0, 0);");
+//                } else {
+//                    System.out.println("No puedes seleccionar más de 5 cartas.");
+//                }
+//            });
 
             visualCartas.getChildren().add(imagenCarta);
         }

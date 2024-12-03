@@ -43,7 +43,7 @@ public class PantallaJuego {
     }
 
     private void setFondoConTransparenciaOscura(Pane pane) {
-        String rutaImagen = "src/main/java/edu/fiuba/algo3/resources/fondo_rya.jpeg";
+        String rutaImagen = "src/main/java/edu/fiuba/algo3/resources/fondos/fondo_rya.jpeg";
         Image imagenFondo = new Image(Paths.get(rutaImagen).toUri().toString());
         Background background = new Background(new BackgroundImage(imagenFondo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT));
         pane.setBackground(background);
