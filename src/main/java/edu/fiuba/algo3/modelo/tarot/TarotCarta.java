@@ -7,7 +7,7 @@ import edu.fiuba.algo3.modelo.mano.Mano;
 import java.util.List;
 
 public class TarotCarta extends Tarot {
-    private String cartaQueModifica;
+    //private String cartaQueModifica;
     //private EstrategiaCarta estrategia;
 
     /*
@@ -24,7 +24,7 @@ public class TarotCarta extends Tarot {
         this.descripcion = descripcion;
         this.puntaje = puntos;
         this.multiplicador = mult;
-        this.cartaQueModifica = ejemplar;
+        this.aQueAplica = ejemplar;
     }
 
 
@@ -32,7 +32,7 @@ public class TarotCarta extends Tarot {
 
     public void aplicarEfectos(List<Carta> cartas, Mano mano){
         for (Carta carta : cartas) {
-            //if (carta..esIgual(cartaQueModifica)) {estrategia.modificarCarta(carta, puntaje, multiplicador);}
+            if (carta.esIgual(aQueAplica)) {carta.modificarPorTarot(puntaje, multiplicador);}
         }
     }
 
