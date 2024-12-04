@@ -33,7 +33,6 @@ public class Controlador {
     /**
      * Muestra la pantalla inicial del juego.
      */
-
     public void mostrarPantallaInicial() {
         EventoPantallaInicial eventosPantallaInicial = new EventoPantallaInicial();
         PantallaInicial pantallaInicial = new PantallaInicial(eventosPantallaInicial);

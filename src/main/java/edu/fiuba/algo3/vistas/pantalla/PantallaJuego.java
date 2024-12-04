@@ -1,6 +1,5 @@
 package edu.fiuba.algo3.vistas.pantalla;
 
-import edu.fiuba.algo3.modelo.carta.Carta;
 import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.vistas.menu.MenuJuego;
 import javafx.scene.image.Image;
@@ -8,7 +7,6 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.nio.file.Paths;
-import java.util.List;
 
 public class PantallaJuego {
 
