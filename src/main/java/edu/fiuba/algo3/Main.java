@@ -10,7 +10,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        Juego juego = new Juego("src/main/java/edu/fiuba/algo3/resources/archivosJson/balatro.json");
+        Juego juego = Juego.getInstance();
         VistaBalatro vistaBalatro = new VistaBalatro(primaryStage, juego);
     }
 

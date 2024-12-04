@@ -14,17 +14,26 @@ public class Juego {
 
     private static final int PRIMERARONDA = 1;
 
+    private static Juego juego;
+
     private List<Ronda> rondas;
     private Mazo mazo;
     private final JuegoFabrica fabrica;
     private int numeroRondaActual;
     private Jugador jugador;
 
-    public Juego(String rutaDeJson) {
-        this.fabrica = new JuegoFabrica(rutaDeJson);
+    private Juego() {
+        this.fabrica = new JuegoFabrica("src/main/java/edu/fiuba/algo3/resources/archivosJson/balatro.json");
         this.rondas = fabrica.inicializarRondas();
         this.mazo = fabrica.inicializarMazo();
         this.numeroRondaActual = PRIMERARONDA;
+    }
+
+    public static Juego getInstance(){
+        if (juego == null){
+            juego = new Juego();
+        }
+        return juego;
     }
 
     // Getters y setters
