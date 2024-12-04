@@ -1,8 +1,9 @@
 package edu.fiuba.algo3.vistas.pantalla;
 
+import edu.fiuba.algo3.controllers.BotonConfirmarHandler;
+import edu.fiuba.algo3.vistas.boton.BotonConfirmar;
 import edu.fiuba.algo3.vistas.menu.MenuJuego;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
@@ -13,17 +14,16 @@ import javafx.scene.media.AudioClip;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.nio.file.Paths;
-import java.util.function.Consumer;
 
 public class PantallaUser {
     private StackPane root;
     private MenuJuego menuJuego;
 
-    public PantallaUser(Consumer<String> onNombreIngresado) {
+    public PantallaUser() {
         // Crear el StackPane que contendrá la imagen de fondo
         StackPane fondo = new StackPane();
-
-        this.menuJuego = new MenuJuego(null);
+        VistaBalatro vistaBalatro = VistaBalatro.getInstance(null);
+        this.menuJuego = vistaBalatro.getMenuJuego();
 
         // Cargar las fuentes
         Font fuenteIngreseNombre = cargarFuente("src/main/java/edu/fiuba/algo3/resources/fuentes/fuente2.otf", 40);
@@ -63,25 +63,21 @@ public class PantallaUser {
         campoNombre.setMaxWidth(300);
 
         // Botón de confirmar
-        Button botonConfirmar = new Button("Comenzar Partida");
-        botonConfirmar.setFont(fuenteConfirmar);
-        botonConfirmar.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #FF0000;");
+        BotonConfirmarHandler botonConfirmarHandler = new BotonConfirmarHandler(vistaBalatro.getStage(), campoNombre,textoIngreseNombre);
+        BotonConfirmar botonConfirmar = new BotonConfirmar(botonConfirmarHandler);
 
-        // Cargar y reproducir el sonido al hacer clic en el botón
-        String rutaSonido = "src/main/java/edu/fiuba/algo3/resources/sonidos/click.mp3"; // Cambia "click.mp3" por tu archivo de sonido
-        AudioClip sonido = new AudioClip(Paths.get(rutaSonido).toUri().toString());
+//        // Cargar y reproducir el sonido al hacer clic en el botón
+//        String rutaSonido = "src/main/java/edu/fiuba/algo3/resources/sonidos/click.mp3"; // Cambia "click.mp3" por tu archivo de sonido
+//        AudioClip sonido = new AudioClip(Paths.get(rutaSonido).toUri().toString());
 
         // Evento para el botón confirmar
-        botonConfirmar.setOnAction(event -> {
-            sonido.play();
-            String nombreIngresado = campoNombre.getText().trim();
-            if (!nombreIngresado.isEmpty()) {
-                // Llamar al Consumer pasado como argumento para notificar al Main
-                onNombreIngresado.accept(nombreIngresado);
-            } else {
-                textoIngreseNombre.setText("Por favor ingresa tu nombre");
-            }
-        });
+//        botonConfirmar.setOnAction(event -> {
+////            sonido.play();
+//            String nombreIngresado = campoNombre.getText().trim();
+//            if (nombreIngresado.isEmpty()) {
+//                textoIngreseNombre.setText("Por favor ingresa tu nombre");
+//            }
+//        });
 
         // Añadir elementos al VBox
         contenido.getChildren().addAll(textoIngreseNombre, campoNombre, botonConfirmar);

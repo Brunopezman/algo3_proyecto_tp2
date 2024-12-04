@@ -76,6 +76,7 @@ public class Juego {
         return jugador.recibirCartas(mazo);
     }
 
+    public String getNombreJugador() { return jugador.getNombre();}
 
     //TIENDA
     public Tienda getTiendaRonda() {

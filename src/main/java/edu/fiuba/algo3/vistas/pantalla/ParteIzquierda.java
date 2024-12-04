@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.vistas.pantalla;
 
+import edu.fiuba.algo3.modelo.juego.Juego;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -15,7 +16,7 @@ public class ParteIzquierda {
     private final VBox parteIzquierda;
     private StackPane puntajeAcumuladoBox;
 
-    public ParteIzquierda(String nombreJugador, int puntajeMin, int puntajeRonda, int turnos, int descartes, int rondaActual) {
+    public ParteIzquierda(int puntajeMin, int puntajeRonda, int turnos, int descartes, int rondaActual) {
         this.parteIzquierda = new VBox();
         parteIzquierda.setAlignment(Pos.TOP_CENTER);
         parteIzquierda.setSpacing(15);
@@ -76,7 +77,8 @@ public class ParteIzquierda {
         rondaYnombre.setAlignment(Pos.CENTER);
         rondaYnombre.setSpacing(10);
 
-        StackPane nombre = crearCuadroConValor("Nombre", nombreJugador, 70, 100, "#444444", "#666666");
+        String aux = Juego.getInstance().getNombreJugador();
+        StackPane nombre = crearCuadroConValor("Nombre", aux, 70, 100, "#444444", "#666666");
         StackPane rondaBox = crearCuadroConValor("Round", rondaActual+ " / 8", 70, 100, "#444444", "#666666");
 
         rondaYnombre.getChildren().addAll(nombre, rondaBox);
