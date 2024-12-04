@@ -135,10 +135,6 @@ public class Ronda {
             throw new IllegalArgumentException("No puede realizar más descartes en este turno.");
         }
 
-        /*if (!this.verificarExistenciaDeCartas(cartasADescartar)) {
-            throw new IllegalArgumentException("Algunas cartas no están en la mano.");
-        }*/
-
         this.descartesActuales++;
 
         // Descartar cada carta

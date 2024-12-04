@@ -175,7 +175,8 @@ public class Juego {
     }
 
     public List<Carta> descartarCartas(List<Carta> cartasActuales, List<Carta> cartasADescartar){
-        return this.getRondaActual().descartar(mazo,cartasActuales,cartasADescartar);
+        List<Carta> nuevasCartas = this.getRondaActual().descartar(mazo,cartasActuales,cartasADescartar);
+        return jugador.setCartas(nuevasCartas);
     }
 
     public boolean seGanoPartida(){
