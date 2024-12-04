@@ -154,8 +154,7 @@ public class Juego {
         if(this.getRondaActual().seAlcanzoElPuntajeDeRonda()){
             return false; //se termina la ronda (se gano)
         }
-        this.getRondaActual().avanzarTurno();
-        return true;
+        return this.getRondaActual().avanzarTurno();
     }
 
     public int jugarMano(List<Carta> posibleMano, Mano manoJugada) {

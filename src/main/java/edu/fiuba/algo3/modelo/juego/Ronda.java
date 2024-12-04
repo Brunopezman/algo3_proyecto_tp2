@@ -73,7 +73,7 @@ public class Ronda {
 
     public boolean avanzarTurno(){
         if (turnoActual >= 5){ //esto debería controlarse desde la entidad que contiene las rondas
-            throw new NoHayMasTurnosException();
+            return false;
         }
         turnoActual++;
         return true;
