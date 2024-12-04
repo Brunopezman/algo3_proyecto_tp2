@@ -21,12 +21,14 @@ public class Juego {
     private final JuegoFabrica fabrica;
     private int numeroRondaActual;
     private Jugador jugador;
+    private boolean ganado;
 
     private Juego() {
         this.fabrica = new JuegoFabrica("src/main/java/edu/fiuba/algo3/resources/archivosJson/balatro.json");
         this.rondas = fabrica.inicializarRondas();
         this.mazo = fabrica.inicializarMazo();
         this.numeroRondaActual = PRIMERARONDA;
+        this.ganado = false;
     }
 
     public static Juego getInstance(){
@@ -36,7 +38,9 @@ public class Juego {
         return juego;
     }
 
+
     // Getters y setters
+
     public Ronda getRondaActual() {
         return rondas.get((numeroRondaActual - 1));
     }
@@ -61,6 +65,7 @@ public class Juego {
         return rondas.get(numeroRondaActual);
     }
 
+
     //JUGADOR
 
     public void inicializarJugador(String nombreJugador) {
@@ -70,6 +75,7 @@ public class Juego {
     public List<Carta> repartirCartasJugador() {
         return jugador.recibirCartas(mazo);
     }
+
 
     //TIENDA
     public Tienda getTiendaRonda() {
@@ -94,6 +100,10 @@ public class Juego {
 
     public boolean avanzarRonda() {
         if(this.getRondaActual().seAlcanzoElPuntajeDeRonda()) {
+            if(esUltimaRonda()){
+                juego.ganado = true;
+                return false;
+            }
             this.cargarComodinesActuales();
             numeroRondaActual++;
             this.resetMazo();
@@ -134,6 +144,10 @@ public class Juego {
         return this.getRondaActual().turnoActual();
     }
 
+    public boolean esUltimaRonda(){
+        return this.numeroRondaActual >= this.rondasTotales();
+    }
+
 
     //TURNO
     public boolean avanzarTurno() {
@@ -163,6 +177,10 @@ public class Juego {
 
     public List<Carta> descartarCartas(List<Carta> cartasActuales, List<Carta> cartasADescartar){
         return this.getRondaActual().descartar(mazo,cartasActuales,cartasADescartar);
+    }
+
+    public boolean seGanoPartida(){
+        return juego.ganado;
     }
 
     /*
