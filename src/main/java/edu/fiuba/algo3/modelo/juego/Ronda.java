@@ -73,7 +73,7 @@ public class Ronda {
 
     public boolean avanzarTurno(){
         if (turnoActual >= 5){ //esto debería controlarse desde la entidad que contiene las rondas
-            throw new NoHayMasTurnosException();
+            return false;
         }
         turnoActual++;
         return true;
@@ -134,10 +134,6 @@ public class Ronda {
         if (this.descartesActuales >= descartesMaximos ) {
             throw new IllegalArgumentException("No puede realizar más descartes en este turno.");
         }
-
-        /*if (!this.verificarExistenciaDeCartas(cartasADescartar)) {
-            throw new IllegalArgumentException("Algunas cartas no están en la mano.");
-        }*/
 
         this.descartesActuales++;
 

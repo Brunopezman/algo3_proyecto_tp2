@@ -55,4 +55,8 @@ public class Jugador {
 
     public int cantidadCartasActuales(){ return cartasActuales.size(); }
 
+    public List<Carta> setCartas(List<Carta> nuevasCartas) {
+        this.cartasActuales = nuevasCartas;
+        return this.cartasActuales;
+    }
 }

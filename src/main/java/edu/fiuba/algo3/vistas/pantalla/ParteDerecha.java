@@ -1,7 +1,11 @@
 package edu.fiuba.algo3.vistas.pantalla;
 
+import edu.fiuba.algo3.controllers.BotonDescartarHandler;
+import edu.fiuba.algo3.controllers.BotonJugarManoHandler;
 import edu.fiuba.algo3.modelo.carta.Carta;
 import edu.fiuba.algo3.modelo.juego.Juego;
+import edu.fiuba.algo3.vistas.boton.BotonDescartar;
+import edu.fiuba.algo3.vistas.boton.BotonJugarMano;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -94,18 +98,20 @@ public class ParteDerecha {
         botones.setSpacing(20);
         botones.setAlignment(Pos.CENTER);
 
-        Button botonJugarMano = new Button("Jugar Mano");
-        Button botonDescartar = new Button("Descartar");
+        // Boton JugarMano
+        BotonJugarManoHandler botonJugarManoHandler = new BotonJugarManoHandler();
+        BotonJugarMano botonJugarMano = new BotonJugarMano(botonJugarManoHandler);
 
-        botonJugarMano.setStyle("-fx-font-size: 20px;-fx-background-color: \"#333333\"; -fx-font-weight: bold; -fx-text-fill: white;");
-        botonDescartar.setStyle("-fx-font-size: 20px; -fx-background-color: \"#333333\"; -fx-font-weight: bold; -fx-text-fill: white;");
+        // Boton Descartar
+        BotonDescartarHandler botonDescartarHandler = new BotonDescartarHandler();
+        BotonDescartar botonDescartar = new BotonDescartar(botonDescartarHandler);
 
         // Configurar el evento para el botón "Jugar Mano"
         botonJugarMano.setOnAction(event -> {
             if (!cartasSeleccionadas.isEmpty()) {
 
-                // Actualizar el puntaje de la ronda en la vista
-//                parteIzquierda.actualizarPuntajeRonda(juego.jugarMano(cartasSeleccionadas,juego.queManoEs(cartasSeleccionadas)));
+//                 Actualizar el puntaje de la ronda en la vista
+                parteIzquierda.actualizarPuntajeRonda(juego.jugarMano(cartasSeleccionadas,juego.queManoEs(cartasSeleccionadas)));
 
             } else {
                 System.out.println("No has seleccionado ninguna carta.");
@@ -176,19 +182,6 @@ public class ParteDerecha {
                     System.out.println("No puedes seleccionar más de 5 cartas.");
                 }
             });
-
-            //sin sonido
-//            imagenCarta.setOnMouseClicked(event -> {
-//                if (cartasSeleccionadas.contains(carta)) {
-//                    cartasSeleccionadas.remove(carta);
-//                    imagenCarta.setStyle("-fx-effect: null;");
-//                } else if (cartasSeleccionadas.size() < 5) {
-//                    cartasSeleccionadas.add(carta);
-//                    imagenCarta.setStyle("-fx-effect: dropshadow(gaussian, blue, 10, 0.5, 0, 0);");
-//                } else {
-//                    System.out.println("No puedes seleccionar más de 5 cartas.");
-//                }
-//            });
 
             visualCartas.getChildren().add(imagenCarta);
         }

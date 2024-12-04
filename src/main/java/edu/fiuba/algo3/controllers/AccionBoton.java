@@ -1,6 +1,5 @@
-package edu.fiuba.algo3.vistas.boton;
+package edu.fiuba.algo3.controllers;
 
 public interface AccionBoton {
     void ejecutar();
-
 }
