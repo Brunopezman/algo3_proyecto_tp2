@@ -21,7 +21,7 @@ public class EscaleraColor extends Mano{
     }
 
     @Override
-    public boolean esJugable(List<Carta> cartas) {
+    public Mano esJugable(List<Carta> cartas) {
 
         Map<String, List<Carta>> cartasPorPalo = this.operador.agruparPorPalo(cartas);
 
@@ -29,10 +29,10 @@ public class EscaleraColor extends Mano{
         for (List<Carta> cartasDelPalo : cartasPorPalo.values()) {
             if (cartasDelPalo.size() >= 5) {
                 if (this.escalera.verificarEscalera(cartasDelPalo)) {
-                    return true;
+                    return new EscaleraColor();
                 }
             }
         }
-        return false;
+        return null;
     }
 }

@@ -18,16 +18,16 @@ public class Color extends Mano{
     }
 
     @Override
-    public boolean esJugable(List<Carta> cartas) {
+    public Mano esJugable(List<Carta> cartas) {
         // Mapa para contar la cantidad de cartas por cada palo
         Map<String, Integer> conteoPalos = this.operador.contarPorPalo(cartas);
         // Verificar si alguno de los palos tiene al menos 5 cartas
         for (int cantidad : conteoPalos.values()) {
             if (cantidad >= 5) {
-                return true;
+                return new Color();
             }
         }
-        return false;
+        return null;
     }
 
 }

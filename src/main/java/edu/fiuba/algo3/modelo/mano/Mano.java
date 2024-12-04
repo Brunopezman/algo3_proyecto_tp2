@@ -14,7 +14,7 @@ public abstract class Mano {
     protected Operador operador;
     protected int descartes;
 
-    abstract public boolean esJugable(List<Carta> cartas);
+    abstract public Mano esJugable(List<Carta> cartas);
 
     protected void setPuntaje(int nuevoPuntaje) {
         puntaje = nuevoPuntaje;
@@ -28,19 +28,13 @@ public abstract class Mano {
         return puntaje;
     }
 
-    ;
-
     public int getMultiplicador() {
         return multiplicador;
     }
 
-    ;
-
     public int calcularPuntaje(int valor) {
         return (this.puntaje + valor) * this.multiplicador;
     }
-
-    ;
 
     public void modificarPuntaje(int valor) {
         this.setPuntaje(valor);

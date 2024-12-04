@@ -12,6 +12,7 @@ public abstract class Tarot {
     protected String descripcion;
     protected int puntaje;
     protected int multiplicador;
+    protected String aQueAplica;
 
     public static Tarot con (String nombre, String descripcion, int puntos, int mult, String sobreQueAfecta, String ejemplar){
         if(sobreQueAfecta == MANO){
@@ -21,7 +22,14 @@ public abstract class Tarot {
         }
     }
 
-    abstract void aplicarEfectos(List<Carta> cartas, Mano mano);
+    public abstract void aplicarEfectos(List<Carta> cartas, Mano mano);
 
+    public boolean esElegido(Tarot tarotElegido) {
+        return this.nombre.equals(tarotElegido.nombre);
+    }
+
+    public void modificarAQueAplica(String cartaQueAplica){
+        this.aQueAplica = cartaQueAplica;
+    }
 }
 

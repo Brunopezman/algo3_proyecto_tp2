@@ -19,7 +19,7 @@ public class Valor {
 
     public boolean sonIguales(Carta otraCarta) { return this.numero.equals(otraCarta.numero());}
 
-    public void actualizarPuntaje(int puntaje) { this.puntaje = puntaje; }
+    public void sumarPuntaje(int puntaje) { this.puntaje += puntaje; }
 
     public void multiplicarPuntaje(int multiplicador) { this.puntaje *= multiplicador; }
 }
