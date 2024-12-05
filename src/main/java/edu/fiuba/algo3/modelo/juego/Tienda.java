@@ -17,4 +17,11 @@ public class Tienda {
         this.carta = carta;
     }
 
+    /////////AUXILIARES//////
+
+    public List<Comodin> getComodines() {return comodines;}
+
+    public List<Tarot> getTarots() { return tarots; }
+
+    public Carta getCarta() { return carta; }
 }
