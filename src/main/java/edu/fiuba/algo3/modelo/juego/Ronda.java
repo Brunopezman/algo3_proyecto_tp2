@@ -39,13 +39,13 @@ public class Ronda {
         this.nroRonda = nro;
         this.turnos = new ArrayList<Turno>();
         this.turnoActual = INICIO;
+        this.cantidadTurnos = manos;
         this.descartesMaximos = descartesMaximos;
         this.descartesActuales = 0;
         this.puntajeASuperar = puntajeAObtener;
         this.tienda = tienda;
         this.comodines = new ArrayList <Comodin>();
         this.tarots = new ArrayList<Tarot>();
-        this.cantidadTurnos = manos;
     }
 
     public int getDescartesDisponibles(){
@@ -80,11 +80,11 @@ public class Ronda {
         return true;
     }
 
-    public int cantidadTurnos(){ return turnos.size(); }
+    //public int cantidadTurnos(){ return turnos.size(); }
 
     public int turnoActual(){ return turnoActual; }
 
-    public int puntosTurnoActual(){ return this.getTurno(turnoActual).puntajeDelTurno(); }
+    //public int puntosTurnoActual(){ return this.getTurno(turnoActual).puntajeDelTurno(); }
 
     public int cantidadComodines(){ return comodines.size(); }
 

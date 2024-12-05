@@ -155,7 +155,7 @@ public class Juego {
     }
 
     public int turnosTotales(){
-        return this.getRondaActual().cantidadTurnos();
+        return this.getRondaActual().cantidadDeTurnos();
     }
 
     public int turnoActual(){
