@@ -176,6 +176,15 @@ public class Ronda {
 
     private void sumarPuntos(int puntos){ puntajeAlcanzado += puntos;}
 
+    public boolean sePuedeAvanzar() {
+        if (this.seAlcanzoElPuntajeDeRonda()){
+            return true;
+        } else if(turnoActual > cantidadTurnos && this.seAlcanzoElPuntajeDeRonda()){
+            return true;
+        }
+        return false;
+    }
+
     ///////////////////////AUXILIARES////////////////////////
 
     public int getNro() { return nroRonda; }
@@ -187,4 +196,6 @@ public class Ronda {
     public int getDescartes() { return this.getDescartesDisponibles();}
 
     public int getPuntajeASuperar() { return puntajeASuperar; }
+
+
 }

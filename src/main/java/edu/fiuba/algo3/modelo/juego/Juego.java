@@ -106,7 +106,7 @@ public class Juego {
     }
 
     public boolean avanzarRonda() {
-        if(this.getRondaActual().seAlcanzoElPuntajeDeRonda()) {
+        /*if(this.getRondaActual().seAlcanzoElPuntajeDeRonda()) {
             if(esUltimaRonda()){
                 juego.ganado = true;
                 return false;
@@ -115,6 +115,17 @@ public class Juego {
             numeroRondaActual++;
             this.resetMazo();
             return true;
+        }
+        return false;*/
+        if (this.getRondaActual().sePuedeAvanzar()){
+            if(esUltimaRonda()){
+                juego.ganado = true;
+                return false;
+            }
+            this.cargarComodinesActuales();
+            numeroRondaActual++;
+            this.getRondaActual().iniciarRonda();
+            this.resetMazo();
         }
         return false;
     }

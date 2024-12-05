@@ -27,7 +27,7 @@ public class PantallaJuego {
         ronda.iniciarRonda();
 
         // Inicializar las partes
-        this.parteIzquierda = new ParteIzquierda(juego.puntajeNecesarioRonda(), juego.puntajeRonda(), juego.turnosTotales(), juego.descartesActuales(), juego.rondaActual());
+        this.parteIzquierda = new ParteIzquierda(juego.puntajeNecesarioRonda(), juego.puntajeRonda(), juego.turnoActual(), juego.descartesActuales(), juego.rondaActual());
         this.parteDerecha = new ParteDerecha(juego, this.parteIzquierda);
 
         // Configurar la interfaz inicial

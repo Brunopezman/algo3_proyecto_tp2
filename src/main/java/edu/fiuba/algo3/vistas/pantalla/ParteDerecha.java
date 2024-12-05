@@ -102,7 +102,7 @@ public class ParteDerecha {
         botones.setAlignment(Pos.CENTER);
 
         // Boton JugarMano
-        BotonJugarManoHandler botonJugarManoHandler = new BotonJugarManoHandler(juego, cartasSeleccionadas, parteIzquierda);
+        BotonJugarManoHandler botonJugarManoHandler = new BotonJugarManoHandler(juego, cartasSeleccionadas, parteIzquierda, cartasRestantesText);
         BotonJugarMano botonJugarMano = new BotonJugarMano(botonJugarManoHandler);
 
         // Boton Descartar
