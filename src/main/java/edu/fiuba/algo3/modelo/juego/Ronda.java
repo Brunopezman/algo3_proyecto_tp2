@@ -39,6 +39,7 @@ public class Ronda {
         this.nroRonda = nro;
         this.turnos = new ArrayList<Turno>();
         this.turnoActual = INICIO;
+        this.cantidadTurnos = manos;
         this.descartesMaximos = descartesMaximos;
         this.descartesActuales = 0;
         this.puntajeASuperar = puntajeAObtener;
@@ -173,5 +174,15 @@ public class Ronda {
         tarotElegido.modificarAQueAplica(carta.getNombre());
     }
 
+    ///////////////////////AUXILIARES////////////////////////
 
+    public int getNro() { return nroRonda; }
+
+
+    public int getTurnos() { return this.cantidadTurnos; }
+
+
+    public int getDescartes() { return this.getDescartesDisponibles();}
+
+    public int getPuntajeASuperar() { return puntajeASuperar; }
 }
