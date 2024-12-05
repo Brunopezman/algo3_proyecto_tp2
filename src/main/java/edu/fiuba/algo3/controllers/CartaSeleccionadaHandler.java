@@ -26,7 +26,7 @@ public class CartaSeleccionadaHandler implements EventHandler<ActionEvent> {
         if (cartasSeleccionadas.contains(carta)) {
             // Deseleccionar carta
             cartasSeleccionadas.remove(carta);
-            imagenCarta.setStyle("-fx-effect: null;");
+            imagenCarta.setStyle("-fx-effect:null;");
         } else if (cartasSeleccionadas.size() < 5) {
             // Seleccionar carta
             cartasSeleccionadas.add(carta);

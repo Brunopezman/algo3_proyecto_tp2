@@ -16,6 +16,7 @@ public class Turno {
     private int cantidadDescartes;
 
     public Turno(List<Comodin> comodines) {
+        this.manosJugables = new ArrayList<>();
         this.manosJugables.add(new EscaleraReal());
         this.manosJugables.add(new EscaleraColor());
         this.manosJugables.add(new Poker());
@@ -26,7 +27,6 @@ public class Turno {
         this.manosJugables.add(new DoblePar());
         this.manosJugables.add(new Par());
         this.manosJugables.add(new CartaAlta());
-        this.manosJugables = new ArrayList<>();
         this.comodines = comodines;
         this.tarotUsar = null;
         this.puntaje = 0;

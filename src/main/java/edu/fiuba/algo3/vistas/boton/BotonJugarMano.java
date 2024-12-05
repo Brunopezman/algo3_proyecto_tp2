@@ -6,12 +6,10 @@ import javafx.scene.control.Button;
 
 public class BotonJugarMano extends Button {
 
-    private final BotonJugarManoHandler handler;
 
     public BotonJugarMano(BotonJugarManoHandler handler) {
         super("Jugar Mano");
         configurarBoton();
-        this.handler = handler;
         this.setOnAction(handler);
     }
 

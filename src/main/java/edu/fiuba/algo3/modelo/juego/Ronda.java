@@ -45,6 +45,7 @@ public class Ronda {
         this.tienda = tienda;
         this.comodines = new ArrayList <Comodin>();
         this.tarots = new ArrayList<Tarot>();
+        this.cantidadTurnos = manos;
     }
 
     public int getDescartesDisponibles(){
