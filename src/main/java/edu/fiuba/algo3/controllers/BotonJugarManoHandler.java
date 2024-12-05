@@ -2,10 +2,12 @@ package edu.fiuba.algo3.controllers;
 
 import edu.fiuba.algo3.modelo.carta.Carta;
 import edu.fiuba.algo3.modelo.juego.Juego;
+import edu.fiuba.algo3.vistas.pantalla.ParteDerecha;
 import edu.fiuba.algo3.vistas.pantalla.ParteIzquierda;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BotonJugarManoHandler implements EventHandler<ActionEvent> {
@@ -22,8 +24,14 @@ public class BotonJugarManoHandler implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent actionEvent) {
         if (!cartasSeleccionadas.isEmpty()) {
-            int puntaje = juego.jugarMano(cartasSeleccionadas, juego.queManoEs(cartasSeleccionadas));
-            parteIzquierda.actualizarPuntajeRonda(puntaje);
+            juego.jugarMano(cartasSeleccionadas, juego.queManoEs(cartasSeleccionadas));
+            juego.quitarCartasUsadas(cartasSeleccionadas);
+            juego.repartirCartasJugador(cartasSeleccionadas.size());
+            juego.avanzarTurno();
+            juego.avanzarRonda();
+            cartasSeleccionadas.clear();
+            parteIzquierda.actualizar();
+            ParteDerecha.actualizarVisualCartas(cartasSeleccionadas);
         } else {
             System.out.println("No has seleccionado ninguna carta.");
         }

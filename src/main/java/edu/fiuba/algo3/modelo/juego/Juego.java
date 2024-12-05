@@ -72,11 +72,17 @@ public class Juego {
         this.jugador = new Jugador(nombreJugador);
     }
 
-    public List<Carta> repartirCartasJugador() {
-        return jugador.recibirCartas(mazo);
+    public List<Carta> repartirCartasJugador(int cantidad) {
+        return jugador.recibirCartas(mazo, cantidad);
+    }
+
+    public void quitarCartasUsadas (List<Carta> cartas) {
+        jugador.eliminarCartasUsadas(cartas);
     }
 
     public String getNombreJugador() { return jugador.getNombre();}
+
+    public List<Carta> jugadoresCartasActuales() {return jugador.getCartasActuales(); }
 
     //TIENDA
     public Tienda getTiendaRonda() {

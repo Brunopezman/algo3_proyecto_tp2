@@ -28,9 +28,9 @@ import java.util.List;
 public class ParteDerecha {
     private final BorderPane parteDerecha;
     private final Juego juego;
-    private final List<Carta> cartasSeleccionadas;
+    //private final List<Carta> cartasSeleccionadas;
     private final ParteIzquierda parteIzquierda;
-    private HBox visualCartas;
+    private static HBox visualCartas;
     private Text cartasRestantesText;
     private PantallaJuego pantallaJuego;
 
@@ -38,7 +38,7 @@ public class ParteDerecha {
         this.juego = juego;
         this.parteIzquierda = parteIzquierda;
         this.parteDerecha = new BorderPane();
-        this.cartasSeleccionadas = new ArrayList<>();
+        //this.cartasSeleccionadas = new ArrayList<>();
         inicializarUI();
     }
 
@@ -51,7 +51,9 @@ public class ParteDerecha {
         visualCartas.setAlignment(Pos.CENTER);
 
         // Llama a repartirCartas para inicializar las cartas desde el comienzo
-        repartirCartas();
+        juego.repartirCartasJugador(8);
+        List<Carta> cartasSeleccionadas = new ArrayList<>();
+        visualizarCartas(cartasSeleccionadas);
 
         centro.getChildren().add(visualCartas);
         parteDerecha.setCenter(centro);
@@ -61,7 +63,7 @@ public class ParteDerecha {
         parteDerecha.setTop(comodinesTarots);
 
         // Botones y Mazo
-        HBox contenidoInferior = crearContenidoInferior();
+        HBox contenidoInferior = crearContenidoInferior(cartasSeleccionadas);
         parteDerecha.setBottom(contenidoInferior);
 
         parteDerecha.setPadding(new Insets(10));
@@ -93,7 +95,7 @@ public class ParteDerecha {
         return comodinesTarots;
     }
 
-    private HBox crearContenidoInferior() {
+    private HBox crearContenidoInferior(List<Carta> cartasSeleccionadas) {
         HBox contenidoInferior = new HBox();
         HBox botones = new HBox();
         botones.setSpacing(20);
@@ -129,25 +131,25 @@ public class ParteDerecha {
         return contenidoInferior;
     }
 
-    private void repartirCartas() {
-        actualizarVisualCartas();
+    private void visualizarCartas(List<Carta> cartasSeleccionadas) {
+        actualizarVisualCartas(cartasSeleccionadas);
 
         if (juego.descartesActuales() == 0) {
             System.out.println("Ya tienes 8 cartas en pantalla, no puedes repartir más.");
             return;
         }
 
-        juego.repartirCartasJugador();
+        //juego.repartirCartasJugador();
 
         cartasRestantesText.setText(juego.getMazo().cartasRestantes() + "/52");
     }
 
-    private void actualizarVisualCartas() {
+    public static void actualizarVisualCartas(List<Carta> cartasSeleccionadas) {
         visualCartas.getChildren().clear();
         String rutaSonido = "src/main/java/edu/fiuba/algo3/resources/sonidos/click.mp3";
         AudioClip sonido = new AudioClip(Paths.get(rutaSonido).toUri().toString());
-
-        for (Carta carta : juego.repartirCartasJugador()) {
+        Juego juego = Juego.getInstance();
+        for (Carta carta : juego.jugadoresCartasActuales()) {
             ImageView imagenCarta = new ImageView(new Image(Paths.get("src/main/java/edu/fiuba/algo3/resources/cartas/" + carta.numero() + "_" + carta.getPalo() + ".jpg").toUri().toString()));
             imagenCarta.setFitWidth(56);
             imagenCarta.setFitHeight(84);

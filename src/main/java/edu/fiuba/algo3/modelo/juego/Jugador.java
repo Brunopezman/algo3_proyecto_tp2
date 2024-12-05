@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Jugador {
-    private static final int CARTASARECIBIR = 8;
 
     private String nombre;
     private List<Carta> cartasActuales;
@@ -19,9 +18,10 @@ public class Jugador {
         this.cartasActuales = new ArrayList<>();
     }
 
-    public List<Carta> recibirCartas(Mazo mazo) {
-        List<Carta> cartasRecibidas = mazo.darCartas(CARTASARECIBIR);
-        this.setCartasActuales(cartasRecibidas);
+    public List<Carta> recibirCartas(Mazo mazo, int cantidad) {
+        List<Carta> cartasRecibidas = mazo.darCartas(cantidad);
+        //this.setCartasActuales(cartasRecibidas);
+        cartasActuales.addAll(cartasRecibidas);
         return cartasRecibidas;
     }
 
@@ -59,4 +59,17 @@ public class Jugador {
         this.cartasActuales = nuevasCartas;
         return this.cartasActuales;
     }
+
+    public void eliminarCartasUsadas(List<Carta> cartas) {
+        for (Carta cartaEliminar : cartas) {
+            for (Carta cartaPropia : cartasActuales) {
+                if (cartaPropia.esIgual(cartaEliminar.getNombre())){
+                    cartasActuales.remove(cartaPropia);
+                    break;
+                }
+            }
+        }
+    }
+
+    public List<Carta> getCartasActuales() {return cartasActuales;}
 }

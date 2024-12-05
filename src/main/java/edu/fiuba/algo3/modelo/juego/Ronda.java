@@ -39,7 +39,6 @@ public class Ronda {
         this.nroRonda = nro;
         this.turnos = new ArrayList<Turno>();
         this.turnoActual = INICIO;
-        this.cantidadTurnos = manos;
         this.descartesMaximos = descartesMaximos;
         this.descartesActuales = 0;
         this.puntajeASuperar = puntajeAObtener;
@@ -128,8 +127,9 @@ public class Ronda {
         */
         mano.sumarDescartes(descartesActuales);
         Turno turno = this.getTurno(turnoActual);
-
-        return turno.calcularJugada(cartas,mano); //carga puntaje final en turno y devolvemos valor;
+        int puntaje = turno.calcularJugada(cartas,mano);
+        sumarPuntos(puntaje);
+        return puntaje; //carga puntaje final en turno y devolvemos valor;
     }
 
     public List<Carta> descartar(Mazo mazo, List<Carta> cartasActuales, List<Carta> cartasADescartar){
@@ -173,6 +173,8 @@ public class Ronda {
         this.eliminarTarotPorUso(tarotElegido);
         tarotElegido.modificarAQueAplica(carta.getNombre());
     }
+
+    private void sumarPuntos(int puntos){ puntajeAlcanzado += puntos;}
 
     ///////////////////////AUXILIARES////////////////////////
 
