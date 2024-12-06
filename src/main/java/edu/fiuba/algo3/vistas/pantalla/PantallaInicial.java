@@ -26,15 +26,7 @@ public class PantallaInicial {
 
         String rutaImagen = "src/main/java/edu/fiuba/algo3/resources/fondos/fondo_rya.jpeg";
         Image imagenFondo = new Image(Paths.get(rutaImagen).toUri().toString());
-        Background fondo = new Background(new BackgroundImage(
-                imagenFondo,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.CENTER,
-                new BackgroundSize(
-                        BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true
-                )
-        ));
+        Background background = new Background(new BackgroundImage(imagenFondo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT));
 
         // Crear el menú de juego
         this.menuJuego = vistaBalatro.getMenuJuego();
@@ -54,7 +46,7 @@ public class PantallaInicial {
         contenido.getChildren().addAll(titulo, botonComencemos);
 
         root = new BorderPane();
-        root.setBackground(fondo);
+        root.setBackground(background);
         root.setTop(menuJuego.getMenuBar());
         root.setCenter(contenido);
     }

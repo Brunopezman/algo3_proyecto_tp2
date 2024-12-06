@@ -106,7 +106,7 @@ public class ParteDerecha {
         BotonJugarMano botonJugarMano = new BotonJugarMano(botonJugarManoHandler);
 
         // Boton Descartar
-        BotonDescartarHandler botonDescartarHandler = new BotonDescartarHandler();
+        BotonDescartarHandler botonDescartarHandler = new BotonDescartarHandler(juego,  cartasSeleccionadas, parteIzquierda, cartasRestantesText);
         BotonDescartar botonDescartar = new BotonDescartar(botonDescartarHandler);
 
         botones.getChildren().addAll(botonJugarMano, botonDescartar);
@@ -138,8 +138,6 @@ public class ParteDerecha {
             System.out.println("Ya tienes 8 cartas en pantalla, no puedes repartir más.");
             return;
         }
-
-        //juego.repartirCartasJugador();
 
         cartasRestantesText.setText(juego.getMazo().cartasRestantes() + "/52");
     }
