@@ -9,12 +9,9 @@ import java.io.FileNotFoundException;
 
 public class BotonConfirmar extends Button {
 
-    private final BotonConfirmarHandler handler;
-
     public BotonConfirmar(BotonConfirmarHandler handler) {
         super("Comenzar Partida");
         configurarBoton();
-        this.handler = handler;
         this.setOnAction(handler);
     }
 

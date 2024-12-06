@@ -2,13 +2,14 @@ package edu.fiuba.algo3.vistas.pantalla;
 
 import edu.fiuba.algo3.controllers.BotonDescartarHandler;
 import edu.fiuba.algo3.controllers.BotonJugarManoHandler;
+import edu.fiuba.algo3.controllers.CartaSeleccionadaHandler;
 import edu.fiuba.algo3.modelo.carta.Carta;
 import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.vistas.boton.BotonDescartar;
 import edu.fiuba.algo3.vistas.boton.BotonJugarMano;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -27,9 +28,9 @@ import java.util.List;
 public class ParteDerecha {
     private final BorderPane parteDerecha;
     private final Juego juego;
-    private final List<Carta> cartasSeleccionadas;
+    //private final List<Carta> cartasSeleccionadas;
     private final ParteIzquierda parteIzquierda;
-    private HBox visualCartas;
+    private static HBox visualCartas;
     private Text cartasRestantesText;
     private PantallaJuego pantallaJuego;
 
@@ -37,7 +38,7 @@ public class ParteDerecha {
         this.juego = juego;
         this.parteIzquierda = parteIzquierda;
         this.parteDerecha = new BorderPane();
-        this.cartasSeleccionadas = new ArrayList<>();
+        //this.cartasSeleccionadas = new ArrayList<>();
         inicializarUI();
     }
 
@@ -50,7 +51,9 @@ public class ParteDerecha {
         visualCartas.setAlignment(Pos.CENTER);
 
         // Llama a repartirCartas para inicializar las cartas desde el comienzo
-        repartirCartas();
+        juego.repartirCartasJugador(8);
+        List<Carta> cartasSeleccionadas = new ArrayList<>();
+        visualizarCartas(cartasSeleccionadas);
 
         centro.getChildren().add(visualCartas);
         parteDerecha.setCenter(centro);
@@ -60,7 +63,7 @@ public class ParteDerecha {
         parteDerecha.setTop(comodinesTarots);
 
         // Botones y Mazo
-        HBox contenidoInferior = crearContenidoInferior();
+        HBox contenidoInferior = crearContenidoInferior(cartasSeleccionadas);
         parteDerecha.setBottom(contenidoInferior);
 
         parteDerecha.setPadding(new Insets(10));
@@ -92,31 +95,19 @@ public class ParteDerecha {
         return comodinesTarots;
     }
 
-    private HBox crearContenidoInferior() {
+    private HBox crearContenidoInferior(List<Carta> cartasSeleccionadas) {
         HBox contenidoInferior = new HBox();
         HBox botones = new HBox();
         botones.setSpacing(20);
         botones.setAlignment(Pos.CENTER);
 
         // Boton JugarMano
-        BotonJugarManoHandler botonJugarManoHandler = new BotonJugarManoHandler();
+        BotonJugarManoHandler botonJugarManoHandler = new BotonJugarManoHandler(juego, cartasSeleccionadas, parteIzquierda, cartasRestantesText);
         BotonJugarMano botonJugarMano = new BotonJugarMano(botonJugarManoHandler);
 
         // Boton Descartar
-        BotonDescartarHandler botonDescartarHandler = new BotonDescartarHandler();
+        BotonDescartarHandler botonDescartarHandler = new BotonDescartarHandler(juego,  cartasSeleccionadas, parteIzquierda, cartasRestantesText);
         BotonDescartar botonDescartar = new BotonDescartar(botonDescartarHandler);
-
-        // Configurar el evento para el botón "Jugar Mano"
-        botonJugarMano.setOnAction(event -> {
-            if (!cartasSeleccionadas.isEmpty()) {
-
-//                 Actualizar el puntaje de la ronda en la vista
-                parteIzquierda.actualizarPuntajeRonda(juego.jugarMano(cartasSeleccionadas,juego.queManoEs(cartasSeleccionadas)));
-
-            } else {
-                System.out.println("No has seleccionado ninguna carta.");
-            }
-        });
 
         botones.getChildren().addAll(botonJugarMano, botonDescartar);
 
@@ -140,52 +131,33 @@ public class ParteDerecha {
         return contenidoInferior;
     }
 
-    private void repartirCartas() {
-        actualizarVisualCartas();
+    private void visualizarCartas(List<Carta> cartasSeleccionadas) {
+        actualizarVisualCartas(cartasSeleccionadas);
 
         if (juego.descartesActuales() == 0) {
             System.out.println("Ya tienes 8 cartas en pantalla, no puedes repartir más.");
             return;
         }
 
-        juego.repartirCartasJugador();
-
         cartasRestantesText.setText(juego.getMazo().cartasRestantes() + "/52");
     }
 
-    private void actualizarVisualCartas() {
-        // Limpiar la visualización actual
+    public static void actualizarVisualCartas(List<Carta> cartasSeleccionadas) {
         visualCartas.getChildren().clear();
-
-        // Cargar el sonido para reproducir al hacer clic en las cartas
-        String rutaSonido = "src/main/java/edu/fiuba/algo3/resources/sonidos/click.mp3"; // Cambia "click2.mp3" por tu archivo de sonido
+        String rutaSonido = "src/main/java/edu/fiuba/algo3/resources/sonidos/click.mp3";
         AudioClip sonido = new AudioClip(Paths.get(rutaSonido).toUri().toString());
-
-        // Agregar las cartas nuevas
-        for (Carta carta : juego.repartirCartasJugador()) {
+        Juego juego = Juego.getInstance();
+        for (Carta carta : juego.jugadoresCartasActuales()) {
             ImageView imagenCarta = new ImageView(new Image(Paths.get("src/main/java/edu/fiuba/algo3/resources/cartas/" + carta.numero() + "_" + carta.getPalo() + ".jpg").toUri().toString()));
             imagenCarta.setFitWidth(56);
             imagenCarta.setFitHeight(84);
 
-            imagenCarta.setOnMouseClicked(event -> {
-                if (cartasSeleccionadas.contains(carta)) {
-                    // Si la carta ya está seleccionada, la deseleccionamos
-                    cartasSeleccionadas.remove(carta);
-                    imagenCarta.setStyle("-fx-effect: null;");
-                } else if (cartasSeleccionadas.size() < 5) {
-                    // Si la carta no está seleccionada y se puede seleccionar más, la agregamos
-                    cartasSeleccionadas.add(carta);
-                    imagenCarta.setStyle("-fx-effect: dropshadow(gaussian, blue, 10, 0.5, 0, 0);");
-                    sonido.play(); // Reproduce el sonido solo si la carta se selecciona efectivamente
-                } else {
-                    // Si ya se han seleccionado 5 cartas, no se puede seleccionar más
-                    System.out.println("No puedes seleccionar más de 5 cartas.");
-                }
-            });
-
+            CartaSeleccionadaHandler seleccion = new CartaSeleccionadaHandler(cartasSeleccionadas, carta, imagenCarta, sonido);
+            imagenCarta.setOnMouseClicked(event -> seleccion.handle(new ActionEvent())); // Adaptación para manejar ActionEvent
             visualCartas.getChildren().add(imagenCarta);
         }
     }
+
 
     public BorderPane crearParteDerecha() {
         return parteDerecha;

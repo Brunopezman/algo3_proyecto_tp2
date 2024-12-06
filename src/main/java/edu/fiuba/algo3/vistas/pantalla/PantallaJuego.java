@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.vistas.pantalla;
 
 import edu.fiuba.algo3.modelo.juego.Juego;
+import edu.fiuba.algo3.modelo.juego.Ronda;
 import edu.fiuba.algo3.vistas.menu.MenuJuego;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
@@ -20,8 +21,13 @@ public class PantallaJuego {
         this.root = new VBox();
         this.contenidoJuego = new GridPane();
         this.menuJuego = new MenuJuego(stage);
+        Ronda ronda = juego.inicializarRonda();
+
+        //INICIO RONDA
+        ronda.iniciarRonda();
+
         // Inicializar las partes
-        this.parteIzquierda = new ParteIzquierda(juego.puntajeNecesarioRonda(), juego.puntajeRonda(), juego.turnosTotales(), juego.descartesActuales(), juego.rondaActual());
+        this.parteIzquierda = new ParteIzquierda(juego.puntajeNecesarioRonda(), juego.puntajeRonda(), juego.turnoActual(), juego.descartesActuales(), juego.rondaActual());
         this.parteDerecha = new ParteDerecha(juego, this.parteIzquierda);
 
         // Configurar la interfaz inicial

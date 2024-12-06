@@ -27,9 +27,9 @@ public class BotonConfirmarHandler implements EventHandler<ActionEvent>{
         String nombreIngresado = campoNombre.getText().trim();
         if (nombreIngresado.isEmpty()) {
             textoIngreseNombre.setText("Por favor ingresa tu nombre");
-
+        }else{
+            mostrarPantallaJuego(nombreIngresado);
         }
-        mostrarPantallaJuego(nombreIngresado);
     }
 
     public void mostrarPantallaJuego(String nombre) {

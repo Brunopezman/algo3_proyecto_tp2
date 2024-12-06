@@ -11,12 +11,9 @@ import java.io.FileNotFoundException;
 
 public class BotonComencemos extends Button {
 
-    private final BotonComencemosHandler handler;
-
     public BotonComencemos(BotonComencemosHandler handler) {
         super("Comenzar");
         configurarBoton();
-        this.handler = handler;
         this.setOnAction(handler);
     }
 
