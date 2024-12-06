@@ -49,6 +49,15 @@ public class Turno {
         this.cantidadDescartes = 0;
     }*/
 
+    //Getters y Setters
+    public int puntajeDelTurno(){
+        return puntaje;
+    }
+
+    private void setPuntaje(int nuevoPuntaje){
+        this.puntaje = nuevoPuntaje;
+    }
+
 
     public int calcularJugada(List<Carta> cartas, Mano mano){
         int puntaje = 0;
@@ -77,10 +86,6 @@ public class Turno {
         return mano;
     }
 
-    public int puntajeDelTurno(){
-        return puntaje;
-    }
-
     public void sumarManoJugada(int valor){
         this.setPuntaje(valor);
     }
@@ -94,10 +99,6 @@ public class Turno {
             return false;
         }
         return true;
-    }
-
-    private void setPuntaje(int nuevoPuntaje){
-        this.puntaje = nuevoPuntaje;
     }
 
     public void registrarDescarte() {
