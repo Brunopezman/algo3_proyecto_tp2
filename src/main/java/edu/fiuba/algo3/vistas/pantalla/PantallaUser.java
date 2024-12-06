@@ -34,14 +34,8 @@ public class PantallaUser {
         Image imagenFondo = new Image(Paths.get(rutaImagen).toUri().toString());
 
         // Configurar el fondo
-        BackgroundImage backgroundImage = new BackgroundImage(
-                imagenFondo,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.CENTER,
-                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, true, true)
-        );
-        fondo.setBackground(new Background(backgroundImage));
+        Background background = new Background(new BackgroundImage(imagenFondo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT));
+        fondo.setBackground(background);
 
         // Crear el VBox para el contenido y hacer que ocupe todo el espacio disponible
         VBox contenido = new VBox();
