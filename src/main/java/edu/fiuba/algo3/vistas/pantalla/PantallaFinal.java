@@ -1,6 +1,8 @@
 package edu.fiuba.algo3.vistas.pantalla;
 
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -11,11 +13,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.nio.file.Paths;
 
-public class PantallaTienda {
-
+public class PantallaFinal extends Parent {
     private StackPane root;
-
-    public PantallaTienda() {
+    
+    public PantallaFinal(String resultado) {
         StackPane fondo = new StackPane();
 
         // Cargar las fuentes
@@ -39,7 +40,7 @@ public class PantallaTienda {
         contenido.setPrefSize(800, 600); // Tamaño preferido del contenido, ajusta según tus necesidades
 
         // Texto de encabezado
-        Text textoGanaste = new Text("TIENDA");
+        Text textoGanaste = new Text(resultado);
         textoGanaste.setFont(fuenteGanaste);
         textoGanaste.setFill(Color.YELLOW);
         textoGanaste.setStyle("-fx-fill: white;");
@@ -58,5 +59,10 @@ public class PantallaTienda {
             System.err.println("Fuente no encontrada: " + rutaFuente);
             return Font.font("Arial", tamanio);
         }
+    }
+
+    @Override
+    public Node getStyleableNode() {
+        return super.getStyleableNode();
     }
 }

@@ -22,6 +22,8 @@ public abstract class Tarot {
         }
     }
 
+     public String getNombre(){ return nombre; }
+
     public abstract void aplicarEfectos(List<Carta> cartas, Mano mano);
 
     public boolean esElegido(Tarot tarotElegido) {

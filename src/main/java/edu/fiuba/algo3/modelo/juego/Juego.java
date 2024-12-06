@@ -72,11 +72,17 @@ public class Juego {
         this.jugador = new Jugador(nombreJugador);
     }
 
-    public List<Carta> repartirCartasJugador() {
-        return jugador.recibirCartas(mazo);
+    public List<Carta> repartirCartasJugador(int cantidad) {
+        return jugador.recibirCartas(mazo, cantidad);
+    }
+
+    public void quitarCartasUsadas (List<Carta> cartas) {
+        jugador.eliminarCartasUsadas(cartas);
     }
 
     public String getNombreJugador() { return jugador.getNombre();}
+
+    public List<Carta> jugadoresCartasActuales() {return jugador.getCartasActuales(); }
 
     //TIENDA
     public Tienda getTiendaRonda() {
@@ -100,7 +106,7 @@ public class Juego {
     }
 
     public boolean avanzarRonda() {
-        if(this.getRondaActual().seAlcanzoElPuntajeDeRonda()) {
+        /*if(this.getRondaActual().seAlcanzoElPuntajeDeRonda()) {
             if(esUltimaRonda()){
                 juego.ganado = true;
                 return false;
@@ -109,6 +115,17 @@ public class Juego {
             numeroRondaActual++;
             this.resetMazo();
             return true;
+        }
+        return false;*/
+        if (this.getRondaActual().sePuedeAvanzar()){
+            if(esUltimaRonda()){
+                juego.ganado = true;
+                return false;
+            }
+            this.cargarComodinesActuales();
+            numeroRondaActual++;
+            this.getRondaActual().iniciarRonda();
+            this.resetMazo();
         }
         return false;
     }

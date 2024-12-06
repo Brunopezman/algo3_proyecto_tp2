@@ -45,6 +45,7 @@ public class Ronda {
         this.tienda = tienda;
         this.comodines = new ArrayList <Comodin>();
         this.tarots = new ArrayList<Tarot>();
+        this.cantidadTurnos = manos;
     }
 
     public int getDescartesDisponibles(){
@@ -126,8 +127,9 @@ public class Ronda {
         */
         mano.sumarDescartes(descartesActuales);
         Turno turno = this.getTurno(turnoActual);
-
-        return turno.calcularJugada(cartas,mano); //carga puntaje final en turno y devolvemos valor;
+        int puntaje = turno.calcularJugada(cartas,mano);
+        sumarPuntos(puntaje);
+        return puntaje; //carga puntaje final en turno y devolvemos valor;
     }
 
     public List<Carta> descartar(Mazo mazo, List<Carta> cartasActuales, List<Carta> cartasADescartar){
@@ -171,6 +173,29 @@ public class Ronda {
         this.eliminarTarotPorUso(tarotElegido);
         tarotElegido.modificarAQueAplica(carta.getNombre());
     }
+
+    private void sumarPuntos(int puntos){ puntajeAlcanzado += puntos;}
+
+    public boolean sePuedeAvanzar() {
+        if (this.seAlcanzoElPuntajeDeRonda()){
+            return true;
+        } else if(turnoActual > cantidadTurnos && this.seAlcanzoElPuntajeDeRonda()){
+            return true;
+        }
+        return false;
+    }
+
+    ///////////////////////AUXILIARES////////////////////////
+
+    public int getNro() { return nroRonda; }
+
+
+    public int getTurnos() { return this.cantidadTurnos; }
+
+
+    public int getDescartes() { return this.getDescartesDisponibles();}
+
+    public int getPuntajeASuperar() { return puntajeASuperar; }
 
 
 }
