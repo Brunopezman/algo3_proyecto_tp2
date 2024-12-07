@@ -4,8 +4,8 @@ import edu.fiuba.algo3.controllers.BotonDescartarHandler;
 import edu.fiuba.algo3.controllers.BotonJugarManoHandler;
 import edu.fiuba.algo3.controllers.CartaSeleccionadaHandler;
 import edu.fiuba.algo3.modelo.carta.Carta;
+import edu.fiuba.algo3.modelo.comodin.Comodin;
 import edu.fiuba.algo3.modelo.juego.Juego;
-import edu.fiuba.algo3.modelo.mano.Mano;
 import edu.fiuba.algo3.vistas.boton.BotonDescartar;
 import edu.fiuba.algo3.vistas.boton.BotonJugarMano;
 import javafx.event.ActionEvent;
@@ -33,6 +33,8 @@ public class ParteDerecha {
     private static HBox visualCartas;
     private static Text cartasRestantesText;
     private PantallaJuego pantallaJuego;
+    private VBox comodinesBox;
+    private VBox tarotsBox;
 
 
     public ParteDerecha(Juego juego, ParteIzquierda parteIzquierda) {
@@ -136,11 +138,6 @@ public class ParteDerecha {
         Juego juego = Juego.getInstance();
         cartasRestantesText.setText(juego.getMazo().cartasRestantes() + "/52");
         actualizarVisualCartas(cartasSeleccionadas);
-        /*
-        if (juego.descartesActuales() == 0) {
-            System.out.println("Ya tienes 8 cartas en pantalla, no puedes repartir más.");
-        }
-        */
     }
 
     public static void actualizarVisualCartas(List<Carta> cartasSeleccionadas) {
@@ -153,13 +150,24 @@ public class ParteDerecha {
             imagenCarta.setFitWidth(56);
             imagenCarta.setFitHeight(84);
             CartaSeleccionadaHandler seleccion = new CartaSeleccionadaHandler(cartasSeleccionadas, carta, imagenCarta, sonido, parteIzquierda);
-            imagenCarta.setOnMouseClicked(event -> seleccion.handle(new ActionEvent())); // Adaptación para manejar ActionEvent
+            imagenCarta.setOnMouseClicked(event -> seleccion.handle(new ActionEvent()));
             visualCartas.getChildren().add(imagenCarta);
         }
     }
 
-
     public BorderPane crearParteDerecha() {
         return parteDerecha;
+    }
+
+    public void actualizar(List<Comodin> comodinesSeleccionados) {
+        this.comodinesBox.getChildren().clear();
+        this.tarotsBox.getChildren().clear();
+        for (Comodin comodin : comodinesSeleccionados) {
+            Image comodinImagen = new Image(Paths.get("").toUri().toString());
+            ImageView cartaView = new ImageView(comodinImagen);
+            cartaView.setFitWidth(56); // Ancho de las cartas
+            cartaView.setFitHeight(84); // Alto de las cartas
+        }
+
     }
 }

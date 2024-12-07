@@ -16,6 +16,7 @@ public class PantallaJuego {
     private GridPane contenidoJuego;
     private ParteIzquierda parteIzquierda;
     private ParteDerecha parteDerecha;
+    private PantallaTienda tienda;
 
     public PantallaJuego(Juego juego, Stage stage) {
         this.root = new VBox();
@@ -25,9 +26,11 @@ public class PantallaJuego {
 
         //INICIO RONDA
         ronda.iniciarRonda();
+
         // Inicializar las partes
         this.parteIzquierda = new ParteIzquierda();
         this.parteDerecha = new ParteDerecha(juego, this.parteIzquierda);
+        this.tienda = new PantallaTienda(this.parteDerecha);
 
         // Configurar la interfaz inicial
         setupInterfaz();

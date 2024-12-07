@@ -1,8 +1,13 @@
 package edu.fiuba.algo3.vistas.pantalla;
 
+import edu.fiuba.algo3.controllers.BotonComprarHandler;
+import edu.fiuba.algo3.controllers.BotonOmitirHandler;
 import edu.fiuba.algo3.controllers.ComodinSeleccionadoHandler;
 import edu.fiuba.algo3.controllers.TarotSeleccionadoHandler;
 
+import edu.fiuba.algo3.modelo.comodin.Comodin;
+import edu.fiuba.algo3.vistas.boton.BotonComprar;
+import edu.fiuba.algo3.vistas.boton.BotonOmitir;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -19,10 +24,18 @@ import javafx.scene.media.AudioClip;
 import java.io.FileInputStream;
 import java.nio.file.Paths;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
 public class PantallaTienda {
+
+    private static List<Comodin> comodinesSeleccionados;
+    private static ParteDerecha parteDerecha ;
+
+    public PantallaTienda(ParteDerecha parteDerecha) {
+        this.parteDerecha = parteDerecha;
+    }
 
     public static void mostrarTienda() {
         Stage tiendaStage = new Stage();
@@ -81,8 +94,8 @@ public class PantallaTienda {
             cartaView.setFitHeight(150); // Alto de las cartas
 
             // Instanciar el handler específico para cartas comodín
-            ComodinSeleccionadoHandler handler = new ComodinSeleccionadoHandler(indice, cartaView, sonidoClick);
-            cartaView.setOnMouseClicked(event -> handler.handle(event));
+            ComodinSeleccionadoHandler handler = new ComodinSeleccionadoHandler(cartasComodin[indice], cartaView,cartaImagen, sonidoClick, comodinesSeleccionados, parteDerecha);
+            cartaView.setOnMouseClicked(handler::handle);
             contenedorComodines.getChildren().add(cartaView);
         }
 
@@ -98,7 +111,7 @@ public class PantallaTienda {
 
             // Instanciar el handler específico para cartas tarot
             TarotSeleccionadoHandler handler = new TarotSeleccionadoHandler(indice, cartaView, sonidoClick);
-            cartaView.setOnMouseClicked(event -> handler.handle(event));
+            cartaView.setOnMouseClicked(handler::handle);
             contenedorTarot.getChildren().add(cartaView);
         }
 
@@ -118,18 +131,18 @@ public class PantallaTienda {
         stackPane.setBackground(background);
 
         // Organizar botones
-        Button botonComprar = new Button("Comprar");
-        botonComprar.setOnAction(e -> System.out.println("¡Has comprado las cartas seleccionadas!"));
+        BotonComprarHandler botonComprarHandler = new BotonComprarHandler();
+        BotonComprar botonComprar = new BotonComprar(botonComprarHandler);
 
-        Button cerrarTienda = new Button("Cerrar");
-        cerrarTienda.setOnAction(e -> tiendaStage.close());
+        BotonOmitirHandler botonOmitirHandler = new BotonOmitirHandler(tiendaStage);
+        BotonOmitir botonOmitir = new BotonOmitir(botonOmitirHandler);
 
         // Organizar botones en un HBox
-        HBox botonesBox = new HBox(20, botonComprar, cerrarTienda);
+        HBox botonesBox = new HBox(20, botonComprar, botonOmitir);
         botonesBox.setAlignment(Pos.CENTER);
 
         // Layout principal dentro del StackPane
-        VBox layout = new VBox(20, titulo, contenedorCartas, botonesBox);
+        VBox layout = new VBox(10, titulo, contenedorCartas, botonesBox);
         layout.setAlignment(Pos.CENTER);
         layout.setPadding(new Insets(10));
 
@@ -137,7 +150,7 @@ public class PantallaTienda {
         stackPane.getChildren().add(layout);
 
         // Crear la escena y mostrarla
-        Scene scene = new Scene(stackPane, 800, 600);
+        Scene scene = new Scene(stackPane, 640, 480);
         tiendaStage.setScene(scene);
         tiendaStage.show();
     }
@@ -160,68 +173,3 @@ public class PantallaTienda {
         }
     }
 }
-
-/*
-package edu.fiuba.algo3.vistas.pantalla;
-
-import javafx.geometry.Pos;
-import javafx.scene.image.Image;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.nio.file.Paths;
-
-public class PantallaTienda {
-
-    private StackPane root;
-
-    public PantallaTienda() {
-        StackPane fondo = new StackPane();
-
-        // Cargar las fuentes
-        Font fuenteGanaste = cargarFuente("src/main/java/edu/fiuba/algo3/resources/fuentes/fuente2.otf", 40);
-        Font fuenteConfirmar = cargarFuente("src/main/java/edu/fiuba/algo3/resources/fuentes/fuente2.otf", 30);
-
-        // Cargar la imagen de fondo
-        String rutaImagen = "src/main/java/edu/fiuba/algo3/resources/fondos/fondo_rya2.jpeg";
-        Image imagenFondo = new Image(Paths.get(rutaImagen).toUri().toString());
-
-        // Configurar el fondo
-        Background background = new Background(new BackgroundImage(imagenFondo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT));
-        fondo.setBackground(background);
-
-        // Crear el VBox para el contenido y hacer que ocupe todo el espacio disponible
-        VBox contenido = new VBox();
-        //contenido.setStyle("-fx-background-color: rgba(70, 130, 180, 0.5);");
-        contenido.setAlignment(Pos.CENTER);
-        contenido.setSpacing(30);
-        contenido.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        contenido.setPrefSize(800, 600); // Tamaño preferido del contenido, ajusta según tus necesidades
-
-        // Texto de encabezado
-        Text textoGanaste = new Text("TIENDA");
-        textoGanaste.setFont(fuenteGanaste);
-        textoGanaste.setFill(Color.YELLOW);
-        textoGanaste.setStyle("-fx-fill: white;");
-
-        // Añadir elementos al VBox
-        contenido.getChildren().add(textoGanaste);
-
-        // Configurar el root de la pantalla
-        this.root = fondo;
-    }
-
-    private Font cargarFuente(String rutaFuente, int tamanio) {
-        try {
-            return Font.loadFont(new FileInputStream(rutaFuente), tamanio);
-        } catch (FileNotFoundException e) {
-            System.err.println("Fuente no encontrada: " + rutaFuente);
-            return Font.font("Arial", tamanio);
-        }
-    }
-}
-**/
