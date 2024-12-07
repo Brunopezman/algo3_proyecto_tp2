@@ -25,7 +25,7 @@ public class Carta {
 
     public int puntaje() { return this.valor.getPuntaje(); }
 
-    public boolean esConsecutiva(Carta otraCarta) { return valor.sonConsecutivos(otraCarta.numero()); }
+    public boolean esConsecutiva(Carta otraCarta) { return valor.sonConsecutivos(otraCarta.valor.getConsecutivo()); }
 
     public boolean esIgual(String nombreCarta){ return this.nombre.equals(nombreCarta); };
 

@@ -50,7 +50,7 @@ public class BotonJugarManoHandler implements EventHandler<ActionEvent> {
             }
             cartasSeleccionadas.clear();
             parteIzquierda.actualizar();
-            ParteDerecha.actualizarVisualCartas(cartasSeleccionadas);
+            ParteDerecha.visualizarCartas(cartasSeleccionadas);
         } else {
             System.out.println("No has seleccionado ninguna carta.");
         }
@@ -62,9 +62,11 @@ public class BotonJugarManoHandler implements EventHandler<ActionEvent> {
         Stage popupStage = new Stage();
         popupStage.initModality(Modality.APPLICATION_MODAL); // Hace que sea modal
         popupStage.setTitle("Resultado de la Partida");
+        popupStage.resizableProperty().setValue(Boolean.FALSE);
 
         Scene scene = new Scene(pantallaFinal, 400, 200); // Tamaño del pop-up
         popupStage.setScene(scene);
+        popupStage.resizableProperty().setValue(Boolean.FALSE);
 
         popupStage.centerOnScreen();
         popupStage.showAndWait(); // Espera a que se cierre antes de continuar

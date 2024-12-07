@@ -117,7 +117,7 @@ public class Juego {
             return true;
         }
         return false;*/
-        if (this.getRondaActual().sePuedeAvanzar()){
+        if(this.getRondaActual().seAlcanzoElPuntajeDeRonda()) {
             if(esUltimaRonda()){
                 juego.ganado = true;
                 return false;
@@ -126,6 +126,7 @@ public class Juego {
             numeroRondaActual++;
             this.getRondaActual().iniciarRonda();
             this.resetMazo();
+            return true;
         }
         return false;
     }
@@ -192,8 +193,12 @@ public class Juego {
         return rondas.size();
     }
 
-    public List<Carta> descartarCartas(List<Carta> cartasActuales, List<Carta> cartasADescartar){
+    public List<Carta> descartarCartas(List<Carta> cartasADescartar){
+        List<Carta> cartasActuales = jugador.getCartasActuales();
         List<Carta> nuevasCartas = this.getRondaActual().descartar(mazo,cartasActuales,cartasADescartar);
+        if(nuevasCartas.isEmpty()){
+            return nuevasCartas;
+        }
         return jugador.setCartas(nuevasCartas);
     }
 

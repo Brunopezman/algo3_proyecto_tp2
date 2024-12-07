@@ -13,7 +13,7 @@ import java.util.List;
 public class BotonDescartarHandler implements EventHandler<ActionEvent> {
 
     private final Juego juego;
-    private final List<Carta> cartasSeleccionadas;
+    private List<Carta> cartasSeleccionadas;
     private final ParteIzquierda parteIzquierda;
     private Text cartasRestantesText;
 
@@ -27,11 +27,14 @@ public class BotonDescartarHandler implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent actionEvent) {
         if (!cartasSeleccionadas.isEmpty()) {
-            juego.quitarCartasUsadas(cartasSeleccionadas);
-            juego.repartirCartasJugador(cartasSeleccionadas.size());
-            cartasSeleccionadas.clear();
-            parteIzquierda.actualizar();
-            ParteDerecha.actualizarVisualCartas(cartasSeleccionadas);
+            List<Carta> nuevas = juego.descartarCartas(cartasSeleccionadas);
+            if (nuevas.isEmpty()) {
+                System.out.println("No te quedan descartes!!!");
+            }else {
+                cartasSeleccionadas.clear();
+                parteIzquierda.actualizar();
+                ParteDerecha.actualizarVisualCartas(cartasSeleccionadas);
+            }
         } else {
             System.out.println("No has seleccionado ninguna carta.");
         }

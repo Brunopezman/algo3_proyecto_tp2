@@ -28,17 +28,16 @@ import java.util.List;
 public class ParteDerecha {
     private final BorderPane parteDerecha;
     private final Juego juego;
-    //private final List<Carta> cartasSeleccionadas;
     private final ParteIzquierda parteIzquierda;
     private static HBox visualCartas;
-    private Text cartasRestantesText;
+    private static Text cartasRestantesText;
     private PantallaJuego pantallaJuego;
+
 
     public ParteDerecha(Juego juego, ParteIzquierda parteIzquierda) {
         this.juego = juego;
         this.parteIzquierda = parteIzquierda;
         this.parteDerecha = new BorderPane();
-        //this.cartasSeleccionadas = new ArrayList<>();
         inicializarUI();
     }
 
@@ -53,10 +52,6 @@ public class ParteDerecha {
         // Llama a repartirCartas para inicializar las cartas desde el comienzo
         juego.repartirCartasJugador(8);
         List<Carta> cartasSeleccionadas = new ArrayList<>();
-        visualizarCartas(cartasSeleccionadas);
-
-        centro.getChildren().add(visualCartas);
-        parteDerecha.setCenter(centro);
 
         // Comodines y Tarots
         HBox comodinesTarots = crearComodinesTarots();
@@ -65,6 +60,11 @@ public class ParteDerecha {
         // Botones y Mazo
         HBox contenidoInferior = crearContenidoInferior(cartasSeleccionadas);
         parteDerecha.setBottom(contenidoInferior);
+
+        // Visualizacion de cartas en la mano
+        visualizarCartas(cartasSeleccionadas);
+        centro.getChildren().add(visualCartas);
+        parteDerecha.setCenter(centro);
 
         parteDerecha.setPadding(new Insets(10));
     }
@@ -131,15 +131,15 @@ public class ParteDerecha {
         return contenidoInferior;
     }
 
-    private void visualizarCartas(List<Carta> cartasSeleccionadas) {
+    public static void visualizarCartas(List<Carta> cartasSeleccionadas) {
+        Juego juego = Juego.getInstance();
+        cartasRestantesText.setText(juego.getMazo().cartasRestantes() + "/52");
         actualizarVisualCartas(cartasSeleccionadas);
-
+        /*
         if (juego.descartesActuales() == 0) {
             System.out.println("Ya tienes 8 cartas en pantalla, no puedes repartir más.");
-            return;
         }
-
-        cartasRestantesText.setText(juego.getMazo().cartasRestantes() + "/52");
+        */
     }
 
     public static void actualizarVisualCartas(List<Carta> cartasSeleccionadas) {

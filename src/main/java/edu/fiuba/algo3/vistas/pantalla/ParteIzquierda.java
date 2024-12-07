@@ -20,11 +20,12 @@ public class ParteIzquierda {
     private StackPane descartesBox;
     private StackPane rondaBox;
 
-    public ParteIzquierda(int puntajeMin, int puntajeRonda, int turnos, int descartes, int rondaActual) {
+    public ParteIzquierda() {
         this.parteIzquierda = new VBox();
         parteIzquierda.setAlignment(Pos.TOP_CENTER);
         parteIzquierda.setSpacing(15);
         parteIzquierda.setPadding(new Insets(10, 10, 10, 5));
+        Juego juego = Juego.getInstance();
 
         // Estilo y colores definidos
         String estiloTextoBlanco = "-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;";
@@ -34,12 +35,14 @@ public class ParteIzquierda {
         puntajeSection.setAlignment(Pos.CENTER);
         puntajeSection.setSpacing(5);
 
-        puntajeBox = crearCuadroConValor("Puntaje Min", String.valueOf(puntajeMin), 100, 200, "#444444", "#666666");
+        String puntajeMin = String.valueOf(juego.puntajeNecesarioRonda());
+        puntajeBox = crearCuadroConValor("Puntaje para avanzar", puntajeMin, 100, 200, "#444444", "#666666");
 
         puntajeSection.getChildren().add(puntajeBox);
 
         // Puntaje acumulado
-        puntajeAcumuladoBox = crearCuadroConValor("Puntaje Ronda", String.valueOf(puntajeRonda), 100, 200, "#333333", "#555555");
+        String puntajeRonda = String.valueOf(juego.puntajeRonda());
+        puntajeAcumuladoBox = crearCuadroConValor("Puntaje Ronda", puntajeRonda, 100, 200, "#333333", "#555555");
 
         // Marcador de cartas
         VBox marcadorSection = new VBox();
@@ -71,8 +74,12 @@ public class ParteIzquierda {
         turnosDescartes.setAlignment(Pos.CENTER);
         turnosDescartes.setSpacing(10);
 
-        turnosBox = crearCuadroConValor("Turnos", String.valueOf(turnos), 80, 100, "#444444", "#666666");
-        descartesBox = crearCuadroConValor("Descartes", String.valueOf(descartes), 80, 100, "#444444", "#666666");
+        String turnoActual = String.valueOf(juego.turnoActual());
+        String turnoTotales = String.valueOf(juego.turnosTotales());
+        String descartesActuales = String.valueOf(juego.descartesActuales());
+        String descartesTotales = String.valueOf(juego.descartesDisponibles());
+        turnosBox = crearCuadroConValor("Turnos", turnoActual + " / " + turnoTotales, 80, 100, "#444444", "#666666");
+        descartesBox = crearCuadroConValor("Descartes", descartesActuales + " / " + descartesTotales, 80, 100, "#444444", "#666666");
 
         turnosDescartes.getChildren().addAll(turnosBox, descartesBox);
 
@@ -81,9 +88,10 @@ public class ParteIzquierda {
         rondaYnombre.setAlignment(Pos.CENTER);
         rondaYnombre.setSpacing(10);
 
-        String aux = Juego.getInstance().getNombreJugador();
-        StackPane nombre = crearCuadroConValor("Nombre", aux, 70, 100, "#444444", "#666666");
-        rondaBox = crearCuadroConValor("Round", rondaActual+ " / 8", 70, 100, "#444444", "#666666");
+        String nombreJugador = juego.getNombreJugador();
+        StackPane nombre = crearCuadroConValor("Nombre", nombreJugador, 70, 100, "#444444", "#666666");
+        String rondaActual = String.valueOf(juego.rondaActual());
+        rondaBox = crearCuadroConValor("Ronda", rondaActual+ " / 8", 70, 100, "#444444", "#666666");
 
         rondaYnombre.getChildren().addAll(nombre, rondaBox);
 
@@ -158,8 +166,8 @@ public class ParteIzquierda {
         this.rondaBox.getChildren().clear();
         this.puntajeAcumuladoBox.getChildren().add(crearCuadroConValor("Puntaje Ronda", String.valueOf(juego.puntajeRonda()), 100, 200, "#333333", "#555555"));
         this.puntajeBox.getChildren().add(crearCuadroConValor("Puntaje Min", String.valueOf(juego.puntajeNecesarioRonda()), 100, 200, "#444444", "#666666"));
-        this.turnosBox.getChildren().add(crearCuadroConValor("Turnos", String.valueOf(juego.turnoActual()), 80, 100, "#444444", "#666666"));
-        this.descartesBox.getChildren().add(crearCuadroConValor("Descartes", String.valueOf(juego.descartesActuales()), 80, 100, "#444444", "#666666"));
+        this.turnosBox.getChildren().add(crearCuadroConValor("Turnos", juego.turnoActual() + " / " + juego.turnosTotales(), 80, 100, "#444444", "#666666"));
+        this.descartesBox.getChildren().add(crearCuadroConValor("Descartes", juego.descartesActuales() + " / " + juego.descartesDisponibles(), 80, 100, "#444444", "#666666"));
         this.rondaBox.getChildren().add(crearCuadroConValor("Round", juego.rondaActual()+ " / 8", 70, 100, "#444444", "#666666"));
     }
 
