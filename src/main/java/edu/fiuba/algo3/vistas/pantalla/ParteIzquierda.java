@@ -53,9 +53,6 @@ public class ParteIzquierda {
         marcadorSection.setAlignment(Pos.CENTER);
         marcadorSection.setSpacing(5);
 
-        Label pairLabel = new Label("");
-        pairLabel.setStyle(estiloTextoBlanco);
-
         HBox valoresCartas = new HBox();
         valoresCartas.setAlignment(Pos.CENTER);
         valoresCartas.setSpacing(10);
@@ -70,7 +67,7 @@ public class ParteIzquierda {
         valor2.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #ec1111;");
 
         valoresCartas.getChildren().addAll(valor1, multiplicador, valor2);
-        marcadorSection.getChildren().addAll(pairLabel, valoresCartas);
+        marcadorSection.getChildren().addAll(valoresCartas);
         manoConSusCaracteristicasBox = crearCuadroConFondo(marcadorSection, 100, 200, "#333333");
 
         // Turnos y descartes
@@ -121,8 +118,11 @@ public class ParteIzquierda {
         marcadorSection.setAlignment(Pos.CENTER);
         marcadorSection.setSpacing(5);
 
-        Label manoNombre = new Label(nombre.toUpperCase(Locale.ROOT));
-        manoNombre.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;");
+        if (!nombre.isEmpty()) {
+            Label manoNombre = new Label(nombre.toUpperCase(Locale.ROOT));
+            manoNombre.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;");
+            marcadorSection.getChildren().addAll(manoNombre);
+        }
 
         HBox valoresCartas = new HBox();
         valoresCartas.setAlignment(Pos.CENTER);
@@ -138,7 +138,7 @@ public class ParteIzquierda {
         valor2.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #ec1111;");
 
         valoresCartas.getChildren().addAll(valor1, medio, valor2);
-        marcadorSection.getChildren().addAll(manoNombre, valoresCartas);
+        marcadorSection.getChildren().addAll(valoresCartas);
 
         Rectangle fondo = new Rectangle(200, 100);
         fondo.setArcWidth(10);
