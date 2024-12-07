@@ -39,14 +39,16 @@ public class Ronda {
         this.nroRonda = nro;
         this.turnos = new ArrayList<Turno>();
         this.turnoActual = INICIO;
-        this.cantidadTurnos = manos;
         this.descartesMaximos = descartesMaximos;
         this.descartesActuales = 0;
         this.puntajeASuperar = puntajeAObtener;
         this.tienda = tienda;
         this.comodines = new ArrayList <Comodin>();
         this.tarots = new ArrayList<Tarot>();
+        this.cantidadTurnos = manos;
     }
+
+    //Getters y Setters
 
     public int getDescartesDisponibles(){
         return descartesMaximos;
@@ -55,6 +57,32 @@ public class Ronda {
     public int getDescartesActuales(){
         return descartesActuales;
     }
+
+    public int cantidadTurnos(){ return turnos.size(); }
+
+    public int turnoActual(){ return turnoActual; }
+
+    public int puntosTurnoActual(){ return this.getTurno(turnoActual).puntajeDelTurno(); }
+
+    public int cantidadComodines(){ return comodines.size(); }
+
+    public Turno getTurno(int numeroTurno){ return turnos.get(numeroTurno-1); }
+
+    public int getPuntajeNecesario(){
+        return puntajeASuperar;
+    }
+
+    public Tienda getTienda(){ return tienda; }
+
+    public int getNro() { return nroRonda; }
+
+    public int getTurnos() { return this.cantidadTurnos; }
+
+    public int getDescartes() { return this.getDescartesDisponibles();}
+
+    public int getPuntajeASuperar() { return puntajeASuperar; }
+
+    ////////////////////////////////////
 
     public void cargarComodinesRonda(List<Comodin> comodinesElegidos){
         comodines.addAll(comodinesElegidos);
@@ -73,25 +101,11 @@ public class Ronda {
     }
 
     public boolean avanzarTurno(){
-        if (turnoActual >= 5){ //esto debería controlarse desde la entidad que contiene las rondas
+        if (turnoActual >= cantidadTurnos){ //esto debería controlarse desde la entidad que contiene las rondas
             return false;
         }
         turnoActual++;
         return true;
-    }
-
-    //public int cantidadTurnos(){ return turnos.size(); }
-
-    public int turnoActual(){ return turnoActual; }
-
-    //public int puntosTurnoActual(){ return this.getTurno(turnoActual).puntajeDelTurno(); }
-
-    public int cantidadComodines(){ return comodines.size(); }
-
-    public Turno getTurno(int numeroTurno){ return turnos.get(numeroTurno-1); }
-
-    public int getPuntajeNecesario(){
-        return puntajeASuperar;
     }
 
     public int calcularPuntajeRonda() {
@@ -102,10 +116,6 @@ public class Ronda {
     }
 
     public boolean seAlcanzoElPuntajeDeRonda() { return (puntajeAlcanzado >= puntajeASuperar); }
-
-    public int cantidadDeTurnos(){ return cantidadTurnos; }
-
-    public Tienda getTienda(){ return tienda; }
 
     public void transferirComodines(Ronda ronda) {
         ronda.cargarComodinesRonda(comodines);
@@ -154,7 +164,7 @@ public class Ronda {
         return cartasActuales;
     }
 
-    private void eliminarTarotPorUso(Tarot tarotUsado){
+    private void consumirTarot(Tarot tarotUsado){
         for (Tarot tarotActual : tarots){
             if(tarotActual.esElegido(tarotUsado)){
                 tarots.remove(tarotActual);
@@ -163,39 +173,20 @@ public class Ronda {
         }
     }
 
-    public void agregarTarotEsteTurno(Tarot tarotElegido){
-        this.eliminarTarotPorUso(tarotElegido);
+    public void usarTarotEnEsteTurno(Tarot tarotElegido){
+        this.consumirTarot(tarotElegido);
         Turno turno = this.getTurno(turnoActual);
         turno.agregarTarot(tarotElegido);
     }
 
-    public void seleccionarTarotEsteTurno(Tarot tarotElegido, Carta carta){
-        this.eliminarTarotPorUso(tarotElegido);
+    public void usarTarotEnCarta(Tarot tarotElegido, Carta carta){
+        this.consumirTarot(tarotElegido);
         tarotElegido.modificarAQueAplica(carta.getNombre());
     }
 
     private void sumarPuntos(int puntos){ puntajeAlcanzado += puntos;}
 
     public boolean sePuedeAvanzar() {
-        if (this.seAlcanzoElPuntajeDeRonda()){
-            return true;
-        } else if(turnoActual > cantidadTurnos && this.seAlcanzoElPuntajeDeRonda()){
-            return true;
-        }
-        return false;
+        return this.seAlcanzoElPuntajeDeRonda();
     }
-
-    ///////////////////////AUXILIARES////////////////////////
-
-    public int getNro() { return nroRonda; }
-
-
-    public int getTurnos() { return this.cantidadTurnos; }
-
-
-    public int getDescartes() { return this.getDescartesDisponibles();}
-
-    public int getPuntajeASuperar() { return puntajeASuperar; }
-
-
 }

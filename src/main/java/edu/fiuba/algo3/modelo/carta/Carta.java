@@ -17,6 +17,8 @@ public class Carta {
         this.palo = new Palo(palo);
     }
 
+    //Getters y Setters
+
     public String getNombre() {return this.nombre; }
 
     public String numero() { return this.valor.getNumero(); }
@@ -25,6 +27,8 @@ public class Carta {
 
     public int puntaje() { return this.valor.getPuntaje(); }
 
+    ///////////////////////////////
+
     public boolean esConsecutiva(Carta otraCarta) { return valor.sonConsecutivos(otraCarta.numero()); }
 
     public boolean esIgual(String nombreCarta){ return this.nombre.equals(nombreCarta); };
@@ -32,8 +36,6 @@ public class Carta {
     public boolean tieneMismoPalo(Carta otraCarta){ return this.palo.sonIgules(otraCarta); };
 
     public boolean tieneMismoNumero(Carta otraCarta){ return this.valor.sonIguales(otraCarta); };
-
-    // public void nuevoValor(int puntaje) { this.valor.actualizarPuntaje(puntaje); }
 
     public void multiplicarValor(int multiplicador) { this.valor.multiplicarPuntaje(multiplicador);}
 

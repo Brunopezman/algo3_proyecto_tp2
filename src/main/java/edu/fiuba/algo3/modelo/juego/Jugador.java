@@ -18,6 +18,26 @@ public class Jugador {
         this.cartasActuales = new ArrayList<>();
     }
 
+    //Getters y Setters
+
+    private void setCartasActuales(List<Carta> cartas) {
+        this.cartasActuales = cartas;
+    }
+
+    public String getNombre() { return nombre; }
+
+    public List<Carta> setCartas(List<Carta> nuevasCartas) {
+        this.cartasActuales = nuevasCartas;
+        return this.cartasActuales;
+    }
+
+    public List<Carta> getCartasActuales() {return cartasActuales;}
+
+
+    public int getCantidadCartasActuales(){ return cartasActuales.size(); }
+
+    //
+
     public List<Carta> recibirCartas(Mazo mazo, int cantidad) {
         List<Carta> cartasRecibidas = mazo.darCartas(cantidad);
         //this.setCartasActuales(cartasRecibidas);
@@ -41,24 +61,11 @@ public class Jugador {
         return encontrado;
     }*/
 
-    private void setCartasActuales(List<Carta> cartas) {
-        this.cartasActuales = cartas;
-    }
-
     public boolean pudeJugarAlgunaMano(){
         return this.cartasActuales.size() >= 5;
     }
 
     public void agregarCartas(ArrayList<Carta> cartasElegidas){ cartasActuales.addAll(cartasElegidas); }
-
-    public String getNombre() { return nombre; }
-
-    public int cantidadCartasActuales(){ return cartasActuales.size(); }
-
-    public List<Carta> setCartas(List<Carta> nuevasCartas) {
-        this.cartasActuales = nuevasCartas;
-        return this.cartasActuales;
-    }
 
     public void eliminarCartasUsadas(List<Carta> cartas) {
         for (Carta cartaEliminar : cartas) {
@@ -70,6 +77,4 @@ public class Jugador {
             }
         }
     }
-
-    public List<Carta> getCartasActuales() {return cartasActuales;}
 }

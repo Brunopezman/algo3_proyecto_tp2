@@ -112,7 +112,7 @@ public class ParteDerecha {
         botones.getChildren().addAll(botonJugarMano, botonDescartar);
 
         // Mazo
-        String rutaImagen = "src/main/java/edu/fiuba/algo3/resources/cartas/reverso.jpg";
+        String rutaImagen = "src/main/java/edu/fiuba/algo3/resources/cartas/reverso.png";
         Image imagen = new Image(Paths.get(rutaImagen).toUri().toString());
         ImageView imageView = new ImageView(imagen);
         imageView.setFitWidth(100);

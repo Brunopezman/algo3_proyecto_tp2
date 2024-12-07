@@ -1,0 +1,59 @@
+@startuml Diagrama de Clases
+
+skinparam monochrome true
+hide circle
+skinparam classAttributeIconSize 0
+
+interface EstrategiaComodin <<interface>> {
+    +realizarModificacion(puntos,multiplicador:int, mano:Mano): void
+}
+
+abstract Comodin <<abstract>>{
+    -nombre: string
+    -descripcion: string
+    -multiplicador: int
+    -puntos: int
+    -comodinesInternos: List<Comodin>
+    +Comodin(nombre,descripcion:string, multiplicador,puntos:int, estrategia: EstrategiaComodin, comodinesInternos:List<Comodin>)    
+    +aplicarEfecto(mano:Mano): void
+}
+
+class EstrategiaSumaSuma {
+}
+
+class EstrategiaSumarMultiplicador {
+}
+
+class ComodinCombinacion {
+    +ComodinCombinacion(nombre,descripcion:string, comodinesInternos:List<Comodin>)
+}
+
+class ComodinAleatorio {
+    -probabilidad: int
+    -valorParaEjecucion: int
+    +ComodinAleatorio(nombre,descripcion:string, multiplicador,puntos,probabilidad:int, estrategia:EstrategiaComodin)
+}
+
+class ComodinDescarte {
+    +ComodinDescarte(nombre,descripcion:string, multiplicador,puntos:int, estrategia: EstrategiaComodin)
+}
+
+class ComodinManoEspecifica {
+    -manoQueAfecta: string
+    +ComodinDescarte(nombre,descripcion,nombreMano:string, multiplicador,puntos:int, estrategia: EstrategiaComodin)
+}
+
+class ComodinRegular {
+    +ComodinRegular(nombre,descripcion:string, multiplicador,puntos:int, estrategia: EstrategiaComodin)
+}
+
+Comodin *-up- EstrategiaComodin
+EstrategiaComodin <|.right. EstrategiaSumaSuma
+EstrategiaComodin <|.left. EstrategiaSumarMultiplicador
+Comodin <|--- ComodinAleatorio
+Comodin <|-- ComodinCombinacion
+Comodin <|-- ComodinDescarte
+Comodin <|--- ComodinManoEspecifica
+Comodin <|-- ComodinRegular
+
+@enduml
