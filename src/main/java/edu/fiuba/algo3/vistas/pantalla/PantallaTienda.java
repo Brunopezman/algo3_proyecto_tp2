@@ -1,3 +1,4 @@
+/*
 package edu.fiuba.algo3.vistas.pantalla;
 
 import javafx.geometry.Pos;
@@ -58,5 +59,40 @@ public class PantallaTienda {
             System.err.println("Fuente no encontrada: " + rutaFuente);
             return Font.font("Arial", tamanio);
         }
+    }
+}
+**/
+
+package edu.fiuba.algo3.vistas.pantalla;
+
+import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
+
+public class PantallaTienda {
+
+    public static void mostrarTienda() {
+        Stage tiendaStage = new Stage();
+        tiendaStage.setTitle("Tienda");
+
+        VBox layout = new VBox(20);
+        layout.setStyle("-fx-background-color: #FFFFFF;");
+
+        // Agregar elementos de la tienda
+        Button comprarItem = new Button("Comprar Item");
+        comprarItem.setOnAction(e -> {
+            // Lógica de compra aquí
+            System.out.println("Item comprado");
+        });
+
+        Button cerrarTienda = new Button("Cerrar");
+        cerrarTienda.setOnAction(e -> tiendaStage.close());
+
+        layout.getChildren().addAll(comprarItem, cerrarTienda);
+
+        Scene scene = new Scene(layout, 300, 200);
+        tiendaStage.setScene(scene);
+        tiendaStage.show();
     }
 }

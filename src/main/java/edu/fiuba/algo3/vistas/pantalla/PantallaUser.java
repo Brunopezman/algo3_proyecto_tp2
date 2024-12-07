@@ -3,6 +3,7 @@ package edu.fiuba.algo3.vistas.pantalla;
 import edu.fiuba.algo3.controllers.BotonConfirmarHandler;
 import edu.fiuba.algo3.vistas.boton.BotonConfirmar;
 import edu.fiuba.algo3.vistas.menu.MenuJuego;
+import edu.fiuba.algo3.vistas.pantalla.PantallaTienda;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -57,7 +58,40 @@ public class PantallaUser {
         campoNombre.setMaxWidth(300);
 
         // Botón de confirmar
-        BotonConfirmarHandler botonConfirmarHandler = new BotonConfirmarHandler(vistaBalatro.getStage(), campoNombre,textoIngreseNombre);
+        //BotonConfirmarHandler botonConfirmarHandler = new BotonConfirmarHandler(vistaBalatro.getStage(), campoNombre,textoIngreseNombre);
+        //BotonConfirmar botonConfirmar = new BotonConfirmar(botonConfirmarHandler);
+
+        /**
+        // Botón de confirmar
+        BotonConfirmarHandler botonConfirmarHandler = new BotonConfirmarHandler(vistaBalatro.getStage(), campoNombre, textoIngreseNombre) {
+            @Override
+            public void handle(javafx.event.ActionEvent event) {
+                super.handle(event);
+                // Mostrar la tienda después de ingresar el nombre
+                PantallaTienda.mostrarTienda();
+            }
+        };
+        BotonConfirmar botonConfirmar = new BotonConfirmar(botonConfirmarHandler);
+         */
+
+        // Botón de confirmar con el manejador
+        BotonConfirmarHandler botonConfirmarHandler = new BotonConfirmarHandler(vistaBalatro.getStage(), campoNombre, textoIngreseNombre) {
+            @Override
+            public void handle(javafx.event.ActionEvent event) {
+                super.handle(event);
+                // Validar el nombre ingresado
+                String nombreIngresado = campoNombre.getText().trim();
+                if (!nombreIngresado.isEmpty()) {
+                    // Si el nombre es válido, muestra la tienda
+                    PantallaTienda.mostrarTienda();
+                } else {
+                    // Si el nombre no es válido, mostrar mensaje
+                    textoIngreseNombre.setText("Por favor ingresa tu nombre");
+                }
+            }
+        };
+
+        // Crear el botón de confirmar con el manejador
         BotonConfirmar botonConfirmar = new BotonConfirmar(botonConfirmarHandler);
 
 //        // Cargar y reproducir el sonido al hacer clic en el botón
