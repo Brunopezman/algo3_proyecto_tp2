@@ -1,0 +1,33 @@
+@startuml Diagrama de Clases
+
+skinparam monochrome true
+hide circle
+skinparam classAttributeIconSize 0
+
+class Tarot <<abstract>> {
+    -nombre: string
+    -descripcion: string
+    -aQueAfecta: string
+    -puntos: int
+    -multiplicador: int
+    '+Tarot(nombre,descripcion,sobreQueAfecta,ejemplar:string, puntos,multiplicador:int)
+    +Tarot(...)
+    +aplicarEfectos(cartas:List<Carta>,mano:Mano): void
+    +esElegido(tarotElegido:Tarot): boolean
+    +modificarQueAplica(cartaQueAplica:Carta): void
+}
+
+class TarotMano {
+    +TarotMano(nombre,descripcion,mano:string, puntaje,multiplicador:int)
+    +aplicarEfectos(cartas:List<Carta>,mano:Mano): void
+}
+
+class TarotCarta {
+    +TarotMano(nombre,descripcion,ejemplar:string, puntos,multiplicador:int)
+    +aplicarEfectos(cartas:List<Carta>,mano:Mano): void
+}
+
+Tarot <|-- TarotMano
+Tarot <|-- TarotCarta
+
+@enduml

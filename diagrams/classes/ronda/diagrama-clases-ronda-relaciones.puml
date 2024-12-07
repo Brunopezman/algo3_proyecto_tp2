@@ -1,0 +1,62 @@
+@startuml Diagrama de Clases
+
+skinparam monochrome true
+hide circle
+skinparam classAttributeIconSize 0
+
+class Ronda {
+    -puntajeAlcanzado: int
+    -puntajeASuperar: int
+    -descartesActuales: int
+    -descartesMaximos: int
+    -turnosActual: int
+    -cantidadTurnos: int
+    -nroRonda: int
+}
+
+class Turno {
+    -manosJugables: List<Mano>
+    -comodines: List<Comodin>
+    -tarotUsar: Tarot
+    -puntaje: int
+    -cantidadDescartes: int
+    +Turno(comodines:List<Comodin>)
+    +calcularJugada(cartas:List<Carta>, mano:Mano): int
+    +exiteManoJugable(cartas:List<Carta>): Mano
+    +sumarManoJugada(valor:int): void
+    +sumarDescartes(cantidad:int): void
+    +puedeDescartar(): boolean
+    +registrarDescarte(): void
+    +agregarTarot(tarotElegido:Tarot): void
+}
+
+class Tienda {
+    +Tienda(comodines:List<Comodin>, tarots:List<Tarot>, carta:Carta)
+} 
+
+class Comodin <<abstract>> {
+    -nombre: string
+    -descripcion: string
+    -valor: int
+    +Comodin(nombre:string,descripcion:string,valor:int)
+}
+
+class Tarot <<abstract>> {
+    -nombre: string
+    -descripcion: string
+    -aQueAfecta: string
+    -puntos: int
+    -multiplicador: int
+    '+Tarot(nombre,descripcion,sobreQueAfecta,ejemplar:string, puntos,multiplicador:int)
+    +Tarot(...)
+    +aplicarEfectos(cartas:List<Carta>,mano:Mano): void
+    +esElegido(tarotElegido:Tarot): boolean
+    +modificarQueAplica(cartaQueAplica:Carta): void
+}
+
+Ronda *-- "1..*" Turno
+Ronda *-- Tienda
+Ronda *-left- "0..5" Comodin
+Ronda *-right- "0..2" Tarot
+
+@enduml
