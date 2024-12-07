@@ -7,7 +7,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -19,6 +18,9 @@ import javafx.scene.media.AudioClip;
 
 import java.io.FileInputStream;
 import java.nio.file.Paths;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
 
 public class PantallaTienda {
 
@@ -26,20 +28,18 @@ public class PantallaTienda {
         Stage tiendaStage = new Stage();
         tiendaStage.setTitle("Tienda");
 
-        Font fuenteTitulo = cargarFuente("src/main/java/edu/fiuba/algo3/resources/fuentes/fuente2.otf", 40);
+        Font fuenteTitulo = cargarFuente("src/main/java/edu/fiuba/algo3/resources/fuentes/fuente2.otf", 60);
 
         // Título de la tienda
-        Text titulo = new Text("Tienda de Cartas");
+        Text titulo = new Text("Tienda");
         titulo.setFont(fuenteTitulo);
         titulo.setFill(Color.YELLOW);
         titulo.setStyle("-fx-effect: dropshadow(gaussian, darkred, 5, 0.5, 0, 0);");
 
-        // Crear un GridPane para las cartas
-        GridPane cartasGrid = new GridPane();
-        cartasGrid.setHgap(10); // Espacio horizontal entre columnas
-        cartasGrid.setVgap(10); // Espacio vertical entre filas
-        cartasGrid.setPadding(new Insets(10));
-        cartasGrid.setAlignment(Pos.TOP_CENTER);
+        // Crear un HBox para las cartas de comodines y tarot
+        HBox contenedorCartas = new HBox(20);
+        contenedorCartas.setAlignment(Pos.CENTER);
+        contenedorCartas.setPadding(new Insets(10));
 
         // Cargar las imágenes de las cartas desde recursos
         String[] cartasComodin = {
@@ -70,43 +70,57 @@ public class PantallaTienda {
         String rutaSonido = "src/main/java/edu/fiuba/algo3/resources/sonidos/click.mp3";
         AudioClip sonidoClick = new AudioClip(Paths.get(rutaSonido).toUri().toString());
 
-        // Agregar las cartas comodín a la primera fila del GridPane con ComodinSeleccionadoHandler
-        for (int i = 0; i < cartasComodin.length; i++) {
-            Image cartaImagen = new Image(Paths.get(cartasComodin[i]).toUri().toString());
+        // Seleccionar 2 cartas aleatorias de los comodines
+        Set<Integer> indicesComodin = obtenerIndicesAleatorios(cartasComodin.length, 2);
+        VBox contenedorComodines = new VBox(10);
+        contenedorComodines.setAlignment(Pos.CENTER);
+        for (Integer indice : indicesComodin) {
+            Image cartaImagen = new Image(Paths.get(cartasComodin[indice]).toUri().toString());
             ImageView cartaView = new ImageView(cartaImagen);
             cartaView.setFitWidth(100); // Ancho de las cartas
             cartaView.setFitHeight(150); // Alto de las cartas
 
             // Instanciar el handler específico para cartas comodín
-            ComodinSeleccionadoHandler handler = new ComodinSeleccionadoHandler(i, cartaView, sonidoClick);
+            ComodinSeleccionadoHandler handler = new ComodinSeleccionadoHandler(indice, cartaView, sonidoClick);
             cartaView.setOnMouseClicked(event -> handler.handle(event));
-            cartasGrid.add(cartaView, i, 0); // Columna i, fila 0
+            contenedorComodines.getChildren().add(cartaView);
         }
 
-        // Agregar las cartas tarot a la segunda fila del GridPane con TarotSeleccionadoHandler
-        for (int i = 0; i < cartasTarot.length; i++) {
-            Image cartaImagen = new Image(Paths.get(cartasTarot[i]).toUri().toString());
+        // Seleccionar 2 cartas aleatorias de los tarots
+        Set<Integer> indicesTarot = obtenerIndicesAleatorios(cartasTarot.length, 2);
+        VBox contenedorTarot = new VBox(10);
+        contenedorTarot.setAlignment(Pos.CENTER);
+        for (Integer indice : indicesTarot) {
+            Image cartaImagen = new Image(Paths.get(cartasTarot[indice]).toUri().toString());
             ImageView cartaView = new ImageView(cartaImagen);
             cartaView.setFitWidth(100); // Ancho de las cartas
             cartaView.setFitHeight(150); // Alto de las cartas
 
             // Instanciar el handler específico para cartas tarot
-            TarotSeleccionadoHandler handler = new TarotSeleccionadoHandler(i, cartaView, sonidoClick);
+            TarotSeleccionadoHandler handler = new TarotSeleccionadoHandler(indice, cartaView, sonidoClick);
             cartaView.setOnMouseClicked(event -> handler.handle(event));
-            cartasGrid.add(cartaView, i, 1); // Columna i, fila 1
+            contenedorTarot.getChildren().add(cartaView);
         }
 
-        ScrollPane scrollPane = new ScrollPane(cartasGrid);
-        scrollPane.setFitToHeight(true);
-        scrollPane.setFitToWidth(false); //desplazamiento horizontal
-        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        // Añadir los contenedores de comodines y tarot al contenedor principal
+        contenedorCartas.getChildren().addAll(contenedorComodines, contenedorTarot);
 
-        // Botón para comprar cartas
+        // Crear un StackPane para añadir el fondo de pantalla
+        StackPane stackPane = new StackPane();
+
+        // Cargar la imagen de fondo
+        String rutaFondo = "src/main/java/edu/fiuba/algo3/resources/fondos/fondo_rya.jpeg";
+        Image imagenFondo = new Image(Paths.get(rutaFondo).toUri().toString());
+        BackgroundImage fondo = new BackgroundImage(imagenFondo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+        Background background = new Background(fondo);
+
+        // Establecer el fondo en el StackPane
+        stackPane.setBackground(background);
+
+        // Organizar botones
         Button botonComprar = new Button("Comprar");
         botonComprar.setOnAction(e -> System.out.println("¡Has comprado las cartas seleccionadas!"));
 
-        // Botón para cerrar la tienda
         Button cerrarTienda = new Button("Cerrar");
         cerrarTienda.setOnAction(e -> tiendaStage.close());
 
@@ -114,16 +128,27 @@ public class PantallaTienda {
         HBox botonesBox = new HBox(20, botonComprar, cerrarTienda);
         botonesBox.setAlignment(Pos.CENTER);
 
-        // Layout principal
-        VBox layout = new VBox(20, titulo, scrollPane, botonesBox);
+        // Layout principal dentro del StackPane
+        VBox layout = new VBox(20, titulo, contenedorCartas, botonesBox);
         layout.setAlignment(Pos.CENTER);
         layout.setPadding(new Insets(10));
-        layout.setStyle("-fx-background-color: #f0f0f0;");
+
+        // Añadir el layout al StackPane
+        stackPane.getChildren().add(layout);
 
         // Crear la escena y mostrarla
-        Scene scene = new Scene(layout, 800, 600);
+        Scene scene = new Scene(stackPane, 800, 600);
         tiendaStage.setScene(scene);
         tiendaStage.show();
+    }
+
+    private static Set<Integer> obtenerIndicesAleatorios(int rango, int cantidad) {
+        Random random = new Random();
+        Set<Integer> indices = new HashSet<>();
+        while (indices.size() < cantidad) {
+            indices.add(random.nextInt(rango));
+        }
+        return indices;
     }
 
     private static Font cargarFuente(String rutaFuente, int tamano) {
