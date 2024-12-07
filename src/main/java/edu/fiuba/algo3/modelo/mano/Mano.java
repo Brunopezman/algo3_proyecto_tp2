@@ -32,6 +32,8 @@ public abstract class Mano {
         return multiplicador;
     }
 
+    public String getNombre(){ return nombre; }
+
     public int calcularPuntaje(int valor) {
         return (this.puntaje + valor) * this.multiplicador;
     }

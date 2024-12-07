@@ -5,6 +5,7 @@ import edu.fiuba.algo3.controllers.BotonJugarManoHandler;
 import edu.fiuba.algo3.controllers.CartaSeleccionadaHandler;
 import edu.fiuba.algo3.modelo.carta.Carta;
 import edu.fiuba.algo3.modelo.juego.Juego;
+import edu.fiuba.algo3.modelo.mano.Mano;
 import edu.fiuba.algo3.vistas.boton.BotonDescartar;
 import edu.fiuba.algo3.vistas.boton.BotonJugarMano;
 import javafx.event.ActionEvent;
@@ -28,7 +29,7 @@ import java.util.List;
 public class ParteDerecha {
     private final BorderPane parteDerecha;
     private final Juego juego;
-    private final ParteIzquierda parteIzquierda;
+    private static ParteIzquierda parteIzquierda;
     private static HBox visualCartas;
     private static Text cartasRestantesText;
     private PantallaJuego pantallaJuego;
@@ -151,8 +152,7 @@ public class ParteDerecha {
             ImageView imagenCarta = new ImageView(new Image(Paths.get("src/main/java/edu/fiuba/algo3/resources/cartas/" + carta.numero() + "_" + carta.getPalo() + ".jpg").toUri().toString()));
             imagenCarta.setFitWidth(56);
             imagenCarta.setFitHeight(84);
-
-            CartaSeleccionadaHandler seleccion = new CartaSeleccionadaHandler(cartasSeleccionadas, carta, imagenCarta, sonido);
+            CartaSeleccionadaHandler seleccion = new CartaSeleccionadaHandler(cartasSeleccionadas, carta, imagenCarta, sonido, parteIzquierda);
             imagenCarta.setOnMouseClicked(event -> seleccion.handle(new ActionEvent())); // Adaptación para manejar ActionEvent
             visualCartas.getChildren().add(imagenCarta);
         }

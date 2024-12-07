@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.vistas.pantalla;
 
 import edu.fiuba.algo3.modelo.juego.Juego;
+import edu.fiuba.algo3.modelo.mano.Mano;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -11,10 +12,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.util.Locale;
+
 public class ParteIzquierda {
 
     private final VBox parteIzquierda;
     private StackPane puntajeBox;
+    private StackPane manoConSusCaracteristicasBox;
     private StackPane puntajeAcumuladoBox;
     private StackPane turnosBox;
     private StackPane descartesBox;
@@ -49,25 +53,25 @@ public class ParteIzquierda {
         marcadorSection.setAlignment(Pos.CENTER);
         marcadorSection.setSpacing(5);
 
-        Label pairLabel = new Label("Par");
+        Label pairLabel = new Label("");
         pairLabel.setStyle(estiloTextoBlanco);
 
         HBox valoresCartas = new HBox();
         valoresCartas.setAlignment(Pos.CENTER);
         valoresCartas.setSpacing(10);
 
-        Label valor1 = new Label("10");
+        Label valor1 = new Label("0");
         valor1.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #104ec1;");
 
         Label multiplicador = new Label("x");
         multiplicador.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;");
 
-        Label valor2 = new Label("2");
+        Label valor2 = new Label("0");
         valor2.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #ec1111;");
 
         valoresCartas.getChildren().addAll(valor1, multiplicador, valor2);
         marcadorSection.getChildren().addAll(pairLabel, valoresCartas);
-        StackPane marcadorBox = crearCuadroConFondo(marcadorSection, 100, 200, "#333333");
+        manoConSusCaracteristicasBox = crearCuadroConFondo(marcadorSection, 100, 200, "#333333");
 
         // Turnos y descartes
         HBox turnosDescartes = new HBox();
@@ -99,7 +103,7 @@ public class ParteIzquierda {
         parteIzquierda.getChildren().addAll(
                 puntajeSection,
                 puntajeAcumuladoBox,
-                marcadorBox,
+                manoConSusCaracteristicasBox,
                 turnosDescartes,
                 rondaYnombre
         );
@@ -109,7 +113,44 @@ public class ParteIzquierda {
         return parteIzquierda;
     }
 
-    private StackPane crearCuadroConFondo(Node contenido, int alto, int ancho, String colorFondo) {
+    public void cuadroParaManoPorJugar(String nombre, String puntos, String multiplicador){
+        manoConSusCaracteristicasBox.getChildren().clear();
+
+        VBox marcadorSection = new VBox();
+
+        marcadorSection.setAlignment(Pos.CENTER);
+        marcadorSection.setSpacing(5);
+
+        Label manoNombre = new Label(nombre.toUpperCase(Locale.ROOT));
+        manoNombre.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;");
+
+        HBox valoresCartas = new HBox();
+        valoresCartas.setAlignment(Pos.CENTER);
+        valoresCartas.setSpacing(10);
+
+        Label valor1 = new Label(puntos);
+        valor1.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #104ec1;");
+        Label medio = null;
+        medio = new Label("x");
+        medio.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;");
+
+        Label valor2 = new Label(multiplicador);
+        valor2.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #ec1111;");
+
+        valoresCartas.getChildren().addAll(valor1, medio, valor2);
+        marcadorSection.getChildren().addAll(manoNombre, valoresCartas);
+
+        Rectangle fondo = new Rectangle(200, 100);
+        fondo.setArcWidth(10);
+        fondo.setArcHeight(10);
+        fondo.setFill(Color.web("#333333"));
+        fondo.setStroke(Color.BLACK);
+        fondo.setStrokeWidth(2);
+
+        manoConSusCaracteristicasBox.getChildren().setAll(fondo, marcadorSection);
+    }
+
+    private static StackPane crearCuadroConFondo(Node contenido, int alto, int ancho, String colorFondo) {
         Rectangle fondo = new Rectangle(ancho, alto);
         fondo.setArcWidth(10);
         fondo.setArcHeight(10);
@@ -156,6 +197,7 @@ public class ParteIzquierda {
 
         return new StackPane(fondoLabel, contenido);
     }
+
     public void actualizar() {
         // Asumiendo que tienes un Label o un Text para mostrar el puntaje de la ronda
         Juego juego = Juego.getInstance();
