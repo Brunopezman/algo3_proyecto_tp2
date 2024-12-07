@@ -38,6 +38,10 @@ public class Juego {
         return juego;
     }
 
+    public static Juego updateInstance() {
+        juego = new Juego();
+        return juego;
+    }
 
     // Getters y setters
 

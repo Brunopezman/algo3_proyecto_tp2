@@ -199,7 +199,6 @@ public class ParteIzquierda {
     }
 
     public void actualizar() {
-        // Asumiendo que tienes un Label o un Text para mostrar el puntaje de la ronda
         Juego juego = Juego.getInstance();
         this.puntajeAcumuladoBox.getChildren().clear();// Limpiar contenido anterior
         this.puntajeBox.getChildren().clear();

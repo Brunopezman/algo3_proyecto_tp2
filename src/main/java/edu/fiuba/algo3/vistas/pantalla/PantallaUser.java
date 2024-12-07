@@ -3,7 +3,6 @@ package edu.fiuba.algo3.vistas.pantalla;
 import edu.fiuba.algo3.controllers.BotonConfirmarHandler;
 import edu.fiuba.algo3.vistas.boton.BotonConfirmar;
 import edu.fiuba.algo3.vistas.menu.MenuJuego;
-import edu.fiuba.algo3.vistas.pantalla.PantallaTienda;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -11,7 +10,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.media.AudioClip;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.nio.file.Paths;
@@ -40,7 +38,6 @@ public class PantallaUser {
 
         // Crear el VBox para el contenido y hacer que ocupe todo el espacio disponible
         VBox contenido = new VBox();
-        //contenido.setStyle("-fx-background-color: rgba(70, 130, 180, 0.5);");
         contenido.setAlignment(Pos.CENTER);
         contenido.setSpacing(30);
         contenido.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
@@ -57,55 +54,11 @@ public class PantallaUser {
         campoNombre.setPromptText("Tu nombre...");
         campoNombre.setMaxWidth(300);
 
-        // Botón de confirmar
-        //BotonConfirmarHandler botonConfirmarHandler = new BotonConfirmarHandler(vistaBalatro.getStage(), campoNombre,textoIngreseNombre);
-        //BotonConfirmar botonConfirmar = new BotonConfirmar(botonConfirmarHandler);
-
-        /**
-        // Botón de confirmar
-        BotonConfirmarHandler botonConfirmarHandler = new BotonConfirmarHandler(vistaBalatro.getStage(), campoNombre, textoIngreseNombre) {
-            @Override
-            public void handle(javafx.event.ActionEvent event) {
-                super.handle(event);
-                // Mostrar la tienda después de ingresar el nombre
-                PantallaTienda.mostrarTienda();
-            }
-        };
-        BotonConfirmar botonConfirmar = new BotonConfirmar(botonConfirmarHandler);
-         */
-
         // Botón de confirmar con el manejador
-        BotonConfirmarHandler botonConfirmarHandler = new BotonConfirmarHandler(vistaBalatro.getStage(), campoNombre, textoIngreseNombre) {
-            @Override
-            public void handle(javafx.event.ActionEvent event) {
-                super.handle(event);
-                // Validar el nombre ingresado
-                String nombreIngresado = campoNombre.getText().trim();
-                if (!nombreIngresado.isEmpty()) {
-                    // Si el nombre es válido, muestra la tienda
-                    PantallaTienda.mostrarTienda();
-                } else {
-                    // Si el nombre no es válido, mostrar mensaje
-                    textoIngreseNombre.setText("Por favor ingresa tu nombre");
-                }
-            }
-        };
+        BotonConfirmarHandler botonConfirmarHandler = new BotonConfirmarHandler(vistaBalatro.getStage(), campoNombre, textoIngreseNombre) {};
 
         // Crear el botón de confirmar con el manejador
         BotonConfirmar botonConfirmar = new BotonConfirmar(botonConfirmarHandler);
-
-//        // Cargar y reproducir el sonido al hacer clic en el botón
-//        String rutaSonido = "src/main/java/edu/fiuba/algo3/resources/sonidos/click.mp3"; // Cambia "click.mp3" por tu archivo de sonido
-//        AudioClip sonido = new AudioClip(Paths.get(rutaSonido).toUri().toString());
-
-        // Evento para el botón confirmar
-//        botonConfirmar.setOnAction(event -> {
-////            sonido.play();
-//            String nombreIngresado = campoNombre.getText().trim();
-//            if (nombreIngresado.isEmpty()) {
-//                textoIngreseNombre.setText("Por favor ingresa tu nombre");
-//            }
-//        });
 
         // Añadir elementos al VBox
         contenido.getChildren().addAll(textoIngreseNombre, campoNombre, botonConfirmar);
