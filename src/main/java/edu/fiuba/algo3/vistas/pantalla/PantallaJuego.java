@@ -21,13 +21,12 @@ public class PantallaJuego {
         this.root = new VBox();
         this.contenidoJuego = new GridPane();
         this.menuJuego = new MenuJuego(stage);
-        //Ronda ronda = juego.inicializarRonda();
-        juego.iniciarJuego();
-        //INICIO RONDA
-        //ronda.iniciarRonda();
+        Ronda ronda = juego.inicializarRonda();
 
+        //INICIO RONDA
+        ronda.iniciarRonda();
         // Inicializar las partes
-        this.parteIzquierda = new ParteIzquierda(juego.puntajeNecesarioRonda(), juego.puntajeRonda(), juego.turnoActual(), juego.descartesActuales(), juego.rondaActual());
+        this.parteIzquierda = new ParteIzquierda();
         this.parteDerecha = new ParteDerecha(juego, this.parteIzquierda);
 
         // Configurar la interfaz inicial

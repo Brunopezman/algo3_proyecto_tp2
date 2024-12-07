@@ -9,10 +9,13 @@ import edu.fiuba.algo3.vistas.pantalla.ParteIzquierda;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.nio.file.Paths;
 import java.util.List;
 
 public class BotonJugarManoHandler implements EventHandler<ActionEvent> {
@@ -37,20 +40,22 @@ public class BotonJugarManoHandler implements EventHandler<ActionEvent> {
             juego.jugarMano(cartasSeleccionadas, mano);
             juego.quitarCartasUsadas(cartasSeleccionadas);
             juego.repartirCartasJugador(cartasSeleccionadas.size());
-            juego.avanzarTurno();
-
-            if (!juego.avanzarRonda()) {
-                String mensajeFinal;
-                if (juego.seGanoPartida()) {
-                    mensajeFinal = MENSAJE_GANASTE;
-                } else {
-                    mensajeFinal = MENSAJE_PERDISTE;
+            if(!juego.avanzarTurno()){
+                if(!juego.avanzarRonda()){
+                    String mensajeFinal;
+                    if (juego.seGanoPartida()) {
+                        mensajeFinal = MENSAJE_GANASTE;
+                    } else {
+                        mensajeFinal = MENSAJE_PERDISTE;
+                    }
+                    mostrarPantallaFinal(mensajeFinal); // Muestra el mensaje final
                 }
-                mostrarPantallaFinal(mensajeFinal); // Muestra el mensaje final
             }
+            parteIzquierda.cuadroParaManoPorJugar("","0","0");
+
             cartasSeleccionadas.clear();
             parteIzquierda.actualizar();
-            ParteDerecha.actualizarVisualCartas(cartasSeleccionadas);
+            ParteDerecha.visualizarCartas(cartasSeleccionadas);
         } else {
             System.out.println("No has seleccionado ninguna carta.");
         }
@@ -62,9 +67,12 @@ public class BotonJugarManoHandler implements EventHandler<ActionEvent> {
         Stage popupStage = new Stage();
         popupStage.initModality(Modality.APPLICATION_MODAL); // Hace que sea modal
         popupStage.setTitle("Resultado de la Partida");
+        popupStage.resizableProperty().setValue(Boolean.FALSE);
 
         Scene scene = new Scene(pantallaFinal, 400, 200); // Tamaño del pop-up
         popupStage.setScene(scene);
+        popupStage.resizableProperty().setValue(Boolean.FALSE);
+
 
         popupStage.centerOnScreen();
         popupStage.showAndWait(); // Espera a que se cierre antes de continuar

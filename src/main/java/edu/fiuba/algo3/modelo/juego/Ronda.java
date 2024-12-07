@@ -143,8 +143,8 @@ public class Ronda {
     }
 
     public List<Carta> descartar(Mazo mazo, List<Carta> cartasActuales, List<Carta> cartasADescartar){
-        if (this.descartesActuales >= descartesMaximos ) {
-            throw new IllegalArgumentException("No puede realizar más descartes en este turno.");
+        if (this.descartesActuales >= descartesMaximos || cartasADescartar.size() > 3) {
+            return new ArrayList<>();
         }
 
         this.descartesActuales++;
