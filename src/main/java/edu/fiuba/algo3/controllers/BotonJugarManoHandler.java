@@ -38,7 +38,7 @@ public class BotonJugarManoHandler implements EventHandler<ActionEvent> {
             juego.quitarCartasUsadas(cartasSeleccionadas);
             juego.repartirCartasJugador(cartasSeleccionadas.size());
             juego.avanzarTurno();
-
+            parteIzquierda.cuadroParaManoPorJugar("","0","0");
             if (!juego.avanzarRonda()) {
                 String mensajeFinal;
                 if (juego.seGanoPartida()) {
