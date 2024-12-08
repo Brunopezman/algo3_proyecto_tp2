@@ -1,55 +1,77 @@
 package edu.fiuba.algo3.vistas.pantalla;
 
+import edu.fiuba.algo3.controllers.BotonReinicioHandler;
+import edu.fiuba.algo3.vistas.boton.BotonReinicio;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.nio.file.Paths;
+import java.util.Objects;
 
 public class PantallaFinal extends Parent {
-    private StackPane root;
-    
+    private static Stage popupStage;
+    private BorderPane root;
+    private static final String MENSAJE_GANASTE = "GANASTE";
+
     public PantallaFinal(String resultado) {
-        StackPane fondo = new StackPane();
+        Stage popupStage = new Stage();
+        popupStage.initModality(Modality.APPLICATION_MODAL);
+        popupStage.setTitle("Resultado de la Partida");
+        popupStage.setResizable(false);
 
-        // Cargar las fuentes
-        Font fuenteGanaste = cargarFuente("src/main/java/edu/fiuba/algo3/resources/fuentes/fuente2.otf", 40);
-        Font fuenteConfirmar = cargarFuente("src/main/java/edu/fiuba/algo3/resources/fuentes/fuente2.otf", 30);
-
+        // Cargar la fuente
+        Font fuente= cargarFuente("src/main/java/edu/fiuba/algo3/resources/fuentes/fuente2.otf", 40);
+        String rutaImagen;
         // Cargar la imagen de fondo
-        String rutaImagen = "src/main/java/edu/fiuba/algo3/resources/fondos/fondo_rya2.jpeg";
+        if (Objects.equals(resultado, MENSAJE_GANASTE)) {
+            rutaImagen = "src/main/java/edu/fiuba/algo3/resources/fondos/fondo_pantalla_ganada.jpg";
+
+        } else {
+            rutaImagen = "src/main/java/edu/fiuba/algo3/resources/fondos/fondos-pantalla_perdida.jpg";
+        }
         Image imagenFondo = new Image(Paths.get(rutaImagen).toUri().toString());
 
         // Configurar el fondo
         Background background = new Background(new BackgroundImage(imagenFondo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT));
-        fondo.setBackground(background);
 
         // Crear el VBox para el contenido y hacer que ocupe todo el espacio disponible
         VBox contenido = new VBox();
-        //contenido.setStyle("-fx-background-color: rgba(70, 130, 180, 0.5);");
         contenido.setAlignment(Pos.CENTER);
         contenido.setSpacing(30);
         contenido.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         contenido.setPrefSize(800, 600); // Tamaño preferido del contenido, ajusta según tus necesidades
 
         // Texto de encabezado
-        Text textoGanaste = new Text(resultado);
-        textoGanaste.setFont(fuenteGanaste);
-        textoGanaste.setFill(Color.YELLOW);
-        textoGanaste.setStyle("-fx-fill: white;");
+        Text texto= new Text(resultado);
+        texto.setFont(fuente);
+        texto.setFill(Color.YELLOW);
+        texto.setStyle("-fx-fill: white;");
+
+        //Boton para reiniciar el juego
+        BotonReinicioHandler botonReinicioHandler = new BotonReinicioHandler(popupStage);
+        BotonReinicio botonReinicio = new BotonReinicio(botonReinicioHandler);
 
         // Añadir elementos al VBox
-        contenido.getChildren().add(textoGanaste);
+        contenido.getChildren().addAll(texto, botonReinicio);
 
-        // Configurar el root de la pantalla
-        this.root = fondo;
+        root = new BorderPane();
+        root.setBackground(background);
+        root.setCenter(contenido);
+
+        Scene scene = new Scene(root, 640, 480);
+        popupStage.setScene(scene);
+        popupStage.centerOnScreen();
+        popupStage.showAndWait(); // Espera a que se cierre antes de continuar
     }
 
     private Font cargarFuente(String rutaFuente, int tamanio) {
@@ -61,8 +83,8 @@ public class PantallaFinal extends Parent {
         }
     }
 
-    @Override
-    public Node getStyleableNode() {
-        return super.getStyleableNode();
+    public static void mostrarPantallaFinal(String mensaje) {
+        new PantallaFinal(mensaje);
     }
+
 }

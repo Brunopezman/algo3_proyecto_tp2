@@ -1,0 +1,32 @@
+@startuml Diagrama de Clases
+
+skinparam monochrome true
+hide circle
+skinparam classAttributeIconSize 0
+
+class Juego {
+    -juego: Juego
+    -rondas: List<Ronda>
+    -mazo: Mazo
+    -fabrica: JuegoFabrica
+    -numeroRondaActual: int 
+    -ganado: boolean
+    -Juego() 
+    +getInstance(): Juego
+    +incialiazarJugador(jugador:string): void
+    +repartirCartasJugador(cantidad:int): List<Carta>
+    +quitarCartasUsadas(cartas:List<Carta>): void
+    +cargarElecciones(comodinesElegidos:List<Comodin>,tarotsElegidos:List<Tarot>,cartasElegidas:List<Carta>): void
+    +inicializarRonda(): void
+    +cargarComodinesActuales(): void
+    +avanzarRonda(): boolean
+    +resetMazo(): void
+    +esUltimaRonda(): boolean
+    +avanzarTurno(): void
+    +jugarMano(): int
+    +queManoEs(cartas:List<Carta>): Mano
+    +descartarCartas(cartasActuales:List<Carta>,cartaADescartar:List<Carta>): List<Carta>
+    +seGanoPartida(): boolean
+}
+
+@enduml

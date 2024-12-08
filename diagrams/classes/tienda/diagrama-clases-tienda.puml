@@ -1,0 +1,47 @@
+@startuml Diagrama de Clases
+
+skinparam monochrome true
+hide circle
+skinparam classAttributeIconSize 0
+
+class Tienda {
+    +Tienda(comodines:List<Comodin>, tarots:List<Tarot>, carta:Carta)
+} 
+
+class Carta {
+    -nombre: string
+    -valor: int
+    -palo: string
+    +Carta(nombre,palo,numero,consecutivo:string, puntos:int)
+    +esConsecutiva(carta:Carta): boolean
+    +esIgual(nombreCarta:string): boolean
+    +tieneMismoPalo(carta:Carta): boolean
+    +multiplicarValor(multiplicador:int): void
+    +modificarPorTarot(puntosAgregar,multiplicador:int): void
+}
+
+class Comodin <<abstract>> {
+    -nombre: string
+    -descripcion: string
+    -valor: int
+    +Comodin(nombre:string,descripcion:string,valor:int)
+}
+
+class Tarot <<abstract>> {
+    -nombre: string
+    -descripcion: string
+    -aQueAfecta: string
+    -puntos: int
+    -multiplicador: int
+    '+Tarot(nombre,descripcion,sobreQueAfecta,ejemplar:string, puntos,multiplicador:int)
+    +Tarot(...)
+    +aplicarEfectos(cartas:List<Carta>,mano:Mano): void
+    +esElegido(tarotElegido:Tarot): boolean
+    +modificarQueAplica(cartaQueAplica:Carta): void
+}
+
+Tienda *-- "2" Comodin
+Tienda *-- Carta
+Tienda *-- "2" Tarot
+
+@enduml

@@ -18,6 +18,8 @@ import javafx.stage.Stage;
 import java.nio.file.Paths;
 import java.util.List;
 
+import static edu.fiuba.algo3.vistas.pantalla.PantallaFinal.mostrarPantallaFinal;
+
 public class BotonJugarManoHandler implements EventHandler<ActionEvent> {
     private static final String MENSAJE_GANASTE = "GANASTE";
     private static final String MENSAJE_PERDISTE = "PERDISTE";
@@ -49,7 +51,7 @@ public class BotonJugarManoHandler implements EventHandler<ActionEvent> {
                     } else {
                         mensajeFinal = MENSAJE_PERDISTE;
                     }
-                    mostrarPantallaFinal(mensajeFinal); // Muestra el mensaje final
+                    PantallaFinal.mostrarPantallaFinal(mensajeFinal); // Muestra el mensaje final
                 }
             }
             */
@@ -78,23 +80,5 @@ public class BotonJugarManoHandler implements EventHandler<ActionEvent> {
             System.out.println("No has seleccionado ninguna carta.");
         }
     }
-
-    private void mostrarPantallaFinal(String mensaje) {
-        PantallaFinal pantallaFinal = new PantallaFinal(mensaje);
-
-        Stage popupStage = new Stage();
-        popupStage.initModality(Modality.APPLICATION_MODAL); // Hace que sea modal
-        popupStage.setTitle("Resultado de la Partida");
-        popupStage.resizableProperty().setValue(Boolean.FALSE);
-
-        Scene scene = new Scene(pantallaFinal, 400, 200); // Tamaño del pop-up
-        popupStage.setScene(scene);
-        popupStage.resizableProperty().setValue(Boolean.FALSE);
-
-
-        popupStage.centerOnScreen();
-        popupStage.showAndWait(); // Espera a que se cierre antes de continuar
-    }
-
 
 }
