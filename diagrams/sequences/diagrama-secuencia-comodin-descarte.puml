@@ -1,0 +1,22 @@
+@startuml Diagrama secuencia aplicarEfecto Comodin Descarte
+    participant ":Turno" as Turno
+    participant "comodin:ComodinDescarte" as Comodin
+    participant "estrategia:EstrategiaSumarMultiplicar" as EstrategiaComodin
+    participant "mano:Mano" as Mano 
+
+    Turno -> Comodin: aplicarEfecto(mano)
+
+    activate Comodin
+    
+    loop por cada descarte hecho en esa ronda
+    Comodin -> EstrategiaComodin: realizarModificacion(puntos,multiplicador,mano)
+    activate EstrategiaComodin
+    EstrategiaComodin -> Mano: aumentarYMultiplicar(puntos,multiplicador)
+    activate Mano
+    deactivate Mano
+    deactivate EstrategiaComodin
+    end 
+
+    deactivate Comodin
+
+@enduml
