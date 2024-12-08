@@ -62,11 +62,11 @@ public class Ronda {
 
     public int turnoActual(){ return turnoActual; }
 
-    public int puntosTurnoActual(){ return this.getTurno(turnoActual).puntajeDelTurno(); }
+    public int puntosTurnoActual(){ return this.getTurnoActual().puntajeDelTurno(); }
 
     public int cantidadComodines(){ return comodines.size(); }
 
-    public Turno getTurno(int numeroTurno){ return turnos.get(numeroTurno-1); }
+    public Turno getTurnoActual(){ return turnos.get(turnoActual-1); }
 
     public int getPuntajeNecesario(){
         return puntajeASuperar;
@@ -101,12 +101,14 @@ public class Ronda {
     }
 
     public boolean avanzarTurno(){
-        if (turnoActual >= cantidadTurnos){ //esto debería controlarse desde la entidad que contiene las rondas
-            return false;
+        if (this.hayMasTurnos()){ //esto debería controlarse desde la entidad que contiene las rondas
+            turnoActual++;
+            return true;
         }
-        turnoActual++;
-        return true;
+        return false;
     }
+
+    private boolean hayMasTurnos(){ return cantidadTurnos > turnoActual; }
 
     public int calcularPuntajeRonda() {
         for(Turno turno : turnos){
@@ -122,7 +124,7 @@ public class Ronda {
     }
 
     public Mano existeMano(List<Carta> posibleMano){
-        Turno turno = this.getTurno(turnoActual);
+        Turno turno = this.getTurnoActual();
         return turno.existeManoJugable(posibleMano);
     }
 
@@ -136,7 +138,7 @@ public class Ronda {
         mano.sumarDescartes(descartesActuales);
         */
         mano.sumarDescartes(descartesActuales);
-        Turno turno = this.getTurno(turnoActual);
+        Turno turno = this.getTurnoActual();
         int puntaje = turno.calcularJugada(cartas,mano);
         sumarPuntos(puntaje);
         return puntaje; //carga puntaje final en turno y devolvemos valor;
@@ -175,7 +177,7 @@ public class Ronda {
 
     public void usarTarotEnEsteTurno(Tarot tarotElegido){
         this.consumirTarot(tarotElegido);
-        Turno turno = this.getTurno(turnoActual);
+        Turno turno = this.getTurnoActual();
         turno.agregarTarot(tarotElegido);
     }
 

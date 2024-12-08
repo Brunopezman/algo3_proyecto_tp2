@@ -113,8 +113,9 @@ public class Juego {
         return getRondaActual();
     }
 
-    public void cargarComodinesActuales() {
-        this.getRondaActual().transferirComodines(this.siguienteRonda());
+    public void cargarComodinesActuales(Ronda rondaActuales) {
+        Ronda rondaSiguiente = this.siguienteRonda();
+        rondaActuales.transferirComodines(rondaSiguiente);
     }
 
     public boolean avanzarRonda() {
@@ -129,16 +130,16 @@ public class Juego {
             return true;
         }
         return false;*/
-        if(this.getRondaActual().seAlcanzoElPuntajeDeRonda()) {
+        Ronda rondaActual = this.getRondaActual();
+        if(rondaActual.seAlcanzoElPuntajeDeRonda()) {
             if(esUltimaRonda()){
                 juego.ganado = true;
                 return false;
             }
-            this.cargarComodinesActuales();
+            this.cargarComodinesActuales(rondaActual);
             numeroRondaActual++;
             this.getRondaActual().iniciarRonda();
             this.resetMazo();
-            //this.quitarCartasUsadas(jugador.getCartasActuales());
             return true;
         }
         return false;
@@ -183,10 +184,11 @@ public class Juego {
 
     //TURNO
     public boolean avanzarTurno() {
-        if(this.getRondaActual().seAlcanzoElPuntajeDeRonda()){
+        Ronda rondaActual = this.getRondaActual();
+        if(rondaActual.seAlcanzoElPuntajeDeRonda()){
             return false; //se termina la ronda (se gano)
         }
-        return this.getRondaActual().avanzarTurno();
+        return rondaActual.avanzarTurno();
     }
 
     public int jugarMano(List<Carta> posibleMano, Mano manoJugada) {
