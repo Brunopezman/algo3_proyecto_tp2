@@ -10,20 +10,21 @@ import javafx.scene.input.MouseEvent;
 
 import java.util.List;
 
-public class TarotSeleccionadoHandler {
+public class TarotSeleccionadoHandler implements EventHandler<ActionEvent> {
 
     private final Tarot tarot;
     private final ImageView cartaView;
     private final AudioClip sonido;
     private boolean estaSeleccionado = false;
 
-    public TarotSeleccionadoHandler(Tarot tarot, ImageView cartaView, AudioClip sonido) {
+    public TarotSeleccionadoHandler( Tarot tarot, List<Tarot>TarotsSeleccionados, ImageView cartaView, AudioClip sonido) {
         this.tarot = tarot;
         this.cartaView = cartaView;
         this.sonido = sonido;
     }
 
-    public void handle(MouseEvent event) {
+    @Override
+    public void handle(ActionEvent actionEvent) {
         // Reproducir el sonido de clic
         sonido.play();
 
@@ -40,23 +41,3 @@ public class TarotSeleccionadoHandler {
     }
 }
 
-
-
-/**
-public class TarotSeleccionadoHandler implements EventHandler<ActionEvent> {
-
-    private final List<Tarot> tarotsSeleccionados;
-    private final ImageView imagenCarta;
-    private final AudioClip sonido;
-
-    public TarotSeleccionadoHandler(List<Tarot> tarotsSeleccionados, ImageView imagenTarot, AudioClip sonido) {
-        this.tarotsSeleccionados = tarotsSeleccionados;
-        this.imagenCarta = imagenTarot;
-        this.sonido = sonido;
-    }
-    @Override
-    public void handle(ActionEvent actionEvent) {
-
-    }
-}
-*/

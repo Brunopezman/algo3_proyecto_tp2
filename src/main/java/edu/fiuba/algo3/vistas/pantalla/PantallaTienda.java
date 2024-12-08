@@ -178,11 +178,9 @@ public class PantallaTienda {
 
 package edu.fiuba.algo3.vistas.pantalla;
 
-import edu.fiuba.algo3.controllers.BotonComprarHandler;
-import edu.fiuba.algo3.controllers.BotonOmitirHandler;
-import edu.fiuba.algo3.controllers.ComodinSeleccionadoHandler;
-import edu.fiuba.algo3.controllers.TarotSeleccionadoHandler;
+import edu.fiuba.algo3.controllers.*;
 
+import edu.fiuba.algo3.modelo.carta.Carta;
 import edu.fiuba.algo3.modelo.comodin.Comodin;
 import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.modelo.juego.Ronda;
@@ -190,6 +188,7 @@ import edu.fiuba.algo3.modelo.tarot.Tarot;
 import edu.fiuba.algo3.modelo.juego.Tienda;
 import edu.fiuba.algo3.vistas.boton.BotonComprar;
 import edu.fiuba.algo3.vistas.boton.BotonOmitir;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -205,18 +204,18 @@ import javafx.scene.media.AudioClip;
 import java.io.FileInputStream;
 import java.nio.file.Paths;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import javafx.scene.layout.*;
-
 
 public class PantallaTienda {
 
     private static List<Comodin> comodinesSeleccionados;
     private static ParteDerecha parteDerecha;
+    private static int contador;
 
     public PantallaTienda(ParteDerecha parteDerecha) {
         this.parteDerecha = parteDerecha;
+        this.contador = 0;
     }
 
     public static void mostrarTienda() {
@@ -244,7 +243,11 @@ public class PantallaTienda {
 
         // Obtener las cartas de comodines y tarots de la tienda
         List<Comodin> comodines = tienda.getComodines();
+        List<Comodin> comodinesSeleccionados = new ArrayList<>();
         List<Tarot> tarots = tienda.getTarots();
+        List<Tarot> tarotsSeleccionados = new ArrayList<>();
+        Carta cartaEspecifica = tienda.getCarta();
+        List<Carta> cartasEspecificas = new ArrayList<>();
 
         String rutaSonido = "src/main/java/edu/fiuba/algo3/resources/sonidos/click.mp3";
         AudioClip sonidoClick = new AudioClip(Paths.get(rutaSonido).toUri().toString());
@@ -252,14 +255,15 @@ public class PantallaTienda {
         // Mostrar cartas de comodines
         VBox contenedorComodines = new VBox(10);
         contenedorComodines.setAlignment(Pos.CENTER);
+
         for (Comodin comodin : comodines) {
             Image cartaImagen = new Image(Paths.get("src/main/java/edu/fiuba/algo3/resources/comodines/" + comodin.getNombre() + ".png").toUri().toString());
             ImageView cartaView = new ImageView(cartaImagen);
             cartaView.setFitWidth(100);
             cartaView.setFitHeight(150);
 
-            ComodinSeleccionadoHandler handler = new ComodinSeleccionadoHandler(comodin, cartaView, cartaImagen, sonidoClick, comodinesSeleccionados, parteDerecha);
-            cartaView.setOnMouseClicked(handler::handle);
+            ComodinSeleccionadoHandler handler = new ComodinSeleccionadoHandler(contador,comodin, cartaView, cartaImagen, sonidoClick, comodinesSeleccionados, parteDerecha);
+            cartaView.setOnMouseClicked(event -> handler.handle(new ActionEvent()));
             contenedorComodines.getChildren().add(cartaView);
         }
 
@@ -272,13 +276,33 @@ public class PantallaTienda {
             cartaView.setFitWidth(100);
             cartaView.setFitHeight(150);
 
-            TarotSeleccionadoHandler handler = new TarotSeleccionadoHandler(tarot, cartaView, sonidoClick);
-            cartaView.setOnMouseClicked(handler::handle);
+            TarotSeleccionadoHandler handler = new TarotSeleccionadoHandler(tarot, tarotsSeleccionados, cartaView, sonidoClick);
+            cartaView.setOnMouseClicked(event -> handler.handle(new ActionEvent()));
             contenedorTarot.getChildren().add(cartaView);
+        }
+        VBox contenedorCartaEspecifica = new VBox(10);
+        contenedorCartaEspecifica.setAlignment(Pos.CENTER);
+
+        if (cartaEspecifica != null) {
+            // Construir la ruta de la imagen basada en el número y el palo de la carta
+            String rutaImagenCarta = "src/main/java/edu/fiuba/algo3/resources/cartas/" +
+                    cartaEspecifica.numero() + "_" + cartaEspecifica.getPalo() + ".jpg";
+            ImageView cartaView = new ImageView(new Image(Paths.get(rutaImagenCarta).toUri().toString()));
+            cartaView.setFitWidth(100);
+            cartaView.setFitHeight(150);
+
+            // Agregar evento de clic si es necesario
+            CartaTiendaSeleccionadaHandler handler = new CartaTiendaSeleccionadaHandler(cartaEspecifica, cartasEspecificas,cartaView, sonidoClick);
+            cartaView.setOnMouseClicked(event -> handler.handle(new ActionEvent()));
+
+            // Añadir la carta específica al contenedor
+            contenedorCartaEspecifica.getChildren().add(cartaView);
+        } else {
+            System.out.println("No hay carta específica en la tienda.");
         }
 
         // Añadir contenedores de cartas al contenedor principal
-        contenedorCartas.getChildren().addAll(contenedorComodines, contenedorTarot);
+        contenedorCartas.getChildren().addAll(contenedorComodines, contenedorTarot,contenedorCartaEspecifica);
 
         // Crear un StackPane para el fondo de pantalla
         StackPane stackPane = new StackPane();
@@ -289,7 +313,7 @@ public class PantallaTienda {
         stackPane.setBackground(background);
 
         // Crear botones de compra y omisión
-        BotonComprarHandler botonComprarHandler = new BotonComprarHandler();
+        BotonComprarHandler botonComprarHandler = new BotonComprarHandler(comodinesSeleccionados,tarotsSeleccionados,cartasEspecificas);
         BotonComprar botonComprar = new BotonComprar(botonComprarHandler);
 
         BotonOmitirHandler botonOmitirHandler = new BotonOmitirHandler(tiendaStage);
