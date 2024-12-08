@@ -6,19 +6,21 @@ import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.modelo.tarot.Tarot;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.stage.Stage;
 
 import java.util.List;
 
 public class BotonComprarHandler implements EventHandler<ActionEvent> {
+    private Stage tiendaStage;
     private List<Carta> cartasEspecificas;
     private List<Tarot> tarotsSeleccionados;
     private List<Comodin> comodinesSeleccionados;
 
-    public BotonComprarHandler(List<Comodin> comodinesSeleccionados, List<Tarot> tarotsSeleccionados, List<Carta> cartasEspecificas) {
+    public BotonComprarHandler(Stage tiendaStage, List<Comodin> comodinesSeleccionados, List<Tarot> tarotsSeleccionados, List<Carta> cartasEspecificas) {
+        this.tiendaStage = tiendaStage;
         this.comodinesSeleccionados = comodinesSeleccionados;
         this.tarotsSeleccionados = tarotsSeleccionados;
         this.cartasEspecificas = cartasEspecificas;
-
     }
 
     @Override
@@ -28,5 +30,6 @@ public class BotonComprarHandler implements EventHandler<ActionEvent> {
         System.out.println(comodinesSeleccionados.size());
         System.out.println(tarotsSeleccionados.size());
         System.out.println(cartasEspecificas.size());
+        tiendaStage.close();
     }
 }

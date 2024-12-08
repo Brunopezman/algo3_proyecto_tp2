@@ -262,7 +262,7 @@ public class PantallaTienda {
             cartaView.setFitWidth(100);
             cartaView.setFitHeight(150);
 
-            ComodinSeleccionadoHandler handler = new ComodinSeleccionadoHandler(contador,comodin, cartaView, cartaImagen, sonidoClick, comodinesSeleccionados, parteDerecha);
+            ComodinSeleccionadoHandler handler = new ComodinSeleccionadoHandler(comodin, cartaView, sonidoClick, comodinesSeleccionados);
             cartaView.setOnMouseClicked(event -> handler.handle(new ActionEvent()));
             contenedorComodines.getChildren().add(cartaView);
         }
@@ -313,7 +313,7 @@ public class PantallaTienda {
         stackPane.setBackground(background);
 
         // Crear botones de compra y omisión
-        BotonComprarHandler botonComprarHandler = new BotonComprarHandler(comodinesSeleccionados,tarotsSeleccionados,cartasEspecificas);
+        BotonComprarHandler botonComprarHandler = new BotonComprarHandler(tiendaStage,comodinesSeleccionados,tarotsSeleccionados,cartasEspecificas);
         BotonComprar botonComprar = new BotonComprar(botonComprarHandler);
 
         BotonOmitirHandler botonOmitirHandler = new BotonOmitirHandler(tiendaStage);
@@ -342,5 +342,17 @@ public class PantallaTienda {
             System.out.println("No se pudo cargar la fuente: " + rutaFuente);
             return Font.font("Arial", tamano);
         }
+    }
+
+    public static boolean sePuedeSeguirEligiendo(){
+        return (contador < 3);
+    }
+
+    public static void aumentarContador(){
+        contador++;
+    }
+
+    public static void reducirContador(){
+        contador--;
     }
 }

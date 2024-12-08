@@ -8,6 +8,7 @@ import java.util.List;
 public class Mazo {
 
     private List<Carta> cartas;
+    private int cantidadCartass;
     /*
     public Mazo(){
         this.cartas = new ArrayList<Carta>();
@@ -26,6 +27,7 @@ public class Mazo {
     */
     public Mazo(List<Carta> cartasParaElMazo) {
         this.cartas = cartasParaElMazo;
+        this.cantidadCartass = cartasParaElMazo.size();
     }
 
     public List<Carta> darCartas(int cantidad) {
@@ -38,10 +40,18 @@ public class Mazo {
         return cartasRecibidas;
     }
 
+
     public int cartasRestantes() {
         return cartas.size();
     }
 
     public List<Carta> getCartas() { return this.cartas; }
+
+    public void agregarCartasCompradas(List<Carta> cartasElegidas) {
+        cartas.addAll(cartasElegidas);
+        cantidadCartass += cartasElegidas.size();
+    }
+
+    public int cantidadCartasTotales() { return cantidadCartass; }
 
 }

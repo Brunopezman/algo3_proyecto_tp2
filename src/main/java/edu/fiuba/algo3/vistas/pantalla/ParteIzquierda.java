@@ -206,10 +206,10 @@ public class ParteIzquierda {
         this.descartesBox.getChildren().clear();
         this.rondaBox.getChildren().clear();
         this.puntajeAcumuladoBox.getChildren().add(crearCuadroConValor("Puntaje Ronda", String.valueOf(juego.puntajeRonda()), 100, 200, "#333333", "#555555"));
-        this.puntajeBox.getChildren().add(crearCuadroConValor("Puntaje Min", String.valueOf(juego.puntajeNecesarioRonda()), 100, 200, "#444444", "#666666"));
+        this.puntajeBox.getChildren().add(crearCuadroConValor("Puntaje para avanzar", String.valueOf(juego.puntajeNecesarioRonda()), 100, 200, "#444444", "#666666"));
         this.turnosBox.getChildren().add(crearCuadroConValor("Turnos", juego.turnoActual() + " / " + juego.turnosTotales(), 80, 100, "#444444", "#666666"));
         this.descartesBox.getChildren().add(crearCuadroConValor("Descartes", juego.descartesActuales() + " / " + juego.descartesDisponibles(), 80, 100, "#444444", "#666666"));
-        this.rondaBox.getChildren().add(crearCuadroConValor("Round", juego.rondaActual()+ " / 8", 70, 100, "#444444", "#666666"));
+        this.rondaBox.getChildren().add(crearCuadroConValor("Ronda", juego.rondaActual()+ " / 8", 70, 100, "#444444", "#666666"));
     }
 
 }

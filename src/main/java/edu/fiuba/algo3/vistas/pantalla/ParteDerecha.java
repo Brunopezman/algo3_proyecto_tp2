@@ -121,7 +121,7 @@ public class ParteDerecha {
         imageView.setFitWidth(100);
         imageView.setFitHeight(150);
 
-        cartasRestantesText = new Text(juego.getMazo().cartasRestantes() + "/52");
+        cartasRestantesText = new Text(juego.getMazo().cartasRestantes() + "/" + juego.getCartasTotalesMazo());
         cartasRestantesText.setFont(Font.font("Arial", 16));
         cartasRestantesText.setStyle("-fx-font-size: 0.8em; -fx-fill: #ffffff;");
 
@@ -136,7 +136,7 @@ public class ParteDerecha {
 
     public static void visualizarCartas(List<Carta> cartasSeleccionadas) {
         Juego juego = Juego.getInstance();
-        cartasRestantesText.setText(juego.getMazo().cartasRestantes() + "/52");
+        cartasRestantesText.setText(juego.getMazo().cartasRestantes() + "/" + juego.getCartasTotalesMazo());
         actualizarVisualCartas(cartasSeleccionadas);
     }
 
@@ -159,6 +159,7 @@ public class ParteDerecha {
         return parteDerecha;
     }
 
+    /*
     public VBox actualizarComodines(List<Comodin> comodinesSeleccionados) {
         this.comodinesBox.getChildren().clear();
         for (Comodin comodin : comodinesSeleccionados) {
@@ -172,6 +173,7 @@ public class ParteDerecha {
 
         return comodinesBox;
     }
+    */
 
     public void actualizarTarots(List<Tarot> tarotsSeleccionados) {
         this.tarotsBox.getChildren().clear();

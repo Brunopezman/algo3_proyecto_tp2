@@ -153,17 +153,30 @@ public class Ronda {
 
         // Descartar cada carta
         for (Carta carta : cartasADescartar) {
-            cartasActuales.remove(carta);
+            this.quitarCarta(cartasActuales, carta);
         }
 
         //dar nuevamente la cantidad de cartas que descartó
         int cantidadARecibir = cartasADescartar.size();
         List<Carta> nuevasCartas= mazo.darCartas(cantidadARecibir);
+        /*
         for (int i = 0; i < cantidadARecibir; i++) {
-            cartasActuales.add(nuevasCartas.get(i));
+            this.agregarCarta(cartasActuales, nuevasCartas.get(i));
+        }
+        */
+        for (Carta carta : nuevasCartas) {
+            this.agregarCarta(cartasActuales, carta);
         }
 
         return cartasActuales;
+    }
+
+    private void agregarCarta(List<Carta> cartasActuales, Carta carta){
+        cartasActuales.add(carta);
+    }
+
+    private void quitarCarta(List<Carta> cartasActuales, Carta carta){
+        cartasActuales.remove(carta);
     }
 
     private void consumirTarot(Tarot tarotUsado){

@@ -69,6 +69,7 @@ public class Juego {
         return rondas.get(numeroRondaActual);
     }
 
+    public int getCartasTotalesMazo() {return mazo.cantidadCartasTotales();}
 
     //JUGADOR
 
@@ -102,7 +103,7 @@ public class Juego {
     }
 
     public void cargarElecciones(List<Comodin> comodinesElegidos, List<Tarot> tarotsElegidos, List<Carta> cartasElegidas) {
-        jugador.agregarCartas(cartasElegidas);
+        mazo.agregarCartasCompradas(cartasElegidas);
         getRondaActual().cargarTarotsRonda(tarotsElegidos);
         getRondaActual().cargarComodinesRonda(comodinesElegidos);
     }
