@@ -12,13 +12,14 @@ import java.util.List;
 
 public class ComodinSeleccionadoHandler {
 
-    private  ImageView cartaView;
-    private  ParteDerecha parteDerecha;
-    private  List<Comodin> comodinesSeleccionados;
-    private Comodin comodin;
+    private final ImageView cartaView;
+    private final ParteDerecha parteDerecha;
+    private final List<Comodin> comodinesSeleccionados;
+    private final Comodin comodin;
     private boolean estaSeleccionado = false;
 
-    public ComodinSeleccionadoHandler(String s, ImageView cartaView, Image cartaImagen, AudioClip sonidoClick, List<Comodin> comodinesSeleccionados, ParteDerecha parteDerecha) {
+    public ComodinSeleccionadoHandler(Comodin comodin, ImageView cartaView, Image cartaImagen, AudioClip sonidoClick, List<Comodin> comodinesSeleccionados, ParteDerecha parteDerecha) {
+        this.comodin = comodin;
         this.cartaView = cartaView;
         this.parteDerecha = parteDerecha;
         this.comodinesSeleccionados = comodinesSeleccionados;
@@ -32,15 +33,18 @@ public class ComodinSeleccionadoHandler {
             cartaView.setStyle("");
         } else {
             // Seleccionar: añadir efecto azul
-            comodinesSeleccionados.add(comodin);
-            cartaView.setStyle("-fx-effect: dropshadow(gaussian, blue, 15, 0.8, 0, 0);");
+            if (!comodinesSeleccionados.contains(comodin)) {
+                comodinesSeleccionados.add(comodin);
+                cartaView.setStyle("-fx-effect: dropshadow(gaussian, blue, 15, 0.8, 0, 0);");
+            }
+        }
 
-            comodinesSeleccionados.clear();
+        // Actualizar la parte derecha solo si se ha realizado una selección
+        if (!comodinesSeleccionados.isEmpty()) {
             parteDerecha.actualizar(comodinesSeleccionados);
         }
 
         // Cambiar el estado de selección
         estaSeleccionado = !estaSeleccionado;
     }
-
 }

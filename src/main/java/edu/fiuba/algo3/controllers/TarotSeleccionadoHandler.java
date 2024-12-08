@@ -12,19 +12,19 @@ import java.util.List;
 
 public class TarotSeleccionadoHandler {
 
-    private final int posicion;
+    private final Tarot tarot;
     private final ImageView cartaView;
     private final AudioClip sonido;
     private boolean estaSeleccionado = false;
 
-    public TarotSeleccionadoHandler(int posicion, ImageView cartaView, AudioClip sonido) {
-        this.posicion = posicion;
+    public TarotSeleccionadoHandler(Tarot tarot, ImageView cartaView, AudioClip sonido) {
+        this.tarot = tarot;
         this.cartaView = cartaView;
         this.sonido = sonido;
     }
 
     public void handle(MouseEvent event) {
-        System.out.println("Tarot en posición " + posicion + (estaSeleccionado ? " deseleccionado" : " seleccionado"));
+        // Reproducir el sonido de clic
         sonido.play();
 
         if (estaSeleccionado) {
@@ -39,6 +39,7 @@ public class TarotSeleccionadoHandler {
         estaSeleccionado = !estaSeleccionado;
     }
 }
+
 
 
 /**
