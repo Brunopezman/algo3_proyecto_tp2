@@ -39,6 +39,6 @@ public class Carta {
 
     public void modificarPorTarot(int puntosAgregar, int multiplicador){
         this.valor.sumarPuntaje(puntosAgregar);
-        this.valor.multiplicarPuntaje(puntosAgregar);
+        this.valor.multiplicarPuntaje(multiplicador);
     }
 }

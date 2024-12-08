@@ -108,5 +108,9 @@ public class Turno {
     public void agregarTarot(Tarot tarotElegido) {
         this.tarotUsar = tarotElegido;
     }
+
+    ////
+
+    public List<Comodin> getComodines(){return comodines;}
 }
 

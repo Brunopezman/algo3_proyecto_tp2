@@ -69,6 +69,7 @@ public class Juego {
         return rondas.get(numeroRondaActual);
     }
 
+    public int getCartasTotalesMazo() {return mazo.cantidadCartasTotales();}
 
     //JUGADOR
 
@@ -80,13 +81,22 @@ public class Juego {
         return jugador.recibirCartas(mazo, cantidad);
     }
 
+    public List<Carta> repartirCartasParaIniciar(){
+        return jugador.recibirCartas(mazo, 8);
+    }
+
     public void quitarCartasUsadas (List<Carta> cartas) {
         jugador.eliminarCartasUsadas(cartas);
+    }
+
+    public void eliminarTodasLasCartas() {
+        jugador.getCartasActuales().clear();
     }
 
     public String getNombreJugador() { return jugador.getNombre();}
 
     public List<Carta> jugadoresCartasActuales() {return jugador.getCartasActuales(); }
+
 
     //TIENDA
     public Tienda getTiendaRonda() {
@@ -94,7 +104,7 @@ public class Juego {
     }
 
     public void cargarElecciones(List<Comodin> comodinesElegidos, List<Tarot> tarotsElegidos, List<Carta> cartasElegidas) {
-        jugador.agregarCartas(cartasElegidas);
+        mazo.agregarCartasCompradas(cartasElegidas);
         getRondaActual().cargarTarotsRonda(tarotsElegidos);
         getRondaActual().cargarComodinesRonda(comodinesElegidos);
     }
@@ -105,8 +115,9 @@ public class Juego {
         return getRondaActual();
     }
 
-    public void cargarComodinesActuales() {
-        this.getRondaActual().transferirComodines(this.siguienteRonda());
+    public void cargarComodinesActuales(Ronda rondaActuales) {
+        Ronda rondaSiguiente = this.siguienteRonda();
+        rondaActuales.transferirComodines(rondaSiguiente);
     }
 
     public boolean avanzarRonda() {
@@ -121,12 +132,13 @@ public class Juego {
             return true;
         }
         return false;*/
-        if(this.getRondaActual().seAlcanzoElPuntajeDeRonda()) {
+        Ronda rondaActual = this.getRondaActual();
+        if(rondaActual.seAlcanzoElPuntajeDeRonda()) {
             if(esUltimaRonda()){
                 juego.ganado = true;
                 return false;
             }
-            this.cargarComodinesActuales();
+            this.cargarComodinesActuales(rondaActual);
             numeroRondaActual++;
             this.getRondaActual().iniciarRonda();
             this.resetMazo();
@@ -174,10 +186,11 @@ public class Juego {
 
     //TURNO
     public boolean avanzarTurno() {
-        if(this.getRondaActual().seAlcanzoElPuntajeDeRonda()){
+        Ronda rondaActual = this.getRondaActual();
+        if(rondaActual.seAlcanzoElPuntajeDeRonda()){
             return false; //se termina la ronda (se gano)
         }
-        return this.getRondaActual().avanzarTurno();
+        return rondaActual.avanzarTurno();
     }
 
     public int jugarMano(List<Carta> posibleMano, Mano manoJugada) {
