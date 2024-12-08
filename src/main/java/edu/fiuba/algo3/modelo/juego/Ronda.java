@@ -62,11 +62,11 @@ public class Ronda {
 
     public int turnoActual(){ return turnoActual; }
 
-    public int puntosTurnoActual(){ return this.getTurno(turnoActual).puntajeDelTurno(); }
+    public int puntosTurnoActual(){ return this.getTurnoActual().puntajeDelTurno(); }
 
     public int cantidadComodines(){ return comodines.size(); }
 
-    public Turno getTurno(int numeroTurno){ return turnos.get(numeroTurno-1); }
+    public Turno getTurnoActual(){ return turnos.get(turnoActual-1); }
 
     public int getPuntajeNecesario(){
         return puntajeASuperar;
@@ -81,6 +81,10 @@ public class Ronda {
     public int getDescartes() { return this.getDescartesDisponibles();}
 
     public int getPuntajeASuperar() { return puntajeASuperar; }
+
+    public List<Comodin> getComodines() {return comodines; }
+
+    public List<Tarot> getTarots() {return tarots; }
 
     ////////////////////////////////////
 
@@ -101,12 +105,14 @@ public class Ronda {
     }
 
     public boolean avanzarTurno(){
-        if (turnoActual >= cantidadTurnos){ //esto debería controlarse desde la entidad que contiene las rondas
-            return false;
+        if (this.hayMasTurnos()){ //esto debería controlarse desde la entidad que contiene las rondas
+            turnoActual++;
+            return true;
         }
-        turnoActual++;
-        return true;
+        return false;
     }
+
+    private boolean hayMasTurnos(){ return cantidadTurnos > turnoActual; }
 
     public int calcularPuntajeRonda() {
         for(Turno turno : turnos){
@@ -122,7 +128,7 @@ public class Ronda {
     }
 
     public Mano existeMano(List<Carta> posibleMano){
-        Turno turno = this.getTurno(turnoActual);
+        Turno turno = this.getTurnoActual();
         return turno.existeManoJugable(posibleMano);
     }
 
@@ -136,7 +142,7 @@ public class Ronda {
         mano.sumarDescartes(descartesActuales);
         */
         mano.sumarDescartes(descartesActuales);
-        Turno turno = this.getTurno(turnoActual);
+        Turno turno = this.getTurnoActual();
         int puntaje = turno.calcularJugada(cartas,mano);
         sumarPuntos(puntaje);
         return puntaje; //carga puntaje final en turno y devolvemos valor;
@@ -151,17 +157,30 @@ public class Ronda {
 
         // Descartar cada carta
         for (Carta carta : cartasADescartar) {
-            cartasActuales.remove(carta);
+            this.quitarCarta(cartasActuales, carta);
         }
 
         //dar nuevamente la cantidad de cartas que descartó
         int cantidadARecibir = cartasADescartar.size();
         List<Carta> nuevasCartas= mazo.darCartas(cantidadARecibir);
+        /*
         for (int i = 0; i < cantidadARecibir; i++) {
-            cartasActuales.add(nuevasCartas.get(i));
+            this.agregarCarta(cartasActuales, nuevasCartas.get(i));
+        }
+        */
+        for (Carta carta : nuevasCartas) {
+            this.agregarCarta(cartasActuales, carta);
         }
 
         return cartasActuales;
+    }
+
+    private void agregarCarta(List<Carta> cartasActuales, Carta carta){
+        cartasActuales.add(carta);
+    }
+
+    private void quitarCarta(List<Carta> cartasActuales, Carta carta){
+        cartasActuales.remove(carta);
     }
 
     private void consumirTarot(Tarot tarotUsado){
@@ -173,9 +192,10 @@ public class Ronda {
         }
     }
 
+
     public void usarTarotEnEsteTurno(Tarot tarotElegido){
         this.consumirTarot(tarotElegido);
-        Turno turno = this.getTurno(turnoActual);
+        Turno turno = this.getTurnoActual();
         turno.agregarTarot(tarotElegido);
     }
 

@@ -40,6 +40,7 @@ public class BotonJugarManoHandler implements EventHandler<ActionEvent> {
         if (cartasSeleccionadas.size() == 5) {
             Mano mano = juego.queManoEs(cartasSeleccionadas); // Se debe almacenar dado que se lo pasaremos por parametro a parteIzquierda.actualizar() para que pueda actualizar tambien el bloque que muestra que Mano es junto con su respectivo multiplicador.
             juego.jugarMano(cartasSeleccionadas, mano);
+            /*
             juego.quitarCartasUsadas(cartasSeleccionadas);
             juego.repartirCartasJugador(cartasSeleccionadas.size());
             if(!juego.avanzarTurno()){
@@ -53,11 +54,29 @@ public class BotonJugarManoHandler implements EventHandler<ActionEvent> {
                     PantallaFinal.mostrarPantallaFinal(mensajeFinal); // Muestra el mensaje final
                 }
             }
+            */
+            if (juego.avanzarTurno()){
+                juego.quitarCartasUsadas(cartasSeleccionadas);
+                juego.repartirCartasJugador(cartasSeleccionadas.size());
+            }else{
+                if (juego.avanzarRonda()){
+                    juego.eliminarTodasLasCartas();
+                    juego.repartirCartasParaIniciar();
+                }else{
+                    String mensajeFinal;
+                    if (juego.seGanoPartida()) {
+                        mensajeFinal = MENSAJE_GANASTE;
+                    } else {
+                        mensajeFinal = MENSAJE_PERDISTE;
+                    }
+                    mostrarPantallaFinal(mensajeFinal);
+                }
+            }
             parteIzquierda.cuadroParaManoPorJugar("","0","0");
-
             cartasSeleccionadas.clear();
             parteIzquierda.actualizar();
-            ParteDerecha.visualizarCartas(cartasSeleccionadas);
+            ParteDerecha.actualizarVisualMazo();
+            ParteDerecha.actualizarVisualCartas(cartasSeleccionadas);
         } else {
             System.out.println("No has seleccionado ninguna carta.");
         }

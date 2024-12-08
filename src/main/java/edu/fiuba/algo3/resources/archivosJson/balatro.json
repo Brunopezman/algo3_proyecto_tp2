@@ -13,7 +13,7 @@
                         "activacion": { "Mano Jugada": "par" },
                         "efecto": {
                             "puntos": 50,
-                            "multiplicador": 1
+                            "multiplicador": 0
                         }
                     },
                     {
@@ -21,7 +21,7 @@
                         "descripcion": "x15 multiplicación por cada descarte",
                         "activacion": "Descarte",
                         "efecto": {
-                            "puntos": 1,
+                            "puntos": 0,
                             "multiplicador": 15
                         }
                     }
@@ -41,8 +41,8 @@
                         "nombre": "El Carro",
                         "descripcion": "Mejora 1 carta seleccionada y la convierte en una carta de acero.",
                         "efecto": {
-                            "puntos": 1,
-                            "multiplicador": 1.5
+                            "puntos": 0,
+                            "multiplicador": 2
                         },
                         "sobre": "carta",
                         "ejemplar": "cualquiera"
@@ -69,7 +69,7 @@
                         "descripcion": "x15 Mult. 1 en 6 de probabilidad",
                         "activacion": { "1 en": 6 },
                         "efecto": {
-                            "puntos": 1,
+                            "puntos": 0,
                             "multiplicador": 15
                         }
                     },
@@ -98,7 +98,7 @@
                         "nombre": "Justicia",
                         "descripcion": "Mejora 1 carta seleccionada y la convierte en una carta de cristal",
                         "efecto": {
-                            "puntos": 1,
+                            "puntos": 0,
                             "multiplicador": 2
                         },
                         "sobre": "carta",
@@ -127,7 +127,7 @@
                         "activacion": { "Mano Jugada": "color" },
                         "efecto": {
                             "puntos": 200,
-                            "multiplicador": 1
+                            "multiplicador": 0
                         }
                     },
                     {
@@ -145,7 +145,7 @@
                         "nombre": "La Emperatriz",
                         "descripcion": "Mejora 1 carta seleccionada y la convierte en una multicarta.",
                         "efecto": {
-                            "puntos": 1,
+                            "puntos": 0,
                             "multiplicador": 4
                         },
                         "sobre": "carta",
@@ -183,7 +183,7 @@
                         "descripcion": "+8 al multiplicador si la mano jugada contiene un full",
                         "activacion": { "Mano Jugada": "full" },
                         "efecto": {
-                            "puntos": 1,
+                            "puntos": 0,
                             "multiplicador": 8
                         }
                     },
@@ -241,7 +241,7 @@
                         "activacion": { "Mano Jugada": "poker" },
                         "efecto": {
                             "puntos": 300,
-                            "multiplicador": 1
+                            "multiplicador": 0
                         }
                     },
                     {
@@ -249,7 +249,7 @@
                         "descripcion": "x10 Mult. 1 en 50 de probabilidad",
                         "activacion": { "1 en": 50 },
                         "efecto": {
-                            "puntos": 1,
+                            "puntos": 0,
                             "multiplicador": 10
                         }
                     }
@@ -311,7 +311,7 @@
                                 "activacion": { "Mano Jugada": "color" },
                                 "efecto": {
                                     "puntos": 500,
-                                    "multiplicador": 1
+                                    "multiplicador": 0
                                 }
                             },
                             {
@@ -319,7 +319,7 @@
                                 "descripcion": "x10 Mult. 1 en 50 de probabilidad",
                                 "activacion": { "1 en": 50 },
                                 "efecto": {
-                                    "puntos": 1,
+                                    "puntos": 0,
                                     "multiplicador": 10
                                 }
                             }
@@ -370,7 +370,7 @@
                         "activacion": { "Mano Jugada": "escalera real" },
                         "efecto": {
                             "puntos": 500,
-                            "multiplicador": 1
+                            "multiplicador": 0
                         }
                     },
                     {
@@ -441,7 +441,7 @@
                         "descripcion": "+20 al multiplicador si la mano jugada contiene una escalera real",
                         "activacion": { "Mano Jugada": "escalera real" },
                         "efecto": {
-                            "puntos": 1,
+                            "puntos": 0,
                             "multiplicador": 20
                         }
                     },
@@ -450,7 +450,7 @@
                         "descripcion": "x50 Mult. 1 en 500 de probabilidad",
                         "activacion": { "1 en": 500 },
                         "efecto": {
-                            "puntos": 1,
+                            "puntos": 0,
                             "multiplicador": 50
                         }
                     }

@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.controllers;
 
 import edu.fiuba.algo3.modelo.carta.Carta;
+import edu.fiuba.algo3.vistas.pantalla.PantallaTienda;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
@@ -14,15 +15,12 @@ public class CartaTiendaSeleccionadaHandler implements EventHandler<ActionEvent>
     private final ImageView cartaView;
     private final AudioClip sonido;
     private List<Carta> cartasEspecificas;
-    private boolean estaSeleccionada = false;
-    private int contador;
 
     public CartaTiendaSeleccionadaHandler(Carta carta, List<Carta> cartasEspecificas, ImageView cartaView, AudioClip sonido) {
         this.carta = carta;
         this.cartaView = cartaView;
         this.sonido = sonido;
         this.cartasEspecificas = cartasEspecificas;
-        this.contador = contador;
     }
 
     @Override
@@ -30,21 +28,28 @@ public class CartaTiendaSeleccionadaHandler implements EventHandler<ActionEvent>
         // Reproducir el sonido de clic
         sonido.play();
 
-        if (estaSeleccionada) {
+        if (cartasEspecificas.contains(carta)) {
             // Deseleccionar: quitar el efecto azul
             cartasEspecificas.remove(carta);
             cartaView.setStyle("");
-        } else {
+            PantallaTienda.reducirContador();
+        } else if (!PantallaTienda.sePuedeSeguirEligiendo()) {
+            System.out.println("No se puede seleccionar una carta, ya seleccionaste 3 de las opciones de la tienda!");
+        }else {
             // Seleccionar: añadir efecto azul
             cartaView.setStyle("-fx-effect: dropshadow(gaussian, blue, 15, 0.8, 0, 0);");
             cartasEspecificas.add(carta);
+            PantallaTienda.aumentarContador();
         }
 
+        /*
         // Cambiar el estado de selección
         estaSeleccionada = !estaSeleccionada;
 
         // Log de selección/deselección (opcional para depuración)
         System.out.println((estaSeleccionada ? "Seleccionada: " : "Deseleccionada: ") + carta.getNombre());
+         */
+
     }
 
 }
