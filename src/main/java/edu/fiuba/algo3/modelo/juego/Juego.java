@@ -76,8 +76,16 @@ public class Juego {
         return jugador.recibirCartas(mazo, cantidad);
     }
 
+    public List<Carta> repartirCartasParaIniciar(){
+        return jugador.recibirCartas(mazo, 8);
+    }
+
     public void quitarCartasUsadas (List<Carta> cartas) {
         jugador.eliminarCartasUsadas(cartas);
+    }
+
+    public void eliminarTodasLasCartas() {
+        jugador.getCartasActuales().clear();
     }
 
     public String getNombreJugador() { return jugador.getNombre();}
@@ -126,6 +134,7 @@ public class Juego {
             numeroRondaActual++;
             this.getRondaActual().iniciarRonda();
             this.resetMazo();
+            //this.quitarCartasUsadas(jugador.getCartasActuales());
             return true;
         }
         return false;

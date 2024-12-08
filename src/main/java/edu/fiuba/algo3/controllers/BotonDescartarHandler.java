@@ -35,6 +35,7 @@ public class BotonDescartarHandler implements EventHandler<ActionEvent> {
                 parteIzquierda.actualizar();
                 ParteDerecha.actualizarVisualCartas(cartasSeleccionadas);
             }
+            ParteDerecha.visualizarCartas(cartasSeleccionadas);
         } else {
             System.out.println("No has seleccionado ninguna carta.");
         }
