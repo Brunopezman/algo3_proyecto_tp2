@@ -97,6 +97,7 @@ public class Juego {
 
     public List<Carta> jugadoresCartasActuales() {return jugador.getCartasActuales(); }
 
+
     //TIENDA
     public Tienda getTiendaRonda() {
         return this.getRondaActual().getTienda();

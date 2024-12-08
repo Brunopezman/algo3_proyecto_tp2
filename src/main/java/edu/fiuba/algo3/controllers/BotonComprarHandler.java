@@ -4,10 +4,12 @@ import edu.fiuba.algo3.modelo.carta.Carta;
 import edu.fiuba.algo3.modelo.comodin.Comodin;
 import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.modelo.tarot.Tarot;
+import edu.fiuba.algo3.vistas.pantalla.ParteDerecha;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BotonComprarHandler implements EventHandler<ActionEvent> {
@@ -30,6 +32,9 @@ public class BotonComprarHandler implements EventHandler<ActionEvent> {
         System.out.println(comodinesSeleccionados.size());
         System.out.println(tarotsSeleccionados.size());
         System.out.println(cartasEspecificas.size());
+        ParteDerecha.actualizarVisualMazo();
+        ParteDerecha.actualizarVisualComodines();
+        ParteDerecha.actualizarVisualTarot();
         tiendaStage.close();
     }
 }

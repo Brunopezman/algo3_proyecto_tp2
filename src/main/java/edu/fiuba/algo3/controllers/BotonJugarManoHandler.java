@@ -75,7 +75,8 @@ public class BotonJugarManoHandler implements EventHandler<ActionEvent> {
             parteIzquierda.cuadroParaManoPorJugar("","0","0");
             cartasSeleccionadas.clear();
             parteIzquierda.actualizar();
-            ParteDerecha.visualizarCartas(cartasSeleccionadas);
+            ParteDerecha.actualizarVisualMazo();
+            ParteDerecha.actualizarVisualCartas(cartasSeleccionadas);
         } else {
             System.out.println("No has seleccionado ninguna carta.");
         }

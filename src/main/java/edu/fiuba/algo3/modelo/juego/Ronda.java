@@ -82,6 +82,10 @@ public class Ronda {
 
     public int getPuntajeASuperar() { return puntajeASuperar; }
 
+    public List<Comodin> getComodines() {return comodines; }
+
+    public List<Tarot> getTarots() {return tarots; }
+
     ////////////////////////////////////
 
     public void cargarComodinesRonda(List<Comodin> comodinesElegidos){
@@ -187,6 +191,7 @@ public class Ronda {
             }
         }
     }
+
 
     public void usarTarotEnEsteTurno(Tarot tarotElegido){
         this.consumirTarot(tarotElegido);
