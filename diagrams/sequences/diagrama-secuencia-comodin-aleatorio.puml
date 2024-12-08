@@ -1,0 +1,25 @@
+@startuml Diagrama secuencia aplicarEfecto Comodin Aleatorio
+    participant ":Turno" as Turno    
+    participant "comodin:ComodinAleatorio" as Comodin
+    participant "estrategia:EstrategiaSumarMultiplicar" as EstrategiaComodin
+    participant "mano:Mano" as Mano 
+
+    Turno -> Comodin: aplicarEfecto(mano)
+
+    activate Comodin
+
+    alt caso que se activa segun la probabilidad
+    
+    Comodin -> EstrategiaComodin: realizarModificacion(puntos,multiplicador,mano)
+    
+    activate EstrategiaComodin
+
+    EstrategiaComodin -> Mano: aumentarYMultiplicar(puntos,multiplicador)
+    activate Mano
+    deactivate Mano
+    deactivate EstrategiaComodin
+    deactivate Comodin
+
+    end
+
+@enduml

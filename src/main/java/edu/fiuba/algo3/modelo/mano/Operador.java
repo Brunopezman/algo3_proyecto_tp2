@@ -10,7 +10,7 @@ public class Operador {
     public Operador() {}
 
     public List<Carta> ordenarCartasPorValor(List<Carta> cartas) {
-        List<String> ordenValores = Arrays.asList("A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K");
+        List<String> ordenValores = Arrays.asList("As", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jota", "Reina", "Rey");
         List<Carta> cartasOrdenadas = new ArrayList<>();
 
         for (String valor : ordenValores) {

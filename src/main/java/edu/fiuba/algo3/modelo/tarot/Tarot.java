@@ -22,7 +22,10 @@ public abstract class Tarot {
         }
     }
 
-     public String getNombre(){ return nombre; }
+    //Getters y Setters
+    public String getNombre(){ return nombre; }
+
+    ////////////////////////
 
     public abstract void aplicarEfectos(List<Carta> cartas, Mano mano);
 

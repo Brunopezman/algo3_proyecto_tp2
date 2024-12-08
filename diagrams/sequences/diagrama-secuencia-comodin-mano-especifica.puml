@@ -1,0 +1,33 @@
+@startuml Diagrama secuencia aplicarEfecto Comodin Mano Especifica
+    participant ":Turno" as Turno
+    participant "comodin:ComodinManoEspecifica" as Comodin
+    participant "estrategia:EstrategiaSumaSuma" as EstrategiaComodin
+    participant "mano:Mano" as Mano 
+
+    Turno -> Comodin: aplicarEfecto(mano)
+
+    activate Comodin
+
+    alt caso que la mano jugada es la misma que la que aplica el comodin
+
+    Comodin -> Mano: esMismaMano(manoQueAfecta)
+
+    activate Mano
+
+    Mano --> Comodin: true
+
+    deactivate Mano
+
+    Comodin -> EstrategiaComodin: realizarModificacion(puntos,multiplicador,mano)
+    
+    activate EstrategiaComodin
+
+    EstrategiaComodin -> Mano: aumentarAtributos(puntos,multiplicador)
+    
+    activate Mano
+    deactivate Mano
+    deactivate EstrategiaComodin
+    deactivate Comodin
+    end
+    
+@enduml
