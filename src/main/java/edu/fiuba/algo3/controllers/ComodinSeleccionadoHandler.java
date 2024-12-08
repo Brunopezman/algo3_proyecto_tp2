@@ -1,61 +1,48 @@
 package edu.fiuba.algo3.controllers;
 
-import edu.fiuba.algo3.modelo.carta.Carta;
 import edu.fiuba.algo3.modelo.comodin.Comodin;
+import edu.fiuba.algo3.vistas.pantalla.ParteDerecha;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
-import javafx.scene.input.MouseEvent;
 
 import java.util.List;
 
-public class ComodinSeleccionadoHandler {
-
-    private final int posicion;
-    private final ImageView cartaView;
-    private final AudioClip sonido;
-    private boolean estaSeleccionado = false;
-
-    public ComodinSeleccionadoHandler(int posicion, ImageView cartaView, AudioClip sonido) {
-        this.posicion = posicion;
-        this.cartaView = cartaView;
-        this.sonido = sonido;
-    }
-
-    public void handle(MouseEvent event) {
-        System.out.println("Comodín en posición " + posicion + (estaSeleccionado ? " deseleccionado" : " seleccionado"));
-        sonido.play();
-
-        if (estaSeleccionado) {
-            // Deseleccionar: quitar el efecto azul
-            cartaView.setStyle("");
-        } else {
-            // Seleccionar: añadir efecto azul
-            cartaView.setStyle("-fx-effect: dropshadow(gaussian, blue, 15, 0.8, 0, 0);");
-        }
-
-        // Cambiar el estado de selección
-        estaSeleccionado = !estaSeleccionado;
-    }
-}
-
-
-/**
 public class ComodinSeleccionadoHandler implements EventHandler<ActionEvent> {
 
+    private final ImageView cartaView;
+    private final ParteDerecha parteDerecha;
     private final List<Comodin> comodinesSeleccionados;
-    private final ImageView imagenCarta;
-    private final AudioClip sonido;
+    private final Comodin comodin;
+    private int contador;
+    private boolean estaSeleccionado = false;
 
-    public ComodinSeleccionadoHandler(List<Comodin> comodinesSeleccionados, ImageView imagenComodin, AudioClip sonido) {
+    public ComodinSeleccionadoHandler(int contador, Comodin comodin, ImageView cartaView, Image cartaImagen, AudioClip sonidoClick, List<Comodin> comodinesSeleccionados, ParteDerecha parteDerecha) {
+        this.comodin = comodin;
+        this.cartaView = cartaView;
+        this.parteDerecha = parteDerecha;
         this.comodinesSeleccionados = comodinesSeleccionados;
-        this.imagenCarta = imagenComodin;
-        this.sonido = sonido;
+        this.contador = contador;
     }
+
     @Override
     public void handle(ActionEvent actionEvent) {
+        System.out.println(comodinesSeleccionados.size());
+        if (comodinesSeleccionados.contains(comodin)) {
+            // Deseleccionar: quitar el efecto azul
+            comodinesSeleccionados.remove(comodin);
+        } else if (contador < 3) {
+            comodinesSeleccionados.add(comodin);
+            cartaView.setStyle("-fx-effect: dropshadow(gaussian, blue, 15, 0.8, 0, 0);");
+            contador++;
+        }
+        //Actualizar la parte derecha solo si se ha realizado una selección
+        if (!comodinesSeleccionados.isEmpty()) {
+            parteDerecha.actualizarComodines(comodinesSeleccionados);
+        }
 
     }
 }
-*/

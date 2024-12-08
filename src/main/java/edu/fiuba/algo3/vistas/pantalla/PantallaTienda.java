@@ -1,13 +1,197 @@
+/*
 package edu.fiuba.algo3.vistas.pantalla;
 
+import edu.fiuba.algo3.controllers.BotonComprarHandler;
+import edu.fiuba.algo3.controllers.BotonOmitirHandler;
 import edu.fiuba.algo3.controllers.ComodinSeleccionadoHandler;
 import edu.fiuba.algo3.controllers.TarotSeleccionadoHandler;
 
+import edu.fiuba.algo3.modelo.comodin.Comodin;
+import edu.fiuba.algo3.vistas.boton.BotonComprar;
+import edu.fiuba.algo3.vistas.boton.BotonOmitir;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.scene.media.AudioClip;
+
+import java.io.FileInputStream;
+import java.nio.file.Paths;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
+
+public class PantallaTienda {
+
+    private static List<Comodin> comodinesSeleccionados;
+    private static ParteDerecha parteDerecha ;
+
+    public PantallaTienda(ParteDerecha parteDerecha) {
+        this.parteDerecha = parteDerecha;
+    }
+
+    public static void mostrarTienda() {
+        Stage tiendaStage = new Stage();
+        tiendaStage.setTitle("Tienda");
+
+        Font fuenteTitulo = cargarFuente("src/main/java/edu/fiuba/algo3/resources/fuentes/fuente2.otf", 60);
+
+        // Título de la tienda
+        Text titulo = new Text("Tienda");
+        titulo.setFont(fuenteTitulo);
+        titulo.setFill(Color.YELLOW);
+        titulo.setStyle("-fx-effect: dropshadow(gaussian, darkred, 5, 0.5, 0, 0);");
+
+        // Crear un HBox para las cartas de comodines y tarot
+        HBox contenedorCartas = new HBox(20);
+        contenedorCartas.setAlignment(Pos.CENTER);
+        contenedorCartas.setPadding(new Insets(10));
+
+        // Cargar las imágenes de las cartas desde recursos
+        String[] cartasComodin = {
+                "src/main/java/edu/fiuba/algo3/resources/comodines/Comodin Real.png",
+                "src/main/java/edu/fiuba/algo3/resources/comodines/Descarte Dorado.png",
+                "src/main/java/edu/fiuba/algo3/resources/comodines/Comodin Poderoso.png",
+                "src/main/java/edu/fiuba/algo3/resources/comodines/Suerte Suprema.png",
+                "src/main/java/edu/fiuba/algo3/resources/comodines/comodin_5.png",
+                "src/main/java/edu/fiuba/algo3/resources/comodines/comodin_6.png",
+                "src/main/java/edu/fiuba/algo3/resources/comodines/comodin_7.png",
+                "src/main/java/edu/fiuba/algo3/resources/comodines/comodin_8.png",
+                "src/main/java/edu/fiuba/algo3/resources/comodines/comodin_9.png",
+                "src/main/java/edu/fiuba/algo3/resources/comodines/comodin_10.png",
+                "src/main/java/edu/fiuba/algo3/resources/comodines/Gros Michel.png",
+                "src/main/java/edu/fiuba/algo3/resources/comodines/Destino Explosivo.png"
+        };
+
+        String[] cartasTarot = {
+                "src/main/java/edu/fiuba/algo3/resources/tarots/La Suma Sacerdotisa.png",
+                "src/main/java/edu/fiuba/algo3/resources/tarots/El Tonto.png",
+                "src/main/java/edu/fiuba/algo3/resources/tarots/El Carro.png",
+                "src/main/java/edu/fiuba/algo3/resources/tarots/El Mago.png",
+                "src/main/java/edu/fiuba/algo3/resources/tarots/El Emperador.png",
+                "src/main/java/edu/fiuba/algo3/resources/tarots/La Emperatriz.png",
+                "src/main/java/edu/fiuba/algo3/resources/tarots/El Hierofante.png"
+        };
+
+        String rutaSonido = "src/main/java/edu/fiuba/algo3/resources/sonidos/click.mp3";
+        AudioClip sonidoClick = new AudioClip(Paths.get(rutaSonido).toUri().toString());
+
+        // Seleccionar 2 cartas aleatorias de los comodines
+        Set<Integer> indicesComodin = obtenerIndicesAleatorios(cartasComodin.length, 2);
+        VBox contenedorComodines = new VBox(10);
+        contenedorComodines.setAlignment(Pos.CENTER);
+        for (Integer indice : indicesComodin) {
+            Image cartaImagen = new Image(Paths.get(cartasComodin[indice]).toUri().toString());
+            ImageView cartaView = new ImageView(cartaImagen);
+            cartaView.setFitWidth(100); // Ancho de las cartas
+            cartaView.setFitHeight(150); // Alto de las cartas
+
+            // Instanciar el handler específico para cartas comodín
+            ComodinSeleccionadoHandler handler = new ComodinSeleccionadoHandler(cartasComodin[indice], cartaView,cartaImagen, sonidoClick, comodinesSeleccionados, parteDerecha);
+            cartaView.setOnMouseClicked(handler::handle);
+            contenedorComodines.getChildren().add(cartaView);
+        }
+
+        // Seleccionar 2 cartas aleatorias de los tarots
+        Set<Integer> indicesTarot = obtenerIndicesAleatorios(cartasTarot.length, 2);
+        VBox contenedorTarot = new VBox(10);
+        contenedorTarot.setAlignment(Pos.CENTER);
+        for (Integer indice : indicesTarot) {
+            Image cartaImagen = new Image(Paths.get(cartasTarot[indice]).toUri().toString());
+            ImageView cartaView = new ImageView(cartaImagen);
+            cartaView.setFitWidth(100); // Ancho de las cartas
+            cartaView.setFitHeight(150); // Alto de las cartas
+
+            // Instanciar el handler específico para cartas tarot
+            TarotSeleccionadoHandler handler = new TarotSeleccionadoHandler(indice, cartaView, sonidoClick);
+            cartaView.setOnMouseClicked(handler::handle);
+            contenedorTarot.getChildren().add(cartaView);
+        }
+
+        // Añadir los contenedores de comodines y tarot al contenedor principal
+        contenedorCartas.getChildren().addAll(contenedorComodines, contenedorTarot);
+
+        // Crear un StackPane para añadir el fondo de pantalla
+        StackPane stackPane = new StackPane();
+
+        // Cargar la imagen de fondo
+        String rutaFondo = "src/main/java/edu/fiuba/algo3/resources/fondos/fondo_rya.jpeg";
+        Image imagenFondo = new Image(Paths.get(rutaFondo).toUri().toString());
+        BackgroundImage fondo = new BackgroundImage(imagenFondo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+        Background background = new Background(fondo);
+
+        // Establecer el fondo en el StackPane
+        stackPane.setBackground(background);
+
+        // Organizar botones
+        BotonComprarHandler botonComprarHandler = new BotonComprarHandler();
+        BotonComprar botonComprar = new BotonComprar(botonComprarHandler);
+
+        BotonOmitirHandler botonOmitirHandler = new BotonOmitirHandler(tiendaStage);
+        BotonOmitir botonOmitir = new BotonOmitir(botonOmitirHandler);
+
+        // Organizar botones en un HBox
+        HBox botonesBox = new HBox(20, botonComprar, botonOmitir);
+        botonesBox.setAlignment(Pos.CENTER);
+
+        // Layout principal dentro del StackPane
+        VBox layout = new VBox(10, titulo, contenedorCartas, botonesBox);
+        layout.setAlignment(Pos.CENTER);
+        layout.setPadding(new Insets(10));
+
+        // Añadir el layout al StackPane
+        stackPane.getChildren().add(layout);
+
+        // Crear la escena y mostrarla
+        Scene scene = new Scene(stackPane, 640, 480);
+        tiendaStage.setScene(scene);
+        tiendaStage.show();
+    }
+
+    private static Set<Integer> obtenerIndicesAleatorios(int rango, int cantidad) {
+        Random random = new Random();
+        Set<Integer> indices = new HashSet<>();
+        while (indices.size() < cantidad) {
+            indices.add(random.nextInt(rango));
+        }
+        return indices;
+    }
+
+    private static Font cargarFuente(String rutaFuente, int tamano) {
+        try {
+            return Font.loadFont(new FileInputStream(rutaFuente), tamano);
+        } catch (Exception e) {
+            System.out.println("No se pudo cargar la fuente: " + rutaFuente);
+            return Font.font("Arial", tamano); // Fuente por defecto
+        }
+    }
+}
+ */
+
+package edu.fiuba.algo3.vistas.pantalla;
+
+import edu.fiuba.algo3.controllers.*;
+
+import edu.fiuba.algo3.modelo.carta.Carta;
+import edu.fiuba.algo3.modelo.comodin.Comodin;
+import edu.fiuba.algo3.modelo.juego.Juego;
+import edu.fiuba.algo3.modelo.juego.Ronda;
+import edu.fiuba.algo3.modelo.tarot.Tarot;
+import edu.fiuba.algo3.modelo.juego.Tienda;
+import edu.fiuba.algo3.vistas.boton.BotonComprar;
+import edu.fiuba.algo3.vistas.boton.BotonOmitir;
+import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -20,108 +204,133 @@ import javafx.scene.media.AudioClip;
 import java.io.FileInputStream;
 import java.nio.file.Paths;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PantallaTienda {
+
+    private static List<Comodin> comodinesSeleccionados;
+    private static ParteDerecha parteDerecha;
+    private static int contador;
+
+    public PantallaTienda(ParteDerecha parteDerecha) {
+        this.parteDerecha = parteDerecha;
+        this.contador = 0;
+    }
 
     public static void mostrarTienda() {
         Stage tiendaStage = new Stage();
         tiendaStage.setTitle("Tienda");
 
-        Font fuenteTitulo = cargarFuente("src/main/java/edu/fiuba/algo3/resources/fuentes/fuente2.otf", 40);
+        // Cargar fuente personalizada
+        Font fuenteTitulo = cargarFuente("src/main/java/edu/fiuba/algo3/resources/fuentes/fuente2.otf", 60);
 
-        // Título de la tienda
-        Text titulo = new Text("Tienda de Cartas");
+        // Crear el título de la tienda
+        Text titulo = new Text("Tienda");
         titulo.setFont(fuenteTitulo);
         titulo.setFill(Color.YELLOW);
         titulo.setStyle("-fx-effect: dropshadow(gaussian, darkred, 5, 0.5, 0, 0);");
 
-        // Crear un GridPane para las cartas
-        GridPane cartasGrid = new GridPane();
-        cartasGrid.setHgap(10); // Espacio horizontal entre columnas
-        cartasGrid.setVgap(10); // Espacio vertical entre filas
-        cartasGrid.setPadding(new Insets(10));
-        cartasGrid.setAlignment(Pos.TOP_CENTER);
+        // Crear el contenedor de cartas
+        HBox contenedorCartas = new HBox(20);
+        contenedorCartas.setAlignment(Pos.CENTER);
+        contenedorCartas.setPadding(new Insets(10));
 
-        // Cargar las imágenes de las cartas desde recursos
-        String[] cartasComodin = {
-                "src/main/java/edu/fiuba/algo3/resources/comodines/comodin_1.png",
-                "src/main/java/edu/fiuba/algo3/resources/comodines/comodin_2.png",
-                "src/main/java/edu/fiuba/algo3/resources/comodines/comodin_3.png",
-                "src/main/java/edu/fiuba/algo3/resources/comodines/comodin_4.png",
-                "src/main/java/edu/fiuba/algo3/resources/comodines/comodin_5.png",
-                "src/main/java/edu/fiuba/algo3/resources/comodines/comodin_6.png",
-                "src/main/java/edu/fiuba/algo3/resources/comodines/comodin_7.png",
-                "src/main/java/edu/fiuba/algo3/resources/comodines/comodin_8.png",
-                "src/main/java/edu/fiuba/algo3/resources/comodines/comodin_9.png",
-                "src/main/java/edu/fiuba/algo3/resources/comodines/comodin_10.png",
-                "src/main/java/edu/fiuba/algo3/resources/comodines/comodin_11.png",
-                "src/main/java/edu/fiuba/algo3/resources/comodines/comodin_12.png"
-        };
+        // Obtener la tienda de la ronda actual
+        Juego juego = Juego.getInstance();
+        Ronda rondaActual = juego.getRondaActual();
+        Tienda tienda = rondaActual.getTienda();
 
-        String[] cartasTarot = {
-                "src/main/java/edu/fiuba/algo3/resources/tarots/tarot_1.png",
-                "src/main/java/edu/fiuba/algo3/resources/tarots/tarot_2.png",
-                "src/main/java/edu/fiuba/algo3/resources/tarots/tarot_3.png",
-                "src/main/java/edu/fiuba/algo3/resources/tarots/tarot_4.png",
-                "src/main/java/edu/fiuba/algo3/resources/tarots/tarot_5.png",
-                "src/main/java/edu/fiuba/algo3/resources/tarots/tarot_6.png",
-                "src/main/java/edu/fiuba/algo3/resources/tarots/tarot_7.png"
-        };
+        // Obtener las cartas de comodines y tarots de la tienda
+        List<Comodin> comodines = tienda.getComodines();
+        List<Comodin> comodinesSeleccionados = new ArrayList<>();
+        List<Tarot> tarots = tienda.getTarots();
+        List<Tarot> tarotsSeleccionados = new ArrayList<>();
+        Carta cartaEspecifica = tienda.getCarta();
+        List<Carta> cartasEspecificas = new ArrayList<>();
 
         String rutaSonido = "src/main/java/edu/fiuba/algo3/resources/sonidos/click.mp3";
         AudioClip sonidoClick = new AudioClip(Paths.get(rutaSonido).toUri().toString());
 
-        // Agregar las cartas comodín a la primera fila del GridPane con ComodinSeleccionadoHandler
-        for (int i = 0; i < cartasComodin.length; i++) {
-            Image cartaImagen = new Image(Paths.get(cartasComodin[i]).toUri().toString());
-            ImageView cartaView = new ImageView(cartaImagen);
-            cartaView.setFitWidth(100); // Ancho de las cartas
-            cartaView.setFitHeight(150); // Alto de las cartas
+        // Mostrar cartas de comodines
+        VBox contenedorComodines = new VBox(10);
+        contenedorComodines.setAlignment(Pos.CENTER);
 
-            // Instanciar el handler específico para cartas comodín
-            ComodinSeleccionadoHandler handler = new ComodinSeleccionadoHandler(i, cartaView, sonidoClick);
-            cartaView.setOnMouseClicked(event -> handler.handle(event));
-            cartasGrid.add(cartaView, i, 0); // Columna i, fila 0
+        for (Comodin comodin : comodines) {
+            Image cartaImagen = new Image(Paths.get("src/main/java/edu/fiuba/algo3/resources/comodines/" + comodin.getNombre() + ".png").toUri().toString());
+            ImageView cartaView = new ImageView(cartaImagen);
+            cartaView.setFitWidth(100);
+            cartaView.setFitHeight(150);
+
+            ComodinSeleccionadoHandler handler = new ComodinSeleccionadoHandler(contador,comodin, cartaView, cartaImagen, sonidoClick, comodinesSeleccionados, parteDerecha);
+            cartaView.setOnMouseClicked(event -> handler.handle(new ActionEvent()));
+            contenedorComodines.getChildren().add(cartaView);
         }
 
-        // Agregar las cartas tarot a la segunda fila del GridPane con TarotSeleccionadoHandler
-        for (int i = 0; i < cartasTarot.length; i++) {
-            Image cartaImagen = new Image(Paths.get(cartasTarot[i]).toUri().toString());
+        // Mostrar cartas de tarots
+        VBox contenedorTarot = new VBox(10);
+        contenedorTarot.setAlignment(Pos.CENTER);
+        for (Tarot tarot : tarots) {
+            Image cartaImagen = new Image(Paths.get("src/main/java/edu/fiuba/algo3/resources/tarots/" + tarot.getNombre() + ".png").toUri().toString());
             ImageView cartaView = new ImageView(cartaImagen);
-            cartaView.setFitWidth(100); // Ancho de las cartas
-            cartaView.setFitHeight(150); // Alto de las cartas
+            cartaView.setFitWidth(100);
+            cartaView.setFitHeight(150);
 
-            // Instanciar el handler específico para cartas tarot
-            TarotSeleccionadoHandler handler = new TarotSeleccionadoHandler(i, cartaView, sonidoClick);
-            cartaView.setOnMouseClicked(event -> handler.handle(event));
-            cartasGrid.add(cartaView, i, 1); // Columna i, fila 1
+            TarotSeleccionadoHandler handler = new TarotSeleccionadoHandler(tarot, tarotsSeleccionados, cartaView, sonidoClick);
+            cartaView.setOnMouseClicked(event -> handler.handle(new ActionEvent()));
+            contenedorTarot.getChildren().add(cartaView);
+        }
+        VBox contenedorCartaEspecifica = new VBox(10);
+        contenedorCartaEspecifica.setAlignment(Pos.CENTER);
+
+        if (cartaEspecifica != null) {
+            // Construir la ruta de la imagen basada en el número y el palo de la carta
+            String rutaImagenCarta = "src/main/java/edu/fiuba/algo3/resources/cartas/" +
+                    cartaEspecifica.numero() + "_" + cartaEspecifica.getPalo() + ".jpg";
+            ImageView cartaView = new ImageView(new Image(Paths.get(rutaImagenCarta).toUri().toString()));
+            cartaView.setFitWidth(100);
+            cartaView.setFitHeight(150);
+
+            // Agregar evento de clic si es necesario
+            CartaTiendaSeleccionadaHandler handler = new CartaTiendaSeleccionadaHandler(cartaEspecifica, cartasEspecificas,cartaView, sonidoClick);
+            cartaView.setOnMouseClicked(event -> handler.handle(new ActionEvent()));
+
+            // Añadir la carta específica al contenedor
+            contenedorCartaEspecifica.getChildren().add(cartaView);
+        } else {
+            System.out.println("No hay carta específica en la tienda.");
         }
 
-        ScrollPane scrollPane = new ScrollPane(cartasGrid);
-        scrollPane.setFitToHeight(true);
-        scrollPane.setFitToWidth(false); //desplazamiento horizontal
-        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        // Añadir contenedores de cartas al contenedor principal
+        contenedorCartas.getChildren().addAll(contenedorComodines, contenedorTarot,contenedorCartaEspecifica);
 
-        // Botón para comprar cartas
-        Button botonComprar = new Button("Comprar");
-        botonComprar.setOnAction(e -> System.out.println("¡Has comprado las cartas seleccionadas!"));
+        // Crear un StackPane para el fondo de pantalla
+        StackPane stackPane = new StackPane();
+        String rutaFondo = "src/main/java/edu/fiuba/algo3/resources/fondos/fondo_rya.jpeg";
+        Image imagenFondo = new Image(Paths.get(rutaFondo).toUri().toString());
+        BackgroundImage fondo = new BackgroundImage(imagenFondo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+        Background background = new Background(fondo);
+        stackPane.setBackground(background);
 
-        // Botón para cerrar la tienda
-        Button cerrarTienda = new Button("Cerrar");
-        cerrarTienda.setOnAction(e -> tiendaStage.close());
+        // Crear botones de compra y omisión
+        BotonComprarHandler botonComprarHandler = new BotonComprarHandler(comodinesSeleccionados,tarotsSeleccionados,cartasEspecificas);
+        BotonComprar botonComprar = new BotonComprar(botonComprarHandler);
 
-        // Organizar botones en un HBox
-        HBox botonesBox = new HBox(20, botonComprar, cerrarTienda);
+        BotonOmitirHandler botonOmitirHandler = new BotonOmitirHandler(tiendaStage);
+        BotonOmitir botonOmitir = new BotonOmitir(botonOmitirHandler);
+
+        // Organizar los botones
+        HBox botonesBox = new HBox(20, botonComprar, botonOmitir);
         botonesBox.setAlignment(Pos.CENTER);
 
-        // Layout principal
-        VBox layout = new VBox(20, titulo, scrollPane, botonesBox);
+        // Crear el layout principal y añadir los elementos
+        VBox layout = new VBox(10, titulo, contenedorCartas, botonesBox);
         layout.setAlignment(Pos.CENTER);
         layout.setPadding(new Insets(10));
-        layout.setStyle("-fx-background-color: #f0f0f0;");
 
-        // Crear la escena y mostrarla
-        Scene scene = new Scene(layout, 800, 600);
+        // Añadir el layout al StackPane y mostrar la escena
+        stackPane.getChildren().add(layout);
+        Scene scene = new Scene(stackPane, 640, 480);
         tiendaStage.setScene(scene);
         tiendaStage.show();
     }
@@ -131,72 +340,7 @@ public class PantallaTienda {
             return Font.loadFont(new FileInputStream(rutaFuente), tamano);
         } catch (Exception e) {
             System.out.println("No se pudo cargar la fuente: " + rutaFuente);
-            return Font.font("Arial", tamano); // Fuente por defecto
+            return Font.font("Arial", tamano);
         }
     }
 }
-
-/*
-package edu.fiuba.algo3.vistas.pantalla;
-
-import javafx.geometry.Pos;
-import javafx.scene.image.Image;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.nio.file.Paths;
-
-public class PantallaTienda {
-
-    private StackPane root;
-
-    public PantallaTienda() {
-        StackPane fondo = new StackPane();
-
-        // Cargar las fuentes
-        Font fuenteGanaste = cargarFuente("src/main/java/edu/fiuba/algo3/resources/fuentes/fuente2.otf", 40);
-        Font fuenteConfirmar = cargarFuente("src/main/java/edu/fiuba/algo3/resources/fuentes/fuente2.otf", 30);
-
-        // Cargar la imagen de fondo
-        String rutaImagen = "src/main/java/edu/fiuba/algo3/resources/fondos/fondo_rya2.jpeg";
-        Image imagenFondo = new Image(Paths.get(rutaImagen).toUri().toString());
-
-        // Configurar el fondo
-        Background background = new Background(new BackgroundImage(imagenFondo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT));
-        fondo.setBackground(background);
-
-        // Crear el VBox para el contenido y hacer que ocupe todo el espacio disponible
-        VBox contenido = new VBox();
-        //contenido.setStyle("-fx-background-color: rgba(70, 130, 180, 0.5);");
-        contenido.setAlignment(Pos.CENTER);
-        contenido.setSpacing(30);
-        contenido.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        contenido.setPrefSize(800, 600); // Tamaño preferido del contenido, ajusta según tus necesidades
-
-        // Texto de encabezado
-        Text textoGanaste = new Text("TIENDA");
-        textoGanaste.setFont(fuenteGanaste);
-        textoGanaste.setFill(Color.YELLOW);
-        textoGanaste.setStyle("-fx-fill: white;");
-
-        // Añadir elementos al VBox
-        contenido.getChildren().add(textoGanaste);
-
-        // Configurar el root de la pantalla
-        this.root = fondo;
-    }
-
-    private Font cargarFuente(String rutaFuente, int tamanio) {
-        try {
-            return Font.loadFont(new FileInputStream(rutaFuente), tamanio);
-        } catch (FileNotFoundException e) {
-            System.err.println("Fuente no encontrada: " + rutaFuente);
-            return Font.font("Arial", tamanio);
-        }
-    }
-}
-**/
