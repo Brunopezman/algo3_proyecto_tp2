@@ -1,0 +1,24 @@
+@startuml Diagrama Paquetes Comodin
+
+package "Comodin " {
+    abstract Comodin
+    class ComodinAleatorio
+    class ComodinCombinacion
+    class ComodinDescarte
+    class ComodinManoEspecifica
+    class ComodinRgular
+    interface EstrategiaComodin
+    class EstrategiaSumarMultiplicar
+    class EstrategiaSumaSuma
+}
+
+Comodin <|-up- ComodinAleatorio
+Comodin <|-up- ComodinCombinacion
+Comodin <|-up- ComodinDescarte
+Comodin <|-up- ComodinManoEspecifica
+Comodin <|-up- ComodinRgular
+Comodin -down-> EstrategiaComodin
+EstrategiaComodin <|.. EstrategiaSumarMultiplicar
+EstrategiaComodin <|.. EstrategiaSumaSuma
+
+@enduml
