@@ -355,4 +355,8 @@ public class PantallaTienda {
     public static void reducirContador(){
         contador--;
     }
+
+    public static void reiniciarContador(){
+        contador = 0;
+    }
 }

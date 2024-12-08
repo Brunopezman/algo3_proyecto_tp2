@@ -4,6 +4,7 @@ package edu.fiuba.algo3.modelo.tarot;
 import edu.fiuba.algo3.modelo.carta.Carta;
 import edu.fiuba.algo3.modelo.mano.Mano;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class TarotCarta extends Tarot {
@@ -30,12 +31,16 @@ public class TarotCarta extends Tarot {
 
     //HAY QUE AGREGAR UNA FORMA DE COPARAR CARTAS PARA APLICAR EFECTOS
 
-    public void aplicarEfectos(List<Carta> cartas, Mano mano){
-        for (Carta carta : cartas) {
+    public void aplicarEfectos(List<Carta> cartas, Mano mano) {
+        /*for (Carta carta : cartas) {
             if (carta.esIgual(aQueAplica)) {carta.modificarPorTarot(puntaje, multiplicador);}
+        }*/
+        Carta cartaModificar = new Carta("", "", "", "", 0);
+        for (Carta carta : cartas) {
+            if (cartaModificar.puntaje() < carta.puntaje()) {
+                cartaModificar = carta;
+            }
         }
+        cartaModificar.modificarPorTarot(puntaje, multiplicador);
     }
-
-
-
 }

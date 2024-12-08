@@ -66,6 +66,8 @@ public class Ronda {
 
     public int cantidadComodines(){ return comodines.size(); }
 
+    public int cantidadTarots(){ return tarots.size(); }
+
     public Turno getTurnoActual(){ return turnos.get(turnoActual-1); }
 
     public int getPuntajeNecesario(){
@@ -125,6 +127,10 @@ public class Ronda {
 
     public void transferirComodines(Ronda ronda) {
         ronda.cargarComodinesRonda(comodines);
+    }
+
+    public void transferirTarots(Ronda ronda) {
+        ronda.cargarTarotsRonda(tarots);
     }
 
     public Mano existeMano(List<Carta> posibleMano){
@@ -199,10 +205,12 @@ public class Ronda {
         turno.agregarTarot(tarotElegido);
     }
 
+    /*
     public void usarTarotEnCarta(Tarot tarotElegido, Carta carta){
         this.consumirTarot(tarotElegido);
         tarotElegido.modificarAQueAplica(carta.getNombre());
     }
+     */
 
     private void sumarPuntos(int puntos){ puntajeAlcanzado += puntos;}
 
