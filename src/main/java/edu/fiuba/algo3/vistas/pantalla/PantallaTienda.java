@@ -56,28 +56,28 @@ public class PantallaTienda {
 
         // Cargar las imágenes de las cartas desde recursos
         String[] cartasComodin = {
-                "src/main/java/edu/fiuba/algo3/resources/comodines/comodin_1.png",
-                "src/main/java/edu/fiuba/algo3/resources/comodines/comodin_2.png",
-                "src/main/java/edu/fiuba/algo3/resources/comodines/comodin_3.png",
-                "src/main/java/edu/fiuba/algo3/resources/comodines/comodin_4.png",
+                "src/main/java/edu/fiuba/algo3/resources/comodines/Comodin Real.png",
+                "src/main/java/edu/fiuba/algo3/resources/comodines/Descarte Dorado.png",
+                "src/main/java/edu/fiuba/algo3/resources/comodines/Comodin Poderoso.png",
+                "src/main/java/edu/fiuba/algo3/resources/comodines/Suerte Suprema.png",
                 "src/main/java/edu/fiuba/algo3/resources/comodines/comodin_5.png",
                 "src/main/java/edu/fiuba/algo3/resources/comodines/comodin_6.png",
                 "src/main/java/edu/fiuba/algo3/resources/comodines/comodin_7.png",
                 "src/main/java/edu/fiuba/algo3/resources/comodines/comodin_8.png",
                 "src/main/java/edu/fiuba/algo3/resources/comodines/comodin_9.png",
                 "src/main/java/edu/fiuba/algo3/resources/comodines/comodin_10.png",
-                "src/main/java/edu/fiuba/algo3/resources/comodines/comodin_11.png",
-                "src/main/java/edu/fiuba/algo3/resources/comodines/comodin_12.png"
+                "src/main/java/edu/fiuba/algo3/resources/comodines/Gros Michel.png",
+                "src/main/java/edu/fiuba/algo3/resources/comodines/Destino Explosivo.png"
         };
 
         String[] cartasTarot = {
-                "src/main/java/edu/fiuba/algo3/resources/tarots/tarot_1.png",
-                "src/main/java/edu/fiuba/algo3/resources/tarots/tarot_2.png",
-                "src/main/java/edu/fiuba/algo3/resources/tarots/tarot_3.png",
-                "src/main/java/edu/fiuba/algo3/resources/tarots/tarot_4.png",
-                "src/main/java/edu/fiuba/algo3/resources/tarots/tarot_5.png",
-                "src/main/java/edu/fiuba/algo3/resources/tarots/tarot_6.png",
-                "src/main/java/edu/fiuba/algo3/resources/tarots/tarot_7.png"
+                "src/main/java/edu/fiuba/algo3/resources/tarots/La Suma Sacerdotisa.png",
+                "src/main/java/edu/fiuba/algo3/resources/tarots/El Tonto.png",
+                "src/main/java/edu/fiuba/algo3/resources/tarots/El Carro.png",
+                "src/main/java/edu/fiuba/algo3/resources/tarots/El Mago.png",
+                "src/main/java/edu/fiuba/algo3/resources/tarots/El Emperador.png",
+                "src/main/java/edu/fiuba/algo3/resources/tarots/La Emperatriz.png",
+                "src/main/java/edu/fiuba/algo3/resources/tarots/El Hierofante.png"
         };
 
         String rutaSonido = "src/main/java/edu/fiuba/algo3/resources/sonidos/click.mp3";
