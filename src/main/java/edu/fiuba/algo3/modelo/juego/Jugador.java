@@ -65,7 +65,7 @@ public class Jugador {
         return this.cartasActuales.size() >= 5;
     }
 
-    public void agregarCartas(ArrayList<Carta> cartasElegidas){ cartasActuales.addAll(cartasElegidas); }
+    public void agregarCartas(List<Carta> cartasElegidas){ cartasActuales.addAll(cartasElegidas); }
 
     public void eliminarCartasUsadas(List<Carta> cartas) {
         for (Carta cartaEliminar : cartas) {

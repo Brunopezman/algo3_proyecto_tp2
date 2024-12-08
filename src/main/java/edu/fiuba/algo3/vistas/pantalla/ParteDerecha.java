@@ -6,6 +6,7 @@ import edu.fiuba.algo3.controllers.CartaSeleccionadaHandler;
 import edu.fiuba.algo3.modelo.carta.Carta;
 import edu.fiuba.algo3.modelo.comodin.Comodin;
 import edu.fiuba.algo3.modelo.juego.Juego;
+import edu.fiuba.algo3.modelo.tarot.Tarot;
 import edu.fiuba.algo3.vistas.boton.BotonDescartar;
 import edu.fiuba.algo3.vistas.boton.BotonJugarMano;
 import javafx.event.ActionEvent;
@@ -35,7 +36,6 @@ public class ParteDerecha {
     private PantallaJuego pantallaJuego;
     private VBox comodinesBox;
     private VBox tarotsBox;
-
 
     public ParteDerecha(Juego juego, ParteIzquierda parteIzquierda) {
         this.juego = juego;
@@ -159,15 +159,29 @@ public class ParteDerecha {
         return parteDerecha;
     }
 
-    public void actualizar(List<Comodin> comodinesSeleccionados) {
+    public VBox actualizarComodines(List<Comodin> comodinesSeleccionados) {
         this.comodinesBox.getChildren().clear();
-        this.tarotsBox.getChildren().clear();
         for (Comodin comodin : comodinesSeleccionados) {
-            Image comodinImagen = new Image(Paths.get("").toUri().toString());
+            Image comodinImagen = new Image(Paths.get("src/main/java/edu/fiuba/algo3/resources/comodines/" + comodin.getNombre() + ".png").toUri().toString());
             ImageView cartaView = new ImageView(comodinImagen);
             cartaView.setFitWidth(56); // Ancho de las cartas
             cartaView.setFitHeight(84); // Alto de las cartas
+
+            this.comodinesBox.getChildren().add(cartaView);
         }
 
+        return comodinesBox;
+    }
+
+    public void actualizarTarots(List<Tarot> tarotsSeleccionados) {
+        this.tarotsBox.getChildren().clear();
+        for (Tarot tarot : tarotsSeleccionados) {
+            Image cartaImagen = new Image(Paths.get("src/main/java/edu/fiuba/algo3/resources/tarots/" + tarot.getNombre() + ".png").toUri().toString());
+            ImageView cartaView = new ImageView(cartaImagen);
+            cartaView.setFitWidth(56); // Ancho de las cartas
+            cartaView.setFitHeight(84); // Alto de las cartas
+
+            this.tarotsBox.getChildren().add(cartaView);
+        }
     }
 }

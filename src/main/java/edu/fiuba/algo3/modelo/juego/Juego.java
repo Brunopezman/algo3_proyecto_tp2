@@ -101,7 +101,7 @@ public class Juego {
         return this.getRondaActual().getTienda();
     }
 
-    public void cargarElecciones(ArrayList<Comodin> comodinesElegidos, ArrayList<Tarot> tarotsElegidos, ArrayList<Carta> cartasElegidas) {
+    public void cargarElecciones(List<Comodin> comodinesElegidos, List<Tarot> tarotsElegidos, List<Carta> cartasElegidas) {
         jugador.agregarCartas(cartasElegidas);
         getRondaActual().cargarTarotsRonda(tarotsElegidos);
         getRondaActual().cargarComodinesRonda(comodinesElegidos);
