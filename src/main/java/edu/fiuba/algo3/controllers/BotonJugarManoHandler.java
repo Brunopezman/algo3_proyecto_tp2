@@ -57,7 +57,7 @@ public class BotonJugarManoHandler implements EventHandler<ActionEvent> {
             ParteDerecha.actualizarVisualMazo();
             ParteDerecha.actualizarVisualCartas(cartasSeleccionadas);
         } else {
-            mostrarMensajeTemporal("No has seleccionado ninguna carta.");
+            mostrarMensajeTemporal("No has seleccionado cartas suficientes para jugar una mano.");
         }
     }
 
