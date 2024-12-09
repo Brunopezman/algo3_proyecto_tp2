@@ -55,7 +55,7 @@ public class ParteDerecha {
         // Cartas del jugador: inicialmente vacío, pero se llenará automáticamente
         visualCartas = new HBox();
         visualCartas.setSpacing(5);
-        visualCartas.setAlignment(Pos.CENTER_LEFT);
+        visualCartas.setAlignment(Pos.CENTER);
 
         mensajeTemporal = new Label();
         mensajeTemporal.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7); -fx-text-fill: white; -fx-padding: 10px; -fx-font-size: 14px;");
@@ -160,6 +160,7 @@ public class ParteDerecha {
 
         HBox botonesYMazo = new HBox(80, botones, imagenYTexto);
         contenidoInferior.getChildren().add(botonesYMazo);
+        contenidoInferior.setAlignment(Pos.CENTER);
 
         return contenidoInferior;
     }
@@ -176,8 +177,8 @@ public class ParteDerecha {
         Juego juego = Juego.getInstance();
         for (Carta carta : juego.jugadoresCartasActuales()) {
             ImageView imagenCarta = new ImageView(new Image(Paths.get("src/main/java/edu/fiuba/algo3/resources/cartas/" + carta.numero() + "_" + carta.getPalo() + ".jpg").toUri().toString()));
-            imagenCarta.setFitWidth(56);
-            imagenCarta.setFitHeight(84);
+            imagenCarta.setFitWidth(67.2);
+            imagenCarta.setFitHeight(100.8);
             CartaSeleccionadaHandler seleccion = new CartaSeleccionadaHandler(cartasSeleccionadas, carta, imagenCarta, sonido, parteIzquierda,mensajeTemporal);
             imagenCarta.setOnMouseClicked(event -> seleccion.handle(new ActionEvent()));
             visualCartas.getChildren().add(imagenCarta);
