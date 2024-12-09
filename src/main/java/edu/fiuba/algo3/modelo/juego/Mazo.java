@@ -4,6 +4,7 @@ import edu.fiuba.algo3.modelo.carta.Carta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Mazo {
 
@@ -28,6 +29,7 @@ public class Mazo {
     public Mazo(List<Carta> cartasParaElMazo) {
         this.cartas = cartasParaElMazo;
         this.cantidadCartass = cartasParaElMazo.size();
+        mezclarCartas(this.cartas);
     }
 
     public List<Carta> darCartas(int cantidad) {
@@ -53,5 +55,19 @@ public class Mazo {
     }
 
     public int cantidadCartasTotales() { return cantidadCartass; }
+
+    private void mezclarCartas(List<Carta> cartas) {
+        // Inicializar un generador de números aleatorios con una semilla variable
+        Random random = new Random(System.nanoTime());
+
+        // Algoritmo de Fisher-Yates
+        for (int i = cartas.size() - 1; i > 0; i--) {
+            int j = random.nextInt(i + 1); // Índice aleatorio entre 0 e i
+            // Intercambiar las cartas en las posiciones i y j
+            Carta temp = cartas.get(i);
+            cartas.set(i, cartas.get(j));
+            cartas.set(j, temp);
+        }
+    }
 
 }
