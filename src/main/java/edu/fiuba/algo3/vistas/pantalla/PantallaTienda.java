@@ -23,6 +23,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.media.AudioClip;
+import javafx.stage.Modality;
+
 
 import java.io.FileInputStream;
 import java.nio.file.Paths;
@@ -37,9 +39,9 @@ public class PantallaTienda {
     private static List<Comodin> comodinesSeleccionados;
     private static ParteDerecha parteDerecha;
     private static int contador;
-    private static Label mensajeTemporalComodin; //nuevo
-    private static Label mensajeTemporalTarot; //nuevo
-    private static Label mensajeTemporalCarta; //nuevo
+    private static Label mensajeTemporalComodin;
+    private static Label mensajeTemporalTarot;
+    private static Label mensajeTemporalCarta;
 
     public PantallaTienda(ParteDerecha parteDerecha) {
         this.parteDerecha = parteDerecha;
@@ -52,7 +54,12 @@ public class PantallaTienda {
 
         new EventoTiendaHandler(tiendaStage);
 
-        //nuevo
+        tiendaStage.initModality(Modality.APPLICATION_MODAL);
+
+        tiendaStage.setOnCloseRequest(event -> {
+            event.consume();
+        });
+
         mensajeTemporalComodin = new Label();
         mensajeTemporalComodin.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7); -fx-text-fill: white; -fx-padding: 10px; -fx-font-size: 14px;");
         mensajeTemporalComodin.setVisible(false);
@@ -64,7 +71,6 @@ public class PantallaTienda {
         mensajeTemporalCarta = new Label();
         mensajeTemporalCarta.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7); -fx-text-fill: white; -fx-padding: 10px; -fx-font-size: 14px;");
         mensajeTemporalCarta.setVisible(false);
-        //
 
         Font fuenteTitulo = cargarFuente(FUENTE_TIENDA  , 60);
         Text titulo = new Text("Tienda");
@@ -119,7 +125,6 @@ public class PantallaTienda {
             cartaView.setFitWidth(72);
             cartaView.setFitHeight(108);
 
-            //nuevo
             ComodinSeleccionadoHandler handler = new ComodinSeleccionadoHandler(comodin, cartaView, sonidoClick, comodinesSeleccionados, mensajeTemporalComodin);
             cartaView.setOnMouseClicked(event -> handler.handle(new ActionEvent()));
             contenedorComodines.getChildren().add(cartaView);
@@ -137,7 +142,6 @@ public class PantallaTienda {
             cartaView.setFitWidth(72);
             cartaView.setFitHeight(108);
 
-            //nuevo
             TarotSeleccionadoHandler handler = new TarotSeleccionadoHandler(tarot, cartaView, sonidoClick, tarotsSeleccionados, mensajeTemporalTarot);
             cartaView.setOnMouseClicked(event -> handler.handle(new ActionEvent()));
             contenedorTarot.getChildren().add(cartaView);
@@ -194,12 +198,11 @@ public class PantallaTienda {
         layout.setAlignment(Pos.CENTER);
         layout.setPadding(new Insets(20));
 
-
         stackPane.getChildren().addAll(layout, mensajeTemporalComodin, mensajeTemporalTarot);
 
         Scene scene = new Scene(stackPane, 640, 480);
         tiendaStage.setScene(scene);
-        tiendaStage.show();
+        tiendaStage.showAndWait();
     }
 
     private static Font cargarFuente(String rutaFuente, int tamano) {
@@ -227,7 +230,6 @@ public class PantallaTienda {
         contador = 0;
     }
 
-    // Método para crear títulos con estilos
     private static Text crearTitulo(String texto) {
         Text titulo = new Text(texto);
         titulo.setFont(cargarFuente(FUENTE_TIENDA,10)); // Tamaño de la fuente ajustable
