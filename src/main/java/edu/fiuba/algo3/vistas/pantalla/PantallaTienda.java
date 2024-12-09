@@ -11,12 +11,10 @@ import edu.fiuba.algo3.modelo.juego.Tienda;
 import edu.fiuba.algo3.vistas.boton.BotonComprar;
 import edu.fiuba.algo3.vistas.boton.BotonOmitir;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -223,6 +221,10 @@ public class PantallaTienda {
 
     public static void reducirContador(){
         contador--;
+    }
+
+    public static void reiniciarContador(){
+        contador = 0;
     }
 
     // Método para crear títulos con estilos

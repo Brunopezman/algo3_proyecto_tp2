@@ -115,9 +115,10 @@ public class Juego {
         return getRondaActual();
     }
 
-    public void cargarComodinesActuales(Ronda rondaActuales) {
+    public void cargarComodinesTarotsActuales(Ronda rondaActual) {
         Ronda rondaSiguiente = this.siguienteRonda();
-        rondaActuales.transferirComodines(rondaSiguiente);
+        rondaActual.transferirComodines(rondaSiguiente);
+        rondaActual.transferirTarots(rondaSiguiente);
     }
 
     public boolean avanzarRonda() {
@@ -138,7 +139,7 @@ public class Juego {
                 juego.ganado = true;
                 return false;
             }
-            this.cargarComodinesActuales(rondaActual);
+            this.cargarComodinesTarotsActuales(rondaActual);
             numeroRondaActual++;
             this.getRondaActual().iniciarRonda();
             this.resetMazo();

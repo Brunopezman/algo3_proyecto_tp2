@@ -37,7 +37,7 @@ public class BotonAplicarTarotHandler implements EventHandler<ActionEvent> {
         }
     }
 
-    public void mostrarMensajeTemporal(String mensaje) {
+    private void mostrarMensajeTemporal(String mensaje) {
         mensajeTemporal.setText(mensaje);
         mensajeTemporal.setVisible(true);
 

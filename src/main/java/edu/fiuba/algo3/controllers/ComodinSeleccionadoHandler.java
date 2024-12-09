@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.controllers;
 
 import edu.fiuba.algo3.modelo.comodin.Comodin;
+import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.vistas.pantalla.PantallaTienda;
 
 import javafx.event.ActionEvent;
@@ -32,15 +33,21 @@ public class ComodinSeleccionadoHandler implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent actionEvent) {
+        Juego juego = Juego.getInstance();
         if (comodinesSeleccionados.contains(comodin)) {
             comodinesSeleccionados.remove(comodin); //sacar efecto azul
             cartaView.setStyle("");
             PantallaTienda.reducirContador();
         } else if (PantallaTienda.sePuedeSeguirEligiendo()) {
-            comodinesSeleccionados.add(comodin); //poner efecto azul
-            sonido.play();
-            cartaView.setStyle("-fx-effect: dropshadow(gaussian, blue, 15, 0.8, 0, 0);");
-            PantallaTienda.aumentarContador();
+            int comodinesYaGuardados = juego.getRondaActual().cantidadComodines();
+            if ((comodinesYaGuardados + comodinesSeleccionados.size()) == 5){
+                mostrarMensajeTemporal("Ya completaste/completarias los comodines maximos (5)");
+            }else {
+                comodinesSeleccionados.add(comodin);
+                sonido.play();
+                cartaView.setStyle("-fx-effect: dropshadow(gaussian, blue, 15, 0.8, 0, 0);");
+                PantallaTienda.aumentarContador();
+            }
         }else{
             mostrarMensajeTemporal("¡No puedes seleccionar más comodines! Ya elegiste 3 opciones.");
         }

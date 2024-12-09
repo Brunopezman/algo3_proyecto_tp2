@@ -3,6 +3,7 @@ package edu.fiuba.algo3.controllers;
 import edu.fiuba.algo3.modelo.carta.Carta;
 import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.modelo.mano.Mano;
+import edu.fiuba.algo3.vistas.pantalla.PantallaTienda;
 import edu.fiuba.algo3.vistas.pantalla.ParteDerecha;
 import edu.fiuba.algo3.vistas.pantalla.ParteIzquierda;
 import javafx.event.ActionEvent;
@@ -46,6 +47,7 @@ public class BotonJugarManoHandler implements EventHandler<ActionEvent> {
                 if (juego.avanzarRonda()){
                     juego.eliminarTodasLasCartas();
                     juego.repartirCartasParaIniciar();
+                    PantallaTienda.mostrarTienda();
                 }else{
                     String mensajeFinal;
                     if (juego.seGanoPartida()) {
@@ -66,7 +68,7 @@ public class BotonJugarManoHandler implements EventHandler<ActionEvent> {
         }
     }
 
-    public void mostrarMensajeTemporal(String mensaje) {
+    private void mostrarMensajeTemporal(String mensaje) {
         mensajeTemporal.setText(mensaje);
         mensajeTemporal.setVisible(true);
 

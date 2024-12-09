@@ -22,6 +22,8 @@ public class PantallaFinal extends Parent {
     private static Stage popupStage;
     private BorderPane root;
     private static final String MENSAJE_GANASTE = "GANASTE";
+    private static final String PANTALLA_GANASTE = "src/main/java/edu/fiuba/algo3/resources/fondos/fondo_pantalla_ganada.jpg";
+    private static final String PANTALLA_PERDISTE ="src/main/java/edu/fiuba/algo3/resources/fondos/fondos-pantalla_perdida.jpg";
 
     public PantallaFinal(String resultado) {
         Stage popupStage = new Stage();
@@ -34,10 +36,10 @@ public class PantallaFinal extends Parent {
         String rutaImagen;
         // Cargar la imagen de fondo
         if (Objects.equals(resultado, MENSAJE_GANASTE)) {
-            rutaImagen = "src/main/java/edu/fiuba/algo3/resources/fondos/fondo_pantalla_ganada.jpg";
+            rutaImagen = PANTALLA_GANASTE;
 
         } else {
-            rutaImagen = "src/main/java/edu/fiuba/algo3/resources/fondos/fondos-pantalla_perdida.jpg";
+            rutaImagen = PANTALLA_PERDISTE;
         }
         Image imagenFondo = new Image(Paths.get(rutaImagen).toUri().toString());
 
