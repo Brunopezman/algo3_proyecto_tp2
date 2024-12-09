@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.controllers;
 
 import edu.fiuba.algo3.modelo.comodin.Comodin;
+import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.vistas.pantalla.PantallaTienda;
 import edu.fiuba.algo3.vistas.pantalla.ParteDerecha;
 
@@ -28,6 +29,7 @@ public class ComodinSeleccionadoHandler implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent actionEvent) {
+        Juego juego = Juego.getInstance();
         //System.out.println(comodinesSeleccionados.size());
         if (comodinesSeleccionados.contains(comodin)) {
             // Deseleccionar: quitar el efecto azul
@@ -35,11 +37,15 @@ public class ComodinSeleccionadoHandler implements EventHandler<ActionEvent> {
             cartaView.setStyle("");
             PantallaTienda.reducirContador();
         } else if (PantallaTienda.sePuedeSeguirEligiendo()) {
-            comodinesSeleccionados.add(comodin);
-            sonido.play();
-            cartaView.setStyle("-fx-effect: dropshadow(gaussian, blue, 15, 0.8, 0, 0);");
-            PantallaTienda.aumentarContador();
-
+            int comodinesYaGuardados = juego.getRondaActual().cantidadComodines();
+            if ((comodinesYaGuardados + comodinesSeleccionados.size()) == 5){
+                System.out.println("Ya completaste/completarias los comodines maximos (5)");
+            }else {
+                comodinesSeleccionados.add(comodin);
+                sonido.play();
+                cartaView.setStyle("-fx-effect: dropshadow(gaussian, blue, 15, 0.8, 0, 0);");
+                PantallaTienda.aumentarContador();
+            }
         }else{
             System.out.println("No se puede seleccionar un comodin, ya seleccionaste 3 de las opciones de la tienda!");
         }
