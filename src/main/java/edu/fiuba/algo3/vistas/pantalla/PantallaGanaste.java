@@ -21,7 +21,7 @@ public class PantallaGanaste extends Parent {
     private BorderPane root;
 
     private static final String MENSAJE_GANASTE = "GANASTE";
-    private static final String PANTALLA_GANASTE ="src/main/java/edu/fiuba/algo3/resources/fondos/fondo_pantalla_ganada.jpg";
+    private static final String PANTALLA_GANASTE ="src/main/java/edu/fiuba/algo3/resources/fondos/fondos_pantalla_ganada.jpg";
 
     public PantallaGanaste() {
         Stage popupStage = new Stage();
