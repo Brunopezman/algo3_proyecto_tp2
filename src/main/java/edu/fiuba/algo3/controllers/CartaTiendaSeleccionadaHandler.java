@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.controllers;
 
 import edu.fiuba.algo3.modelo.carta.Carta;
+import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.vistas.pantalla.PantallaTienda;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -41,15 +42,5 @@ public class CartaTiendaSeleccionadaHandler implements EventHandler<ActionEvent>
             cartasEspecificas.add(carta);
             PantallaTienda.aumentarContador();
         }
-
-        /*
-        // Cambiar el estado de selección
-        estaSeleccionada = !estaSeleccionada;
-
-        // Log de selección/deselección (opcional para depuración)
-        System.out.println((estaSeleccionada ? "Seleccionada: " : "Deseleccionada: ") + carta.getNombre());
-         */
-
     }
-
 }

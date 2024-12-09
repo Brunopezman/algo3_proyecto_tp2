@@ -11,10 +11,10 @@ import edu.fiuba.algo3.modelo.juego.Tienda;
 import edu.fiuba.algo3.vistas.boton.BotonComprar;
 import edu.fiuba.algo3.vistas.boton.BotonOmitir;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -31,7 +31,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PantallaTienda {
-
+    public static final String FUENTE_TIENDA = "src/main/java/edu/fiuba/algo3/resources/fuentes/fuente2.otf";
+    public static final String FONDO_TIENDA = "src/main/java/edu/fiuba/algo3/resources/fondos/fondo_rya.jpeg";
     private static List<Comodin> comodinesSeleccionados;
     private static ParteDerecha parteDerecha;
     private static int contador;
@@ -45,8 +46,11 @@ public class PantallaTienda {
         Stage tiendaStage = new Stage();
         tiendaStage.setTitle("Tienda");
 
+        // Inicializar el manejador de eventos para la tienda
+        new EventoTiendaHandler(tiendaStage); // Pasamos el Stage al manejador
+
         // Cargar fuente personalizada
-        Font fuenteTitulo = cargarFuente("src/main/java/edu/fiuba/algo3/resources/fuentes/fuente2.otf", 60);
+        Font fuenteTitulo = cargarFuente(FUENTE_TIENDA  , 60);
 
         // Crear el título y subtitulo de la tienda
         Text titulo = new Text("Tienda");
@@ -55,11 +59,19 @@ public class PantallaTienda {
         titulo.setStyle("-fx-effect: dropshadow(gaussian, darkred, 5, 0.5, 0, 0);");
 
         Text subtitulo = new Text("Puedes elegir hasta 3 cartas para comenzar la ronda");
-        subtitulo.setFont(Font.font(fuenteTitulo.getFamily(), fuenteTitulo.getSize() * 0.3)); // Fuente más pequeña, 60% del tamaño del título
+        subtitulo.setFont(Font.font(fuenteTitulo.getFamily(), fuenteTitulo.getSize() * 0.3));
         subtitulo.setFill(Color.YELLOW);
         subtitulo.setStyle("-fx-effect: dropshadow(gaussian, darkred, 5, 0.5, 0, 0);");
 
-        // Crear el contenedor de cartas
+        // Crear el contenedor de todas las cartas de la pantalla
+        HBox seccionTienda = new HBox(20);
+        seccionTienda.setAlignment(Pos.CENTER);
+
+        // Crear los títulos
+        Text tituloComodines = crearTitulo("Comodines");
+        Text tituloTarots = crearTitulo("Tarots");
+        Text tituloCarta = crearTitulo("Carta");
+
         HBox contenedorCartas = new HBox(20);
         contenedorCartas.setAlignment(Pos.CENTER);
         contenedorCartas.setPadding(new Insets(20));
@@ -80,6 +92,10 @@ public class PantallaTienda {
         String rutaSonido = "src/main/java/edu/fiuba/algo3/resources/sonidos/click.mp3";
         AudioClip sonidoClick = new AudioClip(Paths.get(rutaSonido).toUri().toString());
 
+        // Crear seccion para todos los comodines
+        VBox seccionComodines = new VBox(10);
+        seccionComodines.setAlignment(Pos.BOTTOM_CENTER);
+
         // Mostrar cartas de comodines
         HBox contenedorComodines = new HBox(10);
         contenedorComodines.setAlignment(Pos.CENTER_LEFT);
@@ -95,9 +111,13 @@ public class PantallaTienda {
             contenedorComodines.getChildren().add(cartaView);
         }
 
+        VBox seccionTarots = new VBox(10);
+        seccionTarots.setAlignment(Pos.BOTTOM_CENTER);
+
         // Mostrar cartas de tarots
         HBox contenedorTarot = new HBox(10);
         contenedorTarot.setAlignment(Pos.CENTER);
+
         for (Tarot tarot : tarots) {
             Image cartaImagen = new Image(Paths.get("src/main/java/edu/fiuba/algo3/resources/tarots/" + tarot.getNombre() + ".png").toUri().toString());
             ImageView cartaView = new ImageView(cartaImagen);
@@ -108,6 +128,10 @@ public class PantallaTienda {
             cartaView.setOnMouseClicked(event -> handler.handle(new ActionEvent()));
             contenedorTarot.getChildren().add(cartaView);
         }
+
+        VBox seccionCarta = new VBox(10);
+        seccionCarta.setAlignment(Pos.BOTTOM_CENTER);
+
         HBox contenedorCartaEspecifica = new HBox(10);
         contenedorCartaEspecifica.setAlignment(Pos.CENTER_RIGHT);
 
@@ -129,12 +153,15 @@ public class PantallaTienda {
             System.out.println("No hay carta específica en la tienda.");
         }
 
-        // Añadir contenedores de cartas al contenedor principal
-        contenedorCartas.getChildren().addAll(contenedorComodines, contenedorTarot,contenedorCartaEspecifica);
+        seccionComodines.getChildren().addAll(tituloComodines, contenedorComodines);
+        seccionTarots.getChildren().addAll(tituloTarots, contenedorTarot);
+        seccionCarta.getChildren().addAll(tituloCarta, contenedorCartaEspecifica);
+
+        seccionTienda.getChildren().addAll(seccionComodines, seccionTarots, seccionCarta);
 
         // Crear un StackPane para el fondo de pantalla
         StackPane stackPane = new StackPane();
-        String rutaFondo = "src/main/java/edu/fiuba/algo3/resources/fondos/fondo_rya.jpeg";
+        String rutaFondo = FONDO_TIENDA;
         Image imagenFondo = new Image(Paths.get(rutaFondo).toUri().toString());
         BackgroundImage fondo = new BackgroundImage(imagenFondo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         Background background = new Background(fondo);
@@ -152,9 +179,9 @@ public class PantallaTienda {
         botonesBox.setAlignment(Pos.CENTER);
 
         // Crear el layout principal y añadir los elementos
-        VBox layout = new VBox(10, titulo, subtitulo, contenedorCartas, botonesBox);
+        VBox layout = new VBox(50, titulo, subtitulo, seccionTienda, botonesBox);
         layout.setAlignment(Pos.CENTER);
-        layout.setPadding(new Insets(10));
+        layout.setPadding(new Insets(20));
 
         // Añadir el layout al StackPane y mostrar la escena
         stackPane.getChildren().add(layout);
@@ -184,13 +211,12 @@ public class PantallaTienda {
         contador--;
     }
 
-    // Crear un título estilizado para cada sección
-    private Text crearTituloSeccion(String texto) {
+    // Método para crear títulos con estilos
+    private static Text crearTitulo(String texto) {
         Text titulo = new Text(texto);
-        titulo.setFont(Font.font("Arial", 20)); // Ajustar el tamaño según necesidades
-        titulo.setFill(Color.rgb(255, 255, 255, 0.7)); // Color blanco semitransparente
-        titulo.setEffect(new DropShadow(3, Color.BLACK)); // Sombra para mayor visibilidad
-        titulo.setStyle("-fx-font-weight: bold;");
+        titulo.setFont(cargarFuente(FUENTE_TIENDA,10)); // Tamaño de la fuente ajustable
+        titulo.setFill(Color.YELLOW);
+        titulo.setStyle("-fx-font-weight: bold; -fx-opacity: 0.8;"); // Estilo semitransparente
         return titulo;
     }
 }
