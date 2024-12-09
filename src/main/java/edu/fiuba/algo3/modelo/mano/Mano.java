@@ -1,11 +1,7 @@
 package edu.fiuba.algo3.modelo.mano;
 
 import edu.fiuba.algo3.modelo.carta.Carta;
-import edu.fiuba.algo3.modelo.comodin.Comodin;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public abstract class Mano {
     protected String nombre;
@@ -34,28 +30,8 @@ public abstract class Mano {
 
     public String getNombre(){ return nombre; }
 
-    public int calcularPuntaje(int valor) {
-        return (this.puntaje + valor) * this.multiplicador;
-    }
-
-    public void modificarPuntaje(int valor) {
-        this.setPuntaje(valor);
-    }
-
-    public void modificarMultiplicador(int valor) {
-        this.setMultiplicador(valor);
-    }
-
     public boolean esMismaMano(String manoRecibida) {
         return this.nombre.equals(manoRecibida);
-    }
-
-    public void sumarMultiplicador(int multiplicador) {
-        this.setMultiplicador(this.multiplicador + multiplicador);
-    }
-
-    public void multiplicarMultiplicador(int multiplicador) {
-        this.setMultiplicador(this.multiplicador * multiplicador);
     }
 
     public void sumarPuntos(int puntos) {

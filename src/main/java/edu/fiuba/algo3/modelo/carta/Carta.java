@@ -5,12 +5,6 @@ public class Carta {
     private Valor valor;
     private Palo palo;
 
-    /*
-    public Carta(String valor, String consecutivo, String palo) {
-        this.valor = new Valor(valor, consecutivo);
-        this.palo = new Palo(palo);
-    }
-    */
     public Carta(String nombre, String palo, String numero, String consecutivo, int puntos){
         this.nombre = nombre;
         this.valor = new Valor(numero, consecutivo, puntos);
@@ -29,13 +23,7 @@ public class Carta {
 
     public boolean esIgual(String nombreCarta){ return this.nombre.equals(nombreCarta); };
 
-    public boolean tieneMismoPalo(Carta otraCarta){ return this.palo.sonIgules(otraCarta); };
-
     public boolean tieneMismoNumero(Carta otraCarta){ return this.valor.sonIguales(otraCarta); };
-
-    // public void nuevoValor(int puntaje) { this.valor.actualizarPuntaje(puntaje); }
-
-    public void multiplicarValor(int multiplicador) { this.valor.multiplicarPuntaje(multiplicador);}
 
     public void modificarPorTarot(int puntosAgregar, int multiplicador){
         this.valor.sumarPuntaje(puntosAgregar);

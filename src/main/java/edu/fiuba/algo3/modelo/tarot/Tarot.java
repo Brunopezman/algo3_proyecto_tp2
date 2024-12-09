@@ -33,8 +33,5 @@ public abstract class Tarot {
         return this.nombre.equals(tarotElegido.nombre);
     }
 
-    public void modificarAQueAplica(String cartaQueAplica){
-        this.aQueAplica = cartaQueAplica;
-    }
 }
 

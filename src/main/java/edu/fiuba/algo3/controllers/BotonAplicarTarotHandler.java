@@ -11,7 +11,6 @@ import javafx.animation.Timeline;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BotonAplicarTarotHandler implements EventHandler<ActionEvent> {

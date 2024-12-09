@@ -32,22 +32,6 @@ public class Turno {
         this.puntaje = 0;
         this.cantidadDescartes = 0;
     }
-    /*
-    public Turno() {
-        this.manosJugables = new ArrayList<>();
-        this.puntaje = 0;
-        this.manosJugables.add(new EscaleraReal());
-        this.manosJugables.add(new EscaleraColor());
-        this.manosJugables.add(new Poker());
-        this.manosJugables.add(new FullHouse());
-        this.manosJugables.add(new Color());
-        this.manosJugables.add(new Escalera());
-        this.manosJugables.add(new Trio());
-        this.manosJugables.add(new DoblePar());
-        this.manosJugables.add(new Par());
-        this.manosJugables.add(new CartaAlta());
-        this.cantidadDescartes = 0;
-    }*/
 
     //Getters y Setters
     public int puntajeDelTurno(){
@@ -84,25 +68,6 @@ public class Turno {
             }
         }
         return mano;
-    }
-
-    public void sumarManoJugada(int valor){
-        this.setPuntaje(valor);
-    }
-
-    public void sumarDescartes(int cantidad){
-        this.cantidadDescartes += cantidad;
-    }
-
-    public boolean puedeDescartar(){
-        if(this.cantidadDescartes == 3){
-            return false;
-        }
-        return true;
-    }
-
-    public void registrarDescarte() {
-        this.cantidadDescartes++;
     }
 
     public void agregarTarot(Tarot tarotElegido) {

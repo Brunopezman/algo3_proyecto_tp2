@@ -24,17 +24,6 @@ public class Ronda {
     private int descartesMaximos;
     private Tienda tienda;
 
-    /*
-    public Ronda(int cantTurnos, int cantDescartes, int puntASuperar, Jugador jugadorActual) {
-        this.turnos = new ArrayList<Turno>();
-        this.turnoActual = INICIO;
-        this.comodines = new ArrayList <Comodin>();
-        this.cantidadTurnos = cantTurnos;
-        this.puntajeASuperar = puntASuperar;
-        jugadorActual.setDescartesMaximos(cantDescartes);
-    }
-    */
-
     public Ronda(int nro,int manos,int descartesMaximos, int puntajeAObtener, Tienda tienda){
         this.nroRonda = nro;
         this.turnos = new ArrayList<Turno>();
@@ -43,8 +32,8 @@ public class Ronda {
         this.descartesActuales = 0;
         this.puntajeASuperar = puntajeAObtener;
         this.tienda = tienda;
-        this.comodines = new ArrayList <Comodin>();
-        this.tarots = new ArrayList<Tarot>();
+        this.comodines = new ArrayList<>();
+        this.tarots = new ArrayList<>();
         this.cantidadTurnos = manos;
     }
 
@@ -61,8 +50,6 @@ public class Ronda {
     public int cantidadTurnos(){ return turnos.size(); }
 
     public int turnoActual(){ return turnoActual; }
-
-    public int puntosTurnoActual(){ return this.getTurnoActual().puntajeDelTurno(); }
 
     public int cantidadComodines(){ return comodines.size(); }
 
@@ -139,14 +126,6 @@ public class Ronda {
     }
 
     public int jugarTurno(List<Carta> cartas, Mano mano) {
-        /*
-        int puntaje = 0;
-        for (Carta carta : posibleMano) {;
-            puntaje += carta.puntaje();
-        }
-        mano.sumarPuntos(puntaje);
-        mano.sumarDescartes(descartesActuales);
-        */
         mano.sumarDescartes(descartesActuales);
         Turno turno = this.getTurnoActual();
         int puntaje = turno.calcularJugada(cartas,mano);
@@ -169,11 +148,7 @@ public class Ronda {
         //dar nuevamente la cantidad de cartas que descartó
         int cantidadARecibir = cartasADescartar.size();
         List<Carta> nuevasCartas= mazo.darCartas(cantidadARecibir);
-        /*
-        for (int i = 0; i < cantidadARecibir; i++) {
-            this.agregarCarta(cartasActuales, nuevasCartas.get(i));
-        }
-        */
+
         for (Carta carta : nuevasCartas) {
             this.agregarCarta(cartasActuales, carta);
         }
