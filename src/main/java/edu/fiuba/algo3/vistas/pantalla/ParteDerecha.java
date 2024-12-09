@@ -38,7 +38,7 @@ public class ParteDerecha {
     private static HBox tarotsBox;
     private static HBox botonAplicar;
     private static List<Tarot> tarotSeleccionados;
-    private Label mensajeTemporal;
+    private static Label mensajeTemporal;
     private static VBox comodinesYCantidad;
     private static VBox tarotsYCantidad;
 
@@ -178,7 +178,7 @@ public class ParteDerecha {
             ImageView imagenCarta = new ImageView(new Image(Paths.get("src/main/java/edu/fiuba/algo3/resources/cartas/" + carta.numero() + "_" + carta.getPalo() + ".jpg").toUri().toString()));
             imagenCarta.setFitWidth(56);
             imagenCarta.setFitHeight(84);
-            CartaSeleccionadaHandler seleccion = new CartaSeleccionadaHandler(cartasSeleccionadas, carta, imagenCarta, sonido, parteIzquierda);
+            CartaSeleccionadaHandler seleccion = new CartaSeleccionadaHandler(cartasSeleccionadas, carta, imagenCarta, sonido, parteIzquierda,mensajeTemporal);
             imagenCarta.setOnMouseClicked(event -> seleccion.handle(new ActionEvent()));
             visualCartas.getChildren().add(imagenCarta);
         }
@@ -220,7 +220,7 @@ public class ParteDerecha {
             imagenTarot.setFitWidth(56); // Ancho de las cartas
             imagenTarot.setFitHeight(84); // Alto de las cartas
             cantidadTarots++;
-            TarotAplicarHandler seleccion = new TarotAplicarHandler(tarotSeleccionados, tarot, imagenTarot, sonido);
+            TarotAplicarHandler seleccion = new TarotAplicarHandler(tarotSeleccionados, tarot, imagenTarot, sonido, mensajeTemporal);
             imagenTarot.setOnMouseClicked(event -> seleccion.handle(new ActionEvent()));
             tarotsBox.getChildren().add(imagenTarot);
         }
