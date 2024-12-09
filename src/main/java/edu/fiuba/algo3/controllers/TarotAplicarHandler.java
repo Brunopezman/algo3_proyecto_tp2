@@ -6,6 +6,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.scene.control.Label;
+import javafx.util.Duration;
 
 import java.util.List;
 
@@ -15,12 +19,14 @@ public class TarotAplicarHandler implements EventHandler<ActionEvent> {
     private final Tarot tarot;
     private final ImageView imagenCarta;
     private final AudioClip sonido;
+    private final Label mensajeTemporal;
 
-    public TarotAplicarHandler(List<Tarot> tarotSeleccionados, Tarot tarot, ImageView imagenCarta, AudioClip sonido) {
+    public TarotAplicarHandler(List<Tarot> tarotSeleccionados, Tarot tarot, ImageView imagenCarta, AudioClip sonido, Label mensajeTemporal) {
         this.tarotSeleccionados = tarotSeleccionados;
         this.tarot = tarot;
         this.imagenCarta = imagenCarta;
         this.sonido = sonido;
+        this.mensajeTemporal = mensajeTemporal;
     }
 
     @Override
@@ -33,10 +39,17 @@ public class TarotAplicarHandler implements EventHandler<ActionEvent> {
             tarotSeleccionados.add(tarot);
             imagenCarta.setStyle("-fx-effect: dropshadow(gaussian, blue, 10, 0.5, 0, 0);");
         }else{
-            System.out.println("Solo un tarot puede ser seleccionado para usarse!!!");
+            mostrarMensajeTemporal("Solo un tarot puede ser seleccionado para usarse!!!");
         }
         System.out.println(tarotSeleccionados.size());
+    }
 
+    private void mostrarMensajeTemporal(String mensaje) {
+        mensajeTemporal.setText(mensaje);
+        mensajeTemporal.setVisible(true);
 
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), e -> mensajeTemporal.setVisible(false)));
+        timeline.setCycleCount(1); // Solo ejecutar una vez
+        timeline.play();
     }
 }
