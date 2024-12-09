@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.controllers;
 
 import edu.fiuba.algo3.modelo.tarot.Tarot;
+import edu.fiuba.algo3.vistas.pantalla.ParteDerecha;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
@@ -33,6 +34,8 @@ public class TarotAplicarHandler implements EventHandler<ActionEvent> {
         }else if(tarotSeleccionados.isEmpty()){
             tarotSeleccionados.add(tarot);
             imagenCarta.setStyle("-fx-effect: dropshadow(gaussian, blue, 10, 0.5, 0, 0);");
+
+            ParteDerecha.mostrarDescripcionTemporal(tarot.getDescripcion());
         }else{
             mostrarMensajeTemporal("Solo un tarot puede ser seleccionado para usarse!!!");
         }

@@ -7,7 +7,6 @@ import edu.fiuba.algo3.vistas.pantalla.PantallaTienda;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
-import javafx.scene.media.AudioClip;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.control.Label;

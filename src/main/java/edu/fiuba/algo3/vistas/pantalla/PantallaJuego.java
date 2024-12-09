@@ -21,7 +21,7 @@ public class PantallaJuego {
     public PantallaJuego(Juego juego, Stage stage) {
         this.root = new VBox();
         this.contenidoJuego = new GridPane();
-        this.menuJuego = new MenuJuego(stage);
+        this.menuJuego = MenuJuego.getInstance(stage);
         Ronda ronda = juego.inicializarRonda();
 
         //INICIO RONDA

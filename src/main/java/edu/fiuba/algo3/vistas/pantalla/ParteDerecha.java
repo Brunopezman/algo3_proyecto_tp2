@@ -22,6 +22,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.media.AudioClip;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -228,6 +231,22 @@ public class ParteDerecha {
         Text cantidadTarotsText = new Text(cantidadTarots +"/2");
         cantidadTarotsText.setStyle("-fx-font-size: 0.8em; -fx-fill: #efe7e7;");
         tarotsYCantidad.getChildren().addAll(tarotsBox, cantidadTarotsText);
+    }
+
+    public static void mostrarDescripcionTemporal(String descripcion) {
+        Label mensajeDescripcion = new Label(descripcion);
+        mensajeDescripcion.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7); -fx-text-fill: white; -fx-padding: 10px; -fx-font-size: 14px;");
+        mensajeDescripcion.setVisible(true);
+
+        StackPane stackPane = (StackPane) mensajeTemporal.getParent();
+        stackPane.getChildren().add(mensajeDescripcion);
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), e -> {
+            mensajeDescripcion.setVisible(false);
+            stackPane.getChildren().remove(mensajeDescripcion);
+        }));
+        timeline.setCycleCount(1);
+        timeline.play();
     }
 
     public BorderPane crearParteDerecha() {
