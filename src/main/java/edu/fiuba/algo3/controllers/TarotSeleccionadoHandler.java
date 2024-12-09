@@ -38,7 +38,7 @@ public class TarotSeleccionadoHandler implements EventHandler<ActionEvent> {
         } else if(PantallaTienda.sePuedeSeguirEligiendo()){
             int tarotsYaGuardados = juego.getRondaActual().cantidadTarots();
             if ((tarotsYaGuardados + tarotsSeleccionados.size()) == 2){
-                System.out.println("Ya completaste/completarias los tarots maximos (2)");
+                mostrarMensajeTemporal("Ya completaste/completarias los tarots maximos (2)");
             }else {
                 tarotsSeleccionados.add(tarot); //poner efecto azul
                 cartaView.setStyle("-fx-effect: dropshadow(gaussian, blue, 15, 0.8, 0, 0);");
