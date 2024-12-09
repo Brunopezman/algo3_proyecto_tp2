@@ -106,7 +106,7 @@ public class ParteDerecha {
         tarotsBox = new HBox(tarots, cantidadTarotsText);
 
         // Boton para los a tarots
-        BotonAplicarTarotHandler handler = new BotonAplicarTarotHandler(tarotSeleccionados);
+        BotonAplicarTarotHandler handler = new BotonAplicarTarotHandler(tarotSeleccionados, mensajeTemporal);
         BotonAplicarTarot botonAplicarTarot = new BotonAplicarTarot(handler);
         botonAplicar = new HBox(botonAplicarTarot);
 
@@ -121,7 +121,7 @@ public class ParteDerecha {
         botones.setAlignment(Pos.CENTER);
 
         // Boton JugarMano
-        BotonJugarManoHandler botonJugarManoHandler = new BotonJugarManoHandler(juego,cartasSeleccionadas, parteIzquierda, cartasRestantesText);
+        BotonJugarManoHandler botonJugarManoHandler = new BotonJugarManoHandler(juego,cartasSeleccionadas, parteIzquierda, cartasRestantesText, mensajeTemporal);
         BotonJugarMano botonJugarMano = new BotonJugarMano(botonJugarManoHandler);
 
         // Boton Descartar
