@@ -24,6 +24,7 @@ public abstract class Tarot {
 
     //Getters y Setters
     public String getNombre(){ return nombre; }
+    public String getDescripcion() { return descripcion; }
 
     ////////////////////////
 

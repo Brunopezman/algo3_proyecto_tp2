@@ -18,6 +18,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.media.AudioClip;
@@ -54,7 +55,7 @@ public class ParteDerecha {
         // Cartas del jugador: inicialmente vacío, pero se llenará automáticamente
         visualCartas = new HBox();
         visualCartas.setSpacing(5);
-        visualCartas.setAlignment(Pos.CENTER);
+        visualCartas.setAlignment(Pos.CENTER_LEFT);
 
         mensajeTemporal = new Label();
         mensajeTemporal.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7); -fx-text-fill: white; -fx-padding: 10px; -fx-font-size: 14px;");
@@ -71,7 +72,6 @@ public class ParteDerecha {
 
         // Botones y Mazo
         HBox contenidoInferior = crearContenidoInferior(cartasSeleccionadas);
-        contenidoInferior.setAlignment(Pos.CENTER_RIGHT);
         parteDerecha.setBottom(contenidoInferior);
 
         // Visualizacion de cartas en la mano
@@ -131,8 +131,8 @@ public class ParteDerecha {
     private HBox crearContenidoInferior(List<Carta> cartasSeleccionadas) {
         HBox contenidoInferior = new HBox();
         HBox botones = new HBox();
-        botones.setAlignment(Pos.CENTER_LEFT);
         botones.setSpacing(20);
+        botones.setAlignment(Pos.CENTER_RIGHT);
 
         // Boton JugarMano
         BotonJugarManoHandler botonJugarManoHandler = new BotonJugarManoHandler(juego,cartasSeleccionadas, parteIzquierda, cartasRestantesText, mensajeTemporal);
@@ -158,7 +158,7 @@ public class ParteDerecha {
         VBox imagenYTexto = new VBox(10, imageView, cartasRestantesText);
         imagenYTexto.setAlignment(Pos.CENTER_RIGHT);
 
-        HBox botonesYMazo = new HBox(120, botones, imagenYTexto);
+        HBox botonesYMazo = new HBox(80, botones, imagenYTexto);
         contenidoInferior.getChildren().add(botonesYMazo);
 
         return contenidoInferior;
@@ -176,8 +176,8 @@ public class ParteDerecha {
         Juego juego = Juego.getInstance();
         for (Carta carta : juego.jugadoresCartasActuales()) {
             ImageView imagenCarta = new ImageView(new Image(Paths.get("src/main/java/edu/fiuba/algo3/resources/cartas/" + carta.numero() + "_" + carta.getPalo() + ".jpg").toUri().toString()));
-            imagenCarta.setFitWidth(67.2);
-            imagenCarta.setFitHeight(100.8);
+            imagenCarta.setFitWidth(56);
+            imagenCarta.setFitHeight(84);
             CartaSeleccionadaHandler seleccion = new CartaSeleccionadaHandler(cartasSeleccionadas, carta, imagenCarta, sonido, parteIzquierda);
             imagenCarta.setOnMouseClicked(event -> seleccion.handle(new ActionEvent()));
             visualCartas.getChildren().add(imagenCarta);

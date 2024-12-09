@@ -49,7 +49,7 @@ public class TarotSeleccionadoHandler implements EventHandler<ActionEvent> {
                 cartaView.setStyle("-fx-effect: dropshadow(gaussian, blue, 15, 0.8, 0, 0);");
                 PantallaTienda.aumentarContador();
 
-                PantallaTienda.mostrarDescripcionTemporal(tarot.getNombre());
+                PantallaTienda.mostrarDescripcionTemporal(tarot.getDescripcion());
             }
         } else {
             mostrarMensajeTemporal("No se puede seleccionar una tarot, ya seleccionaste 3 de las opciones de la tienda!");
