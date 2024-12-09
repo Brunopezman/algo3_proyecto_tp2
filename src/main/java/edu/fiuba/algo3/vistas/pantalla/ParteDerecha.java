@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -37,6 +38,7 @@ public class ParteDerecha {
     private static HBox tarotsBox;
     private static HBox botonAplicar;
     private static List<Tarot> tarotSeleccionados;
+    private Label mensajeTemporal;
 
     public ParteDerecha(Juego juego, ParteIzquierda parteIzquierda) {
         this.juego = juego;
@@ -52,6 +54,10 @@ public class ParteDerecha {
         visualCartas = new HBox();
         visualCartas.setSpacing(5);
         visualCartas.setAlignment(Pos.CENTER);
+
+        mensajeTemporal = new Label();
+        mensajeTemporal.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7); -fx-text-fill: white; -fx-padding: 10px; -fx-font-size: 14px;");
+        mensajeTemporal.setVisible(false);
 
         // Llama a repartirCartas para inicializar las cartas desde el comienzo
         juego.repartirCartasJugador(8);
@@ -70,13 +76,13 @@ public class ParteDerecha {
         actualizarVisualMazo();
         actualizarVisualCartas(cartasSeleccionadas);
         actualizarVisualTarot();
-        //visualizarCartas(cartasSeleccionadas);
-        centro.getChildren().add(visualCartas);
-        parteDerecha.setCenter(centro);
 
+        centro.getChildren().addAll(visualCartas, mensajeTemporal);
+        StackPane.setAlignment(mensajeTemporal, Pos.TOP_CENTER);
+
+        parteDerecha.setCenter(centro);
         parteDerecha.setPadding(new Insets(10));
     }
-
 
     private HBox crearComodinesTarots() {
         HBox comodinesTarots = new HBox();
@@ -119,7 +125,7 @@ public class ParteDerecha {
         BotonJugarMano botonJugarMano = new BotonJugarMano(botonJugarManoHandler);
 
         // Boton Descartar
-        BotonDescartarHandler botonDescartarHandler = new BotonDescartarHandler(juego,cartasSeleccionadas, parteIzquierda, cartasRestantesText);
+        BotonDescartarHandler botonDescartarHandler = new BotonDescartarHandler(juego,cartasSeleccionadas, parteIzquierda, cartasRestantesText, mensajeTemporal);
         BotonDescartar botonDescartar = new BotonDescartar(botonDescartarHandler);
 
         botones.getChildren().addAll(botonJugarMano, botonDescartar);
@@ -143,13 +149,7 @@ public class ParteDerecha {
 
         return contenidoInferior;
     }
-    /*
-    public static void visualizarCartas(List<Carta> cartasSeleccionadas) {
-        Juego juego = Juego.getInstance();
-        cartasRestantesText.setText(juego.getMazo().cartasRestantes() + "/" + juego.getCartasTotalesMazo());
-        actualizarVisualCartas(cartasSeleccionadas);
-    }
-    */
+
     public static void actualizarVisualMazo(){
         Juego juego = Juego.getInstance();
         cartasRestantesText.setText(juego.getMazo().cartasRestantes() + "/" + juego.getCartasTotalesMazo());
@@ -205,33 +205,4 @@ public class ParteDerecha {
     public BorderPane crearParteDerecha() {
         return parteDerecha;
     }
-
-    /*
-    public VBox actualizarComodines(List<Comodin> comodinesSeleccionados) {
-        this.comodinesBox.getChildren().clear();
-        for (Comodin comodin : comodinesSeleccionados) {
-            Image comodinImagen = new Image(Paths.get("src/main/java/edu/fiuba/algo3/resources/comodines/" + comodin.getNombre() + ".png").toUri().toString());
-            ImageView cartaView = new ImageView(comodinImagen);
-            cartaView.setFitWidth(56); // Ancho de las cartas
-            cartaView.setFitHeight(84); // Alto de las cartas
-
-            this.comodinesBox.getChildren().add(cartaView);
-        }
-
-        return comodinesBox;
-    }
-    */
-    /*
-    public void actualizarTarots(List<Tarot> tarotsSeleccionados) {
-        this.tarotsBox.getChildren().clear();
-        for (Tarot tarot : tarotsSeleccionados) {
-            Image cartaImagen = new Image(Paths.get("src/main/java/edu/fiuba/algo3/resources/tarots/" + tarot.getNombre() + ".png").toUri().toString());
-            ImageView cartaView = new ImageView(cartaImagen);
-            cartaView.setFitWidth(56); // Ancho de las cartas
-            cartaView.setFitHeight(84); // Alto de las cartas
-
-            this.tarotsBox.getChildren().add(cartaView);
-        }
-    }
-    */
 }

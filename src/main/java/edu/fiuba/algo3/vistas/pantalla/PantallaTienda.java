@@ -14,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -35,6 +36,9 @@ public class PantallaTienda {
     private static List<Comodin> comodinesSeleccionados;
     private static ParteDerecha parteDerecha;
     private static int contador;
+    private static Label mensajeTemporalComodin; //nuevo
+    private static Label mensajeTemporalTarot; //nuevo
+    private static Label mensajeTemporalCarta; //nuevo
 
     public PantallaTienda(ParteDerecha parteDerecha) {
         this.parteDerecha = parteDerecha;
@@ -45,10 +49,21 @@ public class PantallaTienda {
         Stage tiendaStage = new Stage();
         tiendaStage.setTitle("Tienda");
 
-        // Cargar fuente personalizada
-        Font fuenteTitulo = cargarFuente("src/main/java/edu/fiuba/algo3/resources/fuentes/fuente2.otf", 60);
+        //nuevo
+        mensajeTemporalComodin = new Label();
+        mensajeTemporalComodin.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7); -fx-text-fill: white; -fx-padding: 10px; -fx-font-size: 14px;");
+        mensajeTemporalComodin.setVisible(false);
 
-        // Crear el título y subtitulo de la tienda
+        mensajeTemporalTarot = new Label();
+        mensajeTemporalTarot.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7); -fx-text-fill: white; -fx-padding: 10px; -fx-font-size: 14px;");
+        mensajeTemporalTarot.setVisible(false);
+
+        mensajeTemporalCarta = new Label();
+        mensajeTemporalCarta.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7); -fx-text-fill: white; -fx-padding: 10px; -fx-font-size: 14px;");
+        mensajeTemporalCarta.setVisible(false);
+        //
+
+        Font fuenteTitulo = cargarFuente("src/main/java/edu/fiuba/algo3/resources/fuentes/fuente2.otf", 60);
         Text titulo = new Text("Tienda");
         titulo.setFont(fuenteTitulo); // Fuente grande, por ejemplo, tamaño 40
         titulo.setFill(Color.YELLOW);
@@ -59,12 +74,10 @@ public class PantallaTienda {
         subtitulo.setFill(Color.YELLOW);
         subtitulo.setStyle("-fx-effect: dropshadow(gaussian, darkred, 5, 0.5, 0, 0);");
 
-        // Crear el contenedor de cartas
         HBox contenedorCartas = new HBox(20);
         contenedorCartas.setAlignment(Pos.CENTER);
         contenedorCartas.setPadding(new Insets(20));
 
-        // Obtener la tienda de la ronda actual
         Juego juego = Juego.getInstance();
         Ronda rondaActual = juego.getRondaActual();
         Tienda tienda = rondaActual.getTienda();
@@ -72,30 +85,32 @@ public class PantallaTienda {
         // Obtener las cartas de comodines y tarots de la tienda
         List<Comodin> comodines = tienda.getComodines();
         List<Comodin> comodinesSeleccionados = new ArrayList<>();
+
         List<Tarot> tarots = tienda.getTarots();
         List<Tarot> tarotsSeleccionados = new ArrayList<>();
+
         Carta cartaEspecifica = tienda.getCarta();
         List<Carta> cartasEspecificas = new ArrayList<>();
 
         String rutaSonido = "src/main/java/edu/fiuba/algo3/resources/sonidos/click.mp3";
         AudioClip sonidoClick = new AudioClip(Paths.get(rutaSonido).toUri().toString());
 
-        // Mostrar cartas de comodines
+        //Comodines
         HBox contenedorComodines = new HBox(10);
         contenedorComodines.setAlignment(Pos.CENTER_LEFT);
-
         for (Comodin comodin : comodines) {
             Image cartaImagen = new Image(Paths.get("src/main/java/edu/fiuba/algo3/resources/comodines/" + comodin.getNombre() + ".png").toUri().toString());
             ImageView cartaView = new ImageView(cartaImagen);
             cartaView.setFitWidth(72);
             cartaView.setFitHeight(108);
 
-            ComodinSeleccionadoHandler handler = new ComodinSeleccionadoHandler(comodin, cartaView, sonidoClick, comodinesSeleccionados);
+            //nuevo
+            ComodinSeleccionadoHandler handler = new ComodinSeleccionadoHandler(comodin, cartaView, sonidoClick, comodinesSeleccionados, mensajeTemporalComodin);
             cartaView.setOnMouseClicked(event -> handler.handle(new ActionEvent()));
             contenedorComodines.getChildren().add(cartaView);
         }
 
-        // Mostrar cartas de tarots
+        //Tarots
         HBox contenedorTarot = new HBox(10);
         contenedorTarot.setAlignment(Pos.CENTER);
         for (Tarot tarot : tarots) {
@@ -104,15 +119,16 @@ public class PantallaTienda {
             cartaView.setFitWidth(72);
             cartaView.setFitHeight(108);
 
-            TarotSeleccionadoHandler handler = new TarotSeleccionadoHandler(tarot, tarotsSeleccionados, cartaView, sonidoClick);
+            //nuevo
+            TarotSeleccionadoHandler handler = new TarotSeleccionadoHandler(tarot, cartaView, sonidoClick, tarotsSeleccionados, mensajeTemporalTarot);
             cartaView.setOnMouseClicked(event -> handler.handle(new ActionEvent()));
             contenedorTarot.getChildren().add(cartaView);
         }
+
+        //Cartas
         HBox contenedorCartaEspecifica = new HBox(10);
         contenedorCartaEspecifica.setAlignment(Pos.CENTER_RIGHT);
-
         if (cartaEspecifica != null) {
-            // Construir la ruta de la imagen basada en el número y el palo de la carta
             String rutaImagenCarta = "src/main/java/edu/fiuba/algo3/resources/cartas/" +
                     cartaEspecifica.numero() + "_" + cartaEspecifica.getPalo() + ".jpg";
             ImageView cartaView = new ImageView(new Image(Paths.get(rutaImagenCarta).toUri().toString()));
@@ -120,7 +136,7 @@ public class PantallaTienda {
             cartaView.setFitHeight(108);
 
             // Agregar evento de clic si es necesario
-            CartaTiendaSeleccionadaHandler handler = new CartaTiendaSeleccionadaHandler(cartaEspecifica, cartasEspecificas,cartaView, sonidoClick);
+            CartaTiendaSeleccionadaHandler handler = new CartaTiendaSeleccionadaHandler(cartaEspecifica, cartaView, sonidoClick, cartasEspecificas, mensajeTemporalCarta);
             cartaView.setOnMouseClicked(event -> handler.handle(new ActionEvent()));
 
             // Añadir la carta específica al contenedor
@@ -129,10 +145,9 @@ public class PantallaTienda {
             System.out.println("No hay carta específica en la tienda.");
         }
 
-        // Añadir contenedores de cartas al contenedor principal
         contenedorCartas.getChildren().addAll(contenedorComodines, contenedorTarot,contenedorCartaEspecifica);
 
-        // Crear un StackPane para el fondo de pantalla
+        //Fondo
         StackPane stackPane = new StackPane();
         String rutaFondo = "src/main/java/edu/fiuba/algo3/resources/fondos/fondo_rya.jpeg";
         Image imagenFondo = new Image(Paths.get(rutaFondo).toUri().toString());
@@ -140,24 +155,23 @@ public class PantallaTienda {
         Background background = new Background(fondo);
         stackPane.setBackground(background);
 
-        // Crear botones de compra y omisión
+        //Botones
         BotonComprarHandler botonComprarHandler = new BotonComprarHandler(tiendaStage,comodinesSeleccionados,tarotsSeleccionados,cartasEspecificas);
         BotonComprar botonComprar = new BotonComprar(botonComprarHandler);
 
         BotonOmitirHandler botonOmitirHandler = new BotonOmitirHandler(tiendaStage);
         BotonOmitir botonOmitir = new BotonOmitir(botonOmitirHandler);
 
-        // Organizar los botones
         HBox botonesBox = new HBox(20, botonComprar, botonOmitir);
         botonesBox.setAlignment(Pos.CENTER);
 
-        // Crear el layout principal y añadir los elementos
         VBox layout = new VBox(10, titulo, subtitulo, contenedorCartas, botonesBox);
         layout.setAlignment(Pos.CENTER);
         layout.setPadding(new Insets(10));
 
-        // Añadir el layout al StackPane y mostrar la escena
-        stackPane.getChildren().add(layout);
+
+        stackPane.getChildren().addAll(layout, mensajeTemporalComodin, mensajeTemporalTarot);
+
         Scene scene = new Scene(stackPane, 640, 480);
         tiendaStage.setScene(scene);
         tiendaStage.show();
