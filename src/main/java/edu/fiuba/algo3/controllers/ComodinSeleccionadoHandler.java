@@ -47,6 +47,8 @@ public class ComodinSeleccionadoHandler implements EventHandler<ActionEvent> {
                 sonido.play();
                 cartaView.setStyle("-fx-effect: dropshadow(gaussian, blue, 15, 0.8, 0, 0);");
                 PantallaTienda.aumentarContador();
+
+                PantallaTienda.mostrarDescripcionTemporal(comodin.getDescripcion());
             }
         }else{
             mostrarMensajeTemporal("¡No puedes seleccionar más comodines! Ya elegiste 3 opciones.");

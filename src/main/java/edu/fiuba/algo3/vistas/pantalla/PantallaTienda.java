@@ -24,7 +24,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Modality;
-
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
 import java.io.FileInputStream;
 import java.nio.file.Paths;
@@ -236,5 +238,21 @@ public class PantallaTienda {
         titulo.setFill(Color.YELLOW);
         titulo.setStyle("-fx-font-weight: bold; -fx-opacity: 0.8;"); // Estilo semitransparente
         return titulo;
+    }
+
+    public static void mostrarDescripcionTemporal(String descripcion) {
+        Label mensajeDescripcion = new Label(descripcion);
+        mensajeDescripcion.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7); -fx-text-fill: white; -fx-padding: 10px; -fx-font-size: 14px;");
+        mensajeDescripcion.setVisible(true);
+
+        StackPane stackPane = (StackPane) mensajeTemporalComodin.getParent();
+        stackPane.getChildren().add(mensajeDescripcion);
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), e -> {
+            mensajeDescripcion.setVisible(false);
+            stackPane.getChildren().remove(mensajeDescripcion);
+        }));
+        timeline.setCycleCount(1);
+        timeline.play();
     }
 }
