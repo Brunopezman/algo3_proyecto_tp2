@@ -6,11 +6,12 @@ import javafx.stage.Stage;
 
 public class BotonReinicioHandler implements EventHandler<ActionEvent> {
 
-    private final Stage stage;
+    private Stage stage;
 
     public BotonReinicioHandler(Stage stage) {
         this.stage = stage;
     }
+
     @Override
     public void handle(ActionEvent actionEvent) {
         Controlador controlador = Controlador.getInstance();

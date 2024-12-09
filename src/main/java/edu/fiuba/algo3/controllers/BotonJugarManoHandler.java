@@ -3,9 +3,7 @@ package edu.fiuba.algo3.controllers;
 import edu.fiuba.algo3.modelo.carta.Carta;
 import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.modelo.mano.Mano;
-import edu.fiuba.algo3.vistas.pantalla.PantallaTienda;
-import edu.fiuba.algo3.vistas.pantalla.ParteDerecha;
-import edu.fiuba.algo3.vistas.pantalla.ParteIzquierda;
+import edu.fiuba.algo3.vistas.pantalla.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.text.Text;
@@ -16,11 +14,8 @@ import javafx.util.Duration;
 
 import java.util.List;
 
-import static edu.fiuba.algo3.vistas.pantalla.PantallaFinal.mostrarPantallaFinal;
-
 public class BotonJugarManoHandler implements EventHandler<ActionEvent> {
-    private static final String MENSAJE_GANASTE = "GANASTE";
-    private static final String MENSAJE_PERDISTE = "PERDISTE";
+
     private final Juego juego;
     private final List<Carta> cartasSeleccionadas;
     private final ParteIzquierda parteIzquierda;
@@ -49,13 +44,11 @@ public class BotonJugarManoHandler implements EventHandler<ActionEvent> {
                     juego.repartirCartasParaIniciar();
                     PantallaTienda.mostrarTienda();
                 }else{
-                    String mensajeFinal;
                     if (juego.seGanoPartida()) {
-                        mensajeFinal = MENSAJE_GANASTE;
+                        PantallaGanaste.mostrarPantallaGanaste();
                     } else {
-                        mensajeFinal = MENSAJE_PERDISTE;
+                        PantallaPerdiste.mostrarPantallaPerdiste();
                     }
-                    mostrarPantallaFinal(mensajeFinal);
                 }
             }
             parteIzquierda.cuadroParaManoPorJugar("","0","0");
