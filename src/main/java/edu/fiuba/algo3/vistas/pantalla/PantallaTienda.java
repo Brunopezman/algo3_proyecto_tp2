@@ -127,7 +127,7 @@ public class PantallaTienda {
             cartaView.setFitWidth(72);
             cartaView.setFitHeight(108);
 
-            ComodinSeleccionadoHandler handler = new ComodinSeleccionadoHandler(comodin, cartaView, sonidoClick, comodinesSeleccionados, mensajeTemporalComodin);
+            ComodinSeleccionadoHandler handler = new ComodinSeleccionadoHandler(comodin, cartaView, comodinesSeleccionados, mensajeTemporalComodin);
             cartaView.setOnMouseClicked(event -> handler.handle(new ActionEvent()));
             contenedorComodines.getChildren().add(cartaView);
         }
@@ -144,7 +144,7 @@ public class PantallaTienda {
             cartaView.setFitWidth(72);
             cartaView.setFitHeight(108);
 
-            TarotSeleccionadoHandler handler = new TarotSeleccionadoHandler(tarot, cartaView, sonidoClick, tarotsSeleccionados, mensajeTemporalTarot);
+            TarotSeleccionadoHandler handler = new TarotSeleccionadoHandler(tarot, cartaView, tarotsSeleccionados, mensajeTemporalTarot);
             cartaView.setOnMouseClicked(event -> handler.handle(new ActionEvent()));
             contenedorTarot.getChildren().add(cartaView);
         }
@@ -163,7 +163,7 @@ public class PantallaTienda {
             cartaView.setFitHeight(108);
 
             // Agregar evento de clic si es necesario
-            CartaTiendaSeleccionadaHandler handler = new CartaTiendaSeleccionadaHandler(cartaEspecifica, cartaView, sonidoClick, cartasEspecificas, mensajeTemporalCarta);
+            CartaTiendaSeleccionadaHandler handler = new CartaTiendaSeleccionadaHandler(cartaEspecifica, cartaView, cartasEspecificas, mensajeTemporalCarta);
             cartaView.setOnMouseClicked(event -> handler.handle(new ActionEvent()));
 
             // Añadir la carta específica al contenedor

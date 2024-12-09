@@ -4,7 +4,6 @@ import edu.fiuba.algo3.modelo.tarot.Tarot;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
-import javafx.scene.media.AudioClip;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.control.Label;
@@ -17,20 +16,17 @@ public class TarotAplicarHandler implements EventHandler<ActionEvent> {
     private final List<Tarot> tarotSeleccionados;
     private final Tarot tarot;
     private final ImageView imagenCarta;
-    private final AudioClip sonido;
     private final Label mensajeTemporal;
 
-    public TarotAplicarHandler(List<Tarot> tarotSeleccionados, Tarot tarot, ImageView imagenCarta, AudioClip sonido, Label mensajeTemporal) {
+    public TarotAplicarHandler(List<Tarot> tarotSeleccionados, Tarot tarot, ImageView imagenCarta, Label mensajeTemporal) {
         this.tarotSeleccionados = tarotSeleccionados;
         this.tarot = tarot;
         this.imagenCarta = imagenCarta;
-        this.sonido = sonido;
         this.mensajeTemporal = mensajeTemporal;
     }
 
     @Override
     public void handle(ActionEvent actionEvent) {
-        sonido.play();
         if (tarotSeleccionados.contains(tarot)) {
             tarotSeleccionados.remove(tarot);
             imagenCarta.setStyle("");

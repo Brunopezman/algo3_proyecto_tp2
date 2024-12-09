@@ -19,15 +19,13 @@ public class CartaSeleccionadaHandler implements EventHandler<ActionEvent> {
     private final List<Carta> cartasSeleccionadas;
     private final Carta carta;
     private final ImageView imagenCarta;
-    private final AudioClip sonido;
     private ParteIzquierda parteIzquierda;
     private final Label mensajeTemporal;
 
-    public CartaSeleccionadaHandler(List<Carta> cartasSeleccionadas, Carta carta, ImageView imagenCarta, AudioClip sonido, ParteIzquierda parteIzquierda, Label mensajeTemporal) {
+    public CartaSeleccionadaHandler(List<Carta> cartasSeleccionadas, Carta carta, ImageView imagenCarta, ParteIzquierda parteIzquierda, Label mensajeTemporal) {
         this.cartasSeleccionadas = cartasSeleccionadas;
         this.carta = carta;
         this.imagenCarta = imagenCarta;
-        this.sonido = sonido;
         this.parteIzquierda = parteIzquierda;
         this.mensajeTemporal = mensajeTemporal;
     }
@@ -46,7 +44,6 @@ public class CartaSeleccionadaHandler implements EventHandler<ActionEvent> {
             // Seleccionar carta
             cartasSeleccionadas.add(carta);
             imagenCarta.setStyle("-fx-effect: dropshadow(gaussian, blue, 10, 0.5, 0, 0);");
-            sonido.play();
             if (cartasSeleccionadas.size() == 5) {
                 Juego juego = Juego.getInstance();
                 Mano posibleMano = juego.queManoEs(cartasSeleccionadas);

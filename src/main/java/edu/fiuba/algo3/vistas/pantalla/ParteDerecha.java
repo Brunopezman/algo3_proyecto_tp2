@@ -179,7 +179,7 @@ public class ParteDerecha {
             ImageView imagenCarta = new ImageView(new Image(Paths.get("src/main/java/edu/fiuba/algo3/resources/cartas/" + carta.numero() + "_" + carta.getPalo() + ".jpg").toUri().toString()));
             imagenCarta.setFitWidth(67.2);
             imagenCarta.setFitHeight(100.8);
-            CartaSeleccionadaHandler seleccion = new CartaSeleccionadaHandler(cartasSeleccionadas, carta, imagenCarta, sonido, parteIzquierda,mensajeTemporal);
+            CartaSeleccionadaHandler seleccion = new CartaSeleccionadaHandler(cartasSeleccionadas, carta, imagenCarta, parteIzquierda,mensajeTemporal);
             imagenCarta.setOnMouseClicked(event -> seleccion.handle(new ActionEvent()));
             visualCartas.getChildren().add(imagenCarta);
         }
@@ -221,7 +221,7 @@ public class ParteDerecha {
             imagenTarot.setFitWidth(56); // Ancho de las cartas
             imagenTarot.setFitHeight(84); // Alto de las cartas
             cantidadTarots++;
-            TarotAplicarHandler seleccion = new TarotAplicarHandler(tarotSeleccionados, tarot, imagenTarot, sonido, mensajeTemporal);
+            TarotAplicarHandler seleccion = new TarotAplicarHandler(tarotSeleccionados, tarot, imagenTarot, mensajeTemporal);
             imagenTarot.setOnMouseClicked(event -> seleccion.handle(new ActionEvent()));
             tarotsBox.getChildren().add(imagenTarot);
         }

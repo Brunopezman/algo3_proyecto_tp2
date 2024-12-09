@@ -7,7 +7,6 @@ import edu.fiuba.algo3.vistas.pantalla.PantallaTienda;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
-import javafx.scene.media.AudioClip;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.control.Label;
@@ -20,13 +19,11 @@ public class ComodinSeleccionadoHandler implements EventHandler<ActionEvent> {
     private final Comodin comodin;
     private final ImageView cartaView;
     private final List<Comodin> comodinesSeleccionados;
-    private final AudioClip sonido;
     private final Label mensajeTemporal;
 
-    public ComodinSeleccionadoHandler(Comodin comodin, ImageView cartaView, AudioClip sonidoClick, List<Comodin> comodinesSeleccionados, Label mensajeTemporal) {
+    public ComodinSeleccionadoHandler(Comodin comodin, ImageView cartaView, List<Comodin> comodinesSeleccionados, Label mensajeTemporal) {
         this.comodin = comodin;
         this.cartaView = cartaView;
-        this.sonido = sonidoClick;
         this.comodinesSeleccionados = comodinesSeleccionados;
         this.mensajeTemporal = mensajeTemporal;
     }
@@ -44,7 +41,6 @@ public class ComodinSeleccionadoHandler implements EventHandler<ActionEvent> {
                 mostrarMensajeTemporal("Ya completaste/completarias los comodines maximos (5)");
             }else {
                 comodinesSeleccionados.add(comodin);
-                sonido.play();
                 cartaView.setStyle("-fx-effect: dropshadow(gaussian, blue, 15, 0.8, 0, 0);");
                 PantallaTienda.aumentarContador();
 

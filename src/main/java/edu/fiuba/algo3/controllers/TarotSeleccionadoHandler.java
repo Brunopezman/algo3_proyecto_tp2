@@ -20,13 +20,11 @@ public class TarotSeleccionadoHandler implements EventHandler<ActionEvent> {
     private final Tarot tarot;
     private final ImageView cartaView;
     private List<Tarot> tarotsSeleccionados;
-    private final AudioClip sonido;
     private final Label mensajeTemporal;
 
-    public TarotSeleccionadoHandler(Tarot tarot, ImageView cartaView, AudioClip sonido, List<Tarot> tarotsSeleccionados, Label mensajeTemporal) {
+    public TarotSeleccionadoHandler(Tarot tarot, ImageView cartaView, List<Tarot> tarotsSeleccionados, Label mensajeTemporal) {
         this.tarot = tarot;
         this.cartaView = cartaView;
-        this.sonido = sonido;
         this.tarotsSeleccionados = tarotsSeleccionados;
         this.mensajeTemporal = mensajeTemporal;
     }
@@ -43,9 +41,7 @@ public class TarotSeleccionadoHandler implements EventHandler<ActionEvent> {
             if ((tarotsYaGuardados + tarotsSeleccionados.size()) == 2){
                 System.out.println("Ya completaste/completarias los tarots maximos (2)");
             }else {
-                tarotsSeleccionados.add(tarot);
-                // Seleccionar: añadir efecto azul
-                sonido.play();
+                tarotsSeleccionados.add(tarot); //poner efecto azul
                 cartaView.setStyle("-fx-effect: dropshadow(gaussian, blue, 15, 0.8, 0, 0);");
                 PantallaTienda.aumentarContador();
 
@@ -61,7 +57,7 @@ public class TarotSeleccionadoHandler implements EventHandler<ActionEvent> {
         mensajeTemporal.setVisible(true);
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), e -> mensajeTemporal.setVisible(false)));
-        timeline.setCycleCount(1); // Solo ejecutar una vez
+        timeline.setCycleCount(1); //Solo ejecutar una vez
         timeline.play();
     }
 }
