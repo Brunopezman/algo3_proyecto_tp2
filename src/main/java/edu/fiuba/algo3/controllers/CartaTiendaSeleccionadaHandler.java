@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.controllers;
 
 import edu.fiuba.algo3.modelo.carta.Carta;
+import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.vistas.pantalla.PantallaTienda;
 
 import javafx.event.ActionEvent;

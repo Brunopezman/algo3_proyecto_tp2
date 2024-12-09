@@ -39,6 +39,8 @@ public class ParteDerecha {
     private static HBox botonAplicar;
     private static List<Tarot> tarotSeleccionados;
     private Label mensajeTemporal;
+    private static VBox comodinesYCantidad;
+    private static VBox tarotsYCantidad;
 
     public ParteDerecha(Juego juego, ParteIzquierda parteIzquierda) {
         this.juego = juego;
@@ -86,31 +88,43 @@ public class ParteDerecha {
 
     private HBox crearComodinesTarots() {
         HBox comodinesTarots = new HBox();
-        comodinesTarots.setSpacing(20);
+        comodinesTarots.setSpacing(8);
         comodinesTarots.setAlignment(Pos.CENTER);
 
         // Comodines
-        Rectangle comodines = new Rectangle(200, 80);
-        comodines.setStyle("-fx-fill: #ffffff; -fx-stroke: black; -fx-stroke-width: 1;");
         int cantidadComodines = juego.comodinesRonda();
         Text cantidadComodinesText = new Text(cantidadComodines + "/5");
         cantidadComodinesText.setStyle("-fx-font-size: 0.8em; -fx-fill: #efe7e7;");
-        comodinesBox = new HBox(comodines, cantidadComodinesText);
+        comodinesBox = new HBox(5);
+        comodinesBox.setStyle("-fx-background-color: rgba(128, 128, 128, 0.5); -fx-padding: 10; -fx-border-radius: 5; -fx-background-radius: 5;");
+        comodinesBox.setAlignment(Pos.CENTER);
+        comodinesBox.setPrefSize(280, 100); // Tamaño fijo (ancho mayor para comodines)
+        comodinesBox.setMinSize(280, 100);
+        comodinesBox.setMaxSize(280, 100);
+        // Contenedor para los comodines y el contador
+        comodinesYCantidad = new VBox(10, comodinesBox, cantidadComodinesText);
+        comodinesYCantidad.setAlignment(Pos.CENTER);
 
         // Tarots
-        Rectangle tarots = new Rectangle(120, 80);
-        tarots.setStyle("-fx-fill: #ffffff; -fx-stroke: black; -fx-stroke-width: 1;");
         int cantidadTarots = 0;
         Text cantidadTarotsText = new Text(cantidadTarots + "/2");
         cantidadTarotsText.setStyle("-fx-font-size: 0.8em; -fx-fill: #ffffff;");
-        tarotsBox = new HBox(tarots, cantidadTarotsText);
+        tarotsBox = new HBox(10);
+        tarotsBox.setStyle("-fx-background-color: rgba(128, 128, 128, 0.5); -fx-padding: 10; -fx-border-radius: 5; -fx-background-radius: 5;");
+        tarotsBox.setAlignment(Pos.CENTER);
+        tarotsBox.setPrefSize(125, 100); // Tamaño fijo (ancho menor para tarots)
+        tarotsBox.setMinSize(125, 100);
+        tarotsBox.setMaxSize(125, 100);
+        // Contenedor para los tarots y el contador
+        tarotsYCantidad = new VBox(10, tarotsBox, cantidadTarotsText);
+        tarotsYCantidad.setAlignment(Pos.CENTER);
 
         // Boton para los a tarots
         BotonAplicarTarotHandler handler = new BotonAplicarTarotHandler(tarotSeleccionados, mensajeTemporal);
         BotonAplicarTarot botonAplicarTarot = new BotonAplicarTarot(handler);
         botonAplicar = new HBox(botonAplicarTarot);
 
-        comodinesTarots.getChildren().addAll(comodinesBox, tarotsBox, botonAplicar);
+        comodinesTarots.getChildren().addAll(comodinesYCantidad, tarotsYCantidad, botonAplicar);
         return comodinesTarots;
     }
 
@@ -172,22 +186,31 @@ public class ParteDerecha {
 
     public static void actualizarVisualComodines(){
         comodinesBox.getChildren().clear();
+        comodinesYCantidad.getChildren().clear();
         Juego juego = Juego.getInstance();
         List<Comodin> comodines = juego.getRondaActual().getComodines();
+        int cantidadComodines = 0;
         for (Comodin comodin : comodines) {
             Image comodinImagen = new Image(Paths.get("src/main/java/edu/fiuba/algo3/resources/comodines/" + comodin.getNombre() + ".png").toUri().toString());
             ImageView cartaView = new ImageView(comodinImagen);
             cartaView.setFitWidth(56); // Ancho de las cartas
             cartaView.setFitHeight(84); // Alto de las cartas
+            cantidadComodines++;
 
             comodinesBox.getChildren().add(cartaView);
         }
+
+        Text cantidadComodinesText = new Text(cantidadComodines +"/5");
+        cantidadComodinesText.setStyle("-fx-font-size: 0.8em; -fx-fill: #efe7e7;");
+        comodinesYCantidad.getChildren().addAll(comodinesBox, cantidadComodinesText);
     }
 
     public static void actualizarVisualTarot(){
         tarotsBox.getChildren().clear();
+        tarotsYCantidad.getChildren().clear();
         tarotsBox.setSpacing(5);
         tarotsBox.setAlignment(Pos.CENTER);
+        int cantidadTarots = 0;
         String rutaSonido = "src/main/java/edu/fiuba/algo3/resources/sonidos/click.mp3";
         Juego juego = Juego.getInstance();
         List<Tarot> tarots = juego.getRondaActual().getTarots();
@@ -196,10 +219,14 @@ public class ParteDerecha {
             ImageView imagenTarot = new ImageView(Paths.get("src/main/java/edu/fiuba/algo3/resources/tarots/" + tarot.getNombre() + ".png").toUri().toString());
             imagenTarot.setFitWidth(56); // Ancho de las cartas
             imagenTarot.setFitHeight(84); // Alto de las cartas
+            cantidadTarots++;
             TarotAplicarHandler seleccion = new TarotAplicarHandler(tarotSeleccionados, tarot, imagenTarot, sonido);
             imagenTarot.setOnMouseClicked(event -> seleccion.handle(new ActionEvent()));
             tarotsBox.getChildren().add(imagenTarot);
         }
+        Text cantidadTarotsText = new Text(cantidadTarots +"/2");
+        cantidadTarotsText.setStyle("-fx-font-size: 0.8em; -fx-fill: #efe7e7;");
+        tarotsYCantidad.getChildren().addAll(tarotsBox, cantidadTarotsText);
     }
 
     public BorderPane crearParteDerecha() {

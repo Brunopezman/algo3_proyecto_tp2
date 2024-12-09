@@ -16,7 +16,7 @@ public class BotonAplicarTarot extends Button {
     }
 
     private void configurarBoton() {
-        this.setStyle("-fx-font-size: 20px;-fx-background-color: \"#333333\"; -fx-font-weight: bold; -fx-text-fill: white;");
+        this.setStyle("-fx-font-size: 15px;-fx-background-color: \"#333333\"; -fx-font-weight: bold; -fx-text-fill: white;");
     }
 
 }

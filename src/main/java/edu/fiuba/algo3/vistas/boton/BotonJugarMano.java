@@ -17,5 +17,4 @@ public class BotonJugarMano extends Button {
         this.setStyle("-fx-font-size: 20px;-fx-background-color: \"#333333\"; -fx-font-weight: bold; -fx-text-fill: white;");
 
     }
-
 }
