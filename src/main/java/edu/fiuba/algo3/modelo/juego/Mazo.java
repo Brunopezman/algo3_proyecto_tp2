@@ -19,23 +19,12 @@ public class Mazo {
         List<Carta> cartasRecibidas = new ArrayList<>();
         for (int i = 0; i < cantidad; i++) {
             if (!cartas.isEmpty()) {
-                cartasRecibidas.add(cartas.remove(0)); // Elimina la carta del mazo y la añade a las cartas recibidas
+                int indexAleatorio = (int) (Math.random() * cartas.size());
+                cartasRecibidas.add(cartas.remove(indexAleatorio)); // Elimina la carta del mazo y la añade a las cartas recibidas
             }
         }
         return cartasRecibidas;
     }
-
-//    public List<Carta> darCartas(int cantidad) {
-//        List<Carta> cartasRecibidas = new ArrayList<>();
-//        for (int i = 0; i < cantidad; i++) {
-//            if (!cartas.isEmpty()) {
-//                int indexAleatorio = (int) (Math.random() * cartas.size());
-//                cartasRecibidas.add(cartas.remove(indexAleatorio)); // Elimina la carta del mazo y la añade a las cartas recibidas
-//            }
-//        }
-//        return cartasRecibidas;
-//    }
-
 
     public int cartasRestantes() {
         return cartas.size();

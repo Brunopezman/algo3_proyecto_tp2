@@ -40,7 +40,6 @@ public class Jugador {
 
     public List<Carta> recibirCartas(Mazo mazo, int cantidad) {
         List<Carta> cartasRecibidas = mazo.darCartas(cantidad);
-        //this.setCartasActuales(cartasRecibidas);
         cartasActuales.addAll(cartasRecibidas);
         return cartasRecibidas;
     }

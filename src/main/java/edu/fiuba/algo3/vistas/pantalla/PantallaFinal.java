@@ -17,21 +17,29 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.nio.file.Paths;
 
-public class PantallaPerdiste extends Parent {
+public class PantallaFinal extends Parent {
+    private String resultado;
     private BorderPane root;
+    private static final String MENSAJE_GANASTE = "GANASTE";
 
-    private static final String MENSAJE_PERDISTE = "PERDISTE";
+    private static final String PANTALLA_GANASTE ="src/main/java/edu/fiuba/algo3/resources/fondos/fondos_pantalla_ganada.jpg";
     private static final String PANTALLA_PERDISTE ="src/main/java/edu/fiuba/algo3/resources/fondos/fondos_pantalla_perdida.jpg";
 
-    public PantallaPerdiste() {
+    public PantallaFinal(String resultado) {
         Stage popupStage = new Stage();
+        this.resultado = resultado;
         popupStage.initModality(Modality.APPLICATION_MODAL);
         popupStage.setTitle("Resultado de la Partida");
         popupStage.setResizable(false);
 
         // Cargar la fuente
         Font fuente= cargarFuente("src/main/java/edu/fiuba/algo3/resources/fuentes/fuente2.otf", 40);
-        Image imagenFondo = new Image(Paths.get( PANTALLA_PERDISTE).toUri().toString());
+        Image imagenFondo;
+        if (MENSAJE_GANASTE.equals(resultado)) {
+            imagenFondo = new Image(Paths.get(PANTALLA_GANASTE).toUri().toString());
+        } else {
+            imagenFondo = new Image(Paths.get(PANTALLA_PERDISTE).toUri().toString());
+        }
 
         // Configurar el fondo
         Background background = new Background(new BackgroundImage(imagenFondo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT));
@@ -44,7 +52,7 @@ public class PantallaPerdiste extends Parent {
         contenido.setPrefSize(800, 600); // Tamaño preferido del contenido, ajusta según tus necesidades
 
         // Texto de encabezado
-        Text texto= new Text(MENSAJE_PERDISTE);
+        Text texto= new Text(resultado);
         texto.setFont(fuente);
         texto.setFill(Color.YELLOW);
         texto.setStyle("-fx-fill: white;");
@@ -75,8 +83,7 @@ public class PantallaPerdiste extends Parent {
         }
     }
 
-    public static void mostrarPantallaPerdiste() {
-        new PantallaPerdiste();
+    public static void mostrarPantallaFinal(String resultado) {
+        new PantallaFinal(resultado);
     }
-
 }

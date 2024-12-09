@@ -55,7 +55,7 @@ public class ParteDerecha {
         // Cartas del jugador: inicialmente vacío, pero se llenará automáticamente
         visualCartas = new HBox();
         visualCartas.setSpacing(5);
-        visualCartas.setAlignment(Pos.CENTER);
+        visualCartas.setAlignment(Pos.CENTER_LEFT);
 
         mensajeTemporal = new Label();
         mensajeTemporal.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7); -fx-text-fill: white; -fx-padding: 10px; -fx-font-size: 14px;");
@@ -98,9 +98,9 @@ public class ParteDerecha {
         comodinesBox = new HBox(5);
         comodinesBox.setStyle("-fx-background-color: rgba(128, 128, 128, 0.5); -fx-padding: 10; -fx-border-radius: 5; -fx-background-radius: 5;");
         comodinesBox.setAlignment(Pos.CENTER);
-        comodinesBox.setPrefSize(280, 100); // Tamaño fijo (ancho mayor para comodines)
-        comodinesBox.setMinSize(280, 100);
-        comodinesBox.setMaxSize(280, 100);
+        comodinesBox.setPrefSize(310, 100); // Tamaño fijo (ancho mayor para comodines)
+        comodinesBox.setMinSize(310, 100);
+        comodinesBox.setMaxSize(310, 100);
         // Contenedor para los comodines y el contador
         comodinesYCantidad = new VBox(10, comodinesBox, cantidadComodinesText);
         comodinesYCantidad.setAlignment(Pos.CENTER);
@@ -112,9 +112,9 @@ public class ParteDerecha {
         tarotsBox = new HBox(10);
         tarotsBox.setStyle("-fx-background-color: rgba(128, 128, 128, 0.5); -fx-padding: 10; -fx-border-radius: 5; -fx-background-radius: 5;");
         tarotsBox.setAlignment(Pos.CENTER);
-        tarotsBox.setPrefSize(125, 100); // Tamaño fijo (ancho menor para tarots)
-        tarotsBox.setMinSize(125, 100);
-        tarotsBox.setMaxSize(125, 100);
+        tarotsBox.setPrefSize(130, 100); // Tamaño fijo (ancho menor para tarots)
+        tarotsBox.setMinSize(130, 100);
+        tarotsBox.setMaxSize(130, 100);
         // Contenedor para los tarots y el contador
         tarotsYCantidad = new VBox(10, tarotsBox, cantidadTarotsText);
         tarotsYCantidad.setAlignment(Pos.CENTER);
@@ -132,7 +132,7 @@ public class ParteDerecha {
         HBox contenidoInferior = new HBox();
         HBox botones = new HBox();
         botones.setSpacing(20);
-        botones.setAlignment(Pos.CENTER);
+        botones.setAlignment(Pos.CENTER_RIGHT);
 
         // Boton JugarMano
         BotonJugarManoHandler botonJugarManoHandler = new BotonJugarManoHandler(juego,cartasSeleccionadas, parteIzquierda, cartasRestantesText, mensajeTemporal);

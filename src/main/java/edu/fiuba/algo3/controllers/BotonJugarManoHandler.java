@@ -15,6 +15,8 @@ import javafx.util.Duration;
 import java.util.List;
 
 public class BotonJugarManoHandler implements EventHandler<ActionEvent> {
+    private static final String MENSAJE_GANASTE = "GANASTE";
+    private static final String MENSAJE_PERDISTE = "PERDISTE";
 
     private final Juego juego;
     private final List<Carta> cartasSeleccionadas;
@@ -45,9 +47,9 @@ public class BotonJugarManoHandler implements EventHandler<ActionEvent> {
                     PantallaTienda.mostrarTienda();
                 }else{
                     if (juego.seGanoPartida()) {
-                        PantallaGanaste.mostrarPantallaGanaste();
+                        PantallaFinal.mostrarPantallaFinal(MENSAJE_GANASTE);
                     } else {
-                        PantallaPerdiste.mostrarPantallaPerdiste();
+                        PantallaFinal.mostrarPantallaFinal(MENSAJE_PERDISTE);
                     }
                 }
             }
