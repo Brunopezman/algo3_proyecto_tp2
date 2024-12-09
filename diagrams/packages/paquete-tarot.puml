@@ -1,0 +1,12 @@
+@startuml Diagrama Paquetes Mano
+
+package "Tarot " {
+    abstract Tarot
+    class TarotMano
+    class TarotCarta
+}
+
+Tarot <|-- TarotMano
+Tarot <|-- TarotCarta
+
+@enduml
