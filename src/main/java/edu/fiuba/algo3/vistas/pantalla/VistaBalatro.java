@@ -24,7 +24,7 @@ public class VistaBalatro {
         stage.setTitle("Balatro");
         stage.setWidth(ANCHO);
         stage.setHeight(ALTO);
-        stage.setResizable(true);
+        stage.setResizable(false);
         stage.show();
     }
 
