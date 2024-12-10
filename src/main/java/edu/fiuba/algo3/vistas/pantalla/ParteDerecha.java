@@ -18,7 +18,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.media.AudioClip;
@@ -36,7 +35,6 @@ public class ParteDerecha {
     private static ParteIzquierda parteIzquierda;
     private static HBox visualCartas;
     private static Text cartasRestantesText;
-    private PantallaJuego pantallaJuego;
     private static HBox comodinesBox;
     private static HBox tarotsBox;
     private static HBox botonAplicar;
