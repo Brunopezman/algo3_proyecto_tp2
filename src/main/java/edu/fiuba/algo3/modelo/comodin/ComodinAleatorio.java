@@ -9,9 +9,11 @@ public class ComodinAleatorio extends Comodin{
     private int probabilidad;
     private int valorParaEjecucion;
 
-    public ComodinAleatorio(int valorMultiplicador, int valorPuntos, EstrategiaComodin estrategia, int probabilidad) {
-        this.multiplicador = valorMultiplicador;
-        this.puntos = valorPuntos;
+    public ComodinAleatorio(String nombre, String descripcion, int puntajeDelComodin, int multiplicadorDelComodin, EstrategiaComodin estrategia, int probabilidad) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.puntos = puntajeDelComodin;
+        this.multiplicador = multiplicadorDelComodin;
         this.estrategia = estrategia;
         this.valorParaEjecucion = 0;
         this.probabilidad = probabilidad;

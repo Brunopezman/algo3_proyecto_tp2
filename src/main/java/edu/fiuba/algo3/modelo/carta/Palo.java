@@ -7,7 +7,4 @@ public class Palo {
 
     public String getPalo() {return this.palo;}
 
-    public boolean sonIgules(Carta otraCarta) {
-        return this.palo.equals(otraCarta.getPalo());
-    }
 }

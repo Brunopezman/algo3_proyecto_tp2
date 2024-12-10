@@ -1,0 +1,46 @@
+@startuml Diagrama de Clases
+
+skinparam monochrome true
+hide circle
+skinparam classAttributeIconSize 0
+
+class Juego {
+    -fabrica: JuegoFabrica
+    -numeroRondaActual: int 
+    -ganado: boolean
+}
+
+class Ronda {
+    -turnos: List<Turno>
+    -comodines: List<Comodin>
+    -tarots: List<Tarot>
+    -tienda: Tienda
+    -puntajeAlcanzado: int
+    -puntajeASuperar: int
+    -descartesActuales: int
+    -descartesMaximos: int
+    -turnosActual: int
+    -cantidadTurnos: int
+    -nroRonda: int
+}
+
+class Mazo {
+    +Mazo()
+    +darCartas(cantidad:int): List<Carta>
+    +cartasRestantes(): int
+}
+
+class Jugador {
+    -nombre: string
+    -cartasActuales: List<Carta>
+    +Jugador(nombre:string)
+    +recibirCartas(mazo:Mazo,cantidad:int): List<Carta>
+    +agregarCartas(cartas:List<Carta>): void
+    +eliminarCartasUsadas(cartas:List<Carta>): void
+} 
+
+Juego *-- Jugador
+Juego*-left-"1..*" Ronda
+Juego *-right- Mazo
+
+@enduml

@@ -1,0 +1,58 @@
+@startuml Diagrama secuencia jugar mano y avanzar ronda
+    actor Interfaz
+    participant ":Juego" as Juego
+    participant "jugador:Jugador" as Jugador
+    participant "rondaActual:Ronda" as RondaActual
+    participant "carta:Carta" as Carta
+    participant "mazo:Mazo" as Mazo
+
+
+    
+    Interfaz -> Juego: descartarCartas(cartasADescartar)
+
+    activate Juego
+
+    Juego -> Jugador: getCartasActuales()
+
+    activate Jugador
+
+    Jugador --> Juego: cartasActuales
+
+    deactivate Jugador
+
+    Juego -> Juego: getRondaActual()
+
+    activate Juego
+    deactivate Juego
+    
+    Juego -> RondaActual: descartar(mazo,cartasActuales,cartasADescartar)
+
+    activate RondaActual
+    
+    loop por cada carta a descartar
+        RondaActual -> RondaActual: quitarCarta(cartasActuales,cartaDescartar)
+        activate RondaActual
+        deactivate RondaActual
+    end
+
+    RondaActual -> Mazo: darCartas(cantidadDescartada)
+
+    activate Mazo
+
+    Mazo --> RondaActual: cartas
+
+    deactivate Mazo
+
+    loop por cada carta descartada
+        RondaActual -> RondaActual: agregarCarta(cartasActuales,cartaAgregar)
+        activate RondaActual
+        deactivate RondaActual
+    end
+
+    RondaActual -> Juego: cartasActuales
+
+    Juego --> Interfaz: cartasActuales
+
+    deactivate RondaActual
+
+@enduml

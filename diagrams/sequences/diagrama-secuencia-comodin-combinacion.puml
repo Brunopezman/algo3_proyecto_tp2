@@ -1,0 +1,15 @@
+@startuml Diagrama secuencia aplicarEfecto Comodin combinacion
+    participant ":Turno" as Turno
+    participant "comodin:ComodinCombinacion" as Comodin
+    participant "comodinInterno:Comodin" as ComodinInterno 
+
+    Turno -> Comodin: aplicarEfecto(mano)
+    activate Comodin
+    loop por cada comodin interno
+        Comodin -> ComodinInterno: aplicarEfecto(mano)
+        activate ComodinInterno
+        deactivate ComodinInterno
+    end
+    deactivate Comodin
+
+@enduml

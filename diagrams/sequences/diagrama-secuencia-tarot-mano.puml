@@ -1,0 +1,16 @@
+@startuml Diagrama secuencia aplicarEfectos Tarot Mano
+    participant ":Turno" as Turno    
+    participant "tarot:TarotMano" as Tarot
+    participant "mano:Mano" as Mano
+
+    Turno -> Tarot: aplicarEfecto(cartas,mano)
+
+    activate Tarot
+    
+    Tarot -> Mano: aumentarAtributos(puntaje,mutiplicador)
+
+    activate Mano
+    deactivate Mano
+    deactivate Tarot
+
+@enduml

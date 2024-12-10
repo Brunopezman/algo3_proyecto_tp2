@@ -1,0 +1,98 @@
+@startuml Diagrama de Clases
+
+skinparam monochrome true
+hide circle
+skinparam classAttributeIconSize 0
+
+class Mano <<abstract>> {
+    -nombre: string
+    -puntaje: int
+    -multiplicador: int
+    -descartes: int
+    -operador: Operador
+    +esJugable(cartas:List<Carta>): Mano
+    +calcularPuntaje(valor:int): int
+    +modificarPuntaje(valor:int): void
+    +modificarMultiplicador(valor:int): void
+    +esMismaMano(manoRecibida:string): boolean
+    +sumarMultiplicador(multiplicador:int): void
+    +multiplicarMultiplicador(multiplicador:int): void
+    +sumarPuntos(puntos:int): void
+    +sumarDescartes(descartes:int): void
+    +puntajeFinal(): int
+    +aumentarAtributos(puntaje,multiplicador:int): void
+    +aumentarYMultiplciar(puntaje,multiplicador:int): void
+}
+
+
+class EscaleraColor {
+    +EscaleraColor()
+    +esJugable(cartas:List<Carta>): Mano
+}
+class Poker {
+    +Poker()
+    +esJugable(cartas:List<Carta>): Mano
+}
+
+class FullHouse {
+    +FullHouse()
+    +esJugable(cartas:List<Carta>): Mano
+}
+
+class Escalera {
+    +Escalera()
+    +esJugable(cartas:List<Carta>): Mano
+}
+
+class Color {
+    +Color()
+    +esJugable(cartas:List<Carta>): Mano
+}
+
+class Trio {
+    +Trio()
+    +esJugable(cartas:List<Carta>): Mano
+}
+
+class DoblePar {
+    +DoblePar()
+    +esJugable(cartas:List<Carta>): Mano
+}
+
+class Operador{
+    +Operador()
+    +ordenarCartasPorValor(cartas:List<Carta>): List<Carta>
+    +agruparPorPalo(cartas:List<Carta>): List<Carta>
+    +contarPorPalos(cartas:List<Carta>): Map<string,int>
+    +contarPorValor(cartas:List<Carta>): Map<string,int>
+    +separarPorPalo(cartas:List<Carta>): Map<string,List<Carta>>
+}
+
+class EscaleraReal {
+    +EscalerReal()
+    +esJugable(cartas:List<Carta>): Mano
+}
+
+class Par {
+    +Par()
+    +esJugable(cartas:List<Carta>): Mano
+}
+
+class CartaAlta {
+    +CartaAlta()
+    +esJugable(cartas:List<Carta>): Mano
+}
+
+Mano <|-- EscaleraReal
+Mano <|-up- Poker
+Mano <|--up- FullHouse
+Mano <|-up- Color
+Mano <|--up- Trio
+Mano <|-up- Escalera
+Mano <|--- DoblePar
+Mano <|--- Par
+Mano <|-- CartaAlta
+Mano <|-- EscaleraColor
+Mano *-right- Operador
+
+@enduml

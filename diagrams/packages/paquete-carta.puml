@@ -1,0 +1,12 @@
+@startuml Diagrama Paquetes Carta
+
+package "Carta " {
+    class Carta
+    class Palo
+    class Valor
+}
+
+Carta --> Palo
+Carta --> Valor
+
+@enduml

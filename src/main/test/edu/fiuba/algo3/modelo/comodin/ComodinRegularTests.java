@@ -6,15 +6,15 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ComodinRegularTests {
-    /*
     @Test
-    public void testComodinRegularSumaAlMultiplicadorCorrectamente(){
+    public void testComodinRegularMultiplicaAlMultiplicadorCorrectamente() {
+        //arrange
         Mano manoJugada = new Color();
         manoJugada.sumarPuntos(20);
-        EstrategiaComodin estrategia = new EstrategiaSumarMultiplicador();
-        Comodin comodin = new ComodinRegular(10,10,estrategia);
+        EstrategiaComodin estrategia = new EstrategiaSumarMultiplicar();
+        Comodin comodin = new ComodinRegular("Comodin Regular","...",0,4,estrategia);
         comodin.aplicarEfecto(manoJugada);
-        int puntajeEsperado = 770;
+        int puntajeEsperado = 880;
         //act
         int puntajeObtenido = manoJugada.puntajeFinal();
         //assert
@@ -22,25 +22,12 @@ public class ComodinRegularTests {
     }
 
     @Test
-    public void testComodinRegularMultiplicaAlMultiplicadorCorrectamente(){
+    public void testComodinRegularSumaAlPuntajeCorrectamente(){
+        //arrange
         Mano manoJugada = new Color();
         manoJugada.sumarPuntos(20);
-        EstrategiaComodin estrategia = new EstrategiaMultiplicarMultiplicador();
-        Comodin comodin = new ComodinRegular(10,10,estrategia);
-        comodin.aplicarEfecto(manoJugada);
-        int puntajeEsperado = 2200;
-        //act
-        int puntajeObtenido = manoJugada.puntajeFinal();
-        //assert
-        assertEquals(puntajeEsperado, puntajeObtenido);
-    }
-
-    @Test
-    public void testComodinSumaAlPuntajeCorrectamente(){
-        Mano manoJugada = new Color();
-        manoJugada.sumarPuntos(20);
-        EstrategiaComodin estrategia = new EstrategiaSumarPuntos();
-        Comodin comodin = new ComodinRegular(10,10,estrategia);
+        EstrategiaComodin estrategia = new EstrategiaSumarMultiplicar();
+        Comodin comodin = new ComodinRegular("Comodin Regular","...",10,1,estrategia);
         comodin.aplicarEfecto(manoJugada);
         int puntajeEsperado = 260;
         //act
@@ -49,5 +36,18 @@ public class ComodinRegularTests {
         assertEquals(puntajeEsperado, puntajeObtenido);
     }
 
-     */
+    @Test
+    public void testComodinRegularAplicaSuEfectoCompletoCorrectamente(){
+        //arrange
+        Mano manoJugada = new Color();
+        manoJugada.sumarPuntos(20);
+        EstrategiaComodin estrategia = new EstrategiaSumarMultiplicar();
+        Comodin comodin = new ComodinRegular("Comodin Regular","...",10,4,estrategia);
+        comodin.aplicarEfecto(manoJugada);
+        int puntajeEsperado = 1040;
+        //act
+        int puntajeObtenido = manoJugada.puntajeFinal();
+        //assert
+        assertEquals(puntajeEsperado, puntajeObtenido);
+    }
 }

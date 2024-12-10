@@ -1,0 +1,23 @@
+@startuml Diagrama Paquetes Comodin
+
+package "Dtos " {
+    abstract ComodinBaseDTO
+    class CartaDTO
+    class ComodinCombinacionDTO
+    class ComodinSimpleDTO
+    class EfectoDTO
+    class RondaDTO
+    class TarotDTO
+    class TiendaDTO
+}
+
+ComodinBaseDTO <|-up- ComodinCombinacionDTO
+ComodinBaseDTO <|-up- ComodinSimpleDTO
+RondaDTO -down-> TiendaDTO
+TiendaDTO -down-> CartaDTO
+TiendaDTO -left-> ComodinBaseDTO
+ComodinBaseDTO -down-> EfectoDTO
+TarotDTO -left-> EfectoDTO
+TiendaDTO --> TarotDTO
+
+@enduml

@@ -4,9 +4,11 @@ import edu.fiuba.algo3.modelo.mano.Mano;
 
 public class ComodinDescarte extends Comodin {
 
-    public ComodinDescarte(int valorMultiplicador,int valorPuntos, EstrategiaComodin estrategia) {
-        this.multiplicador = valorMultiplicador;
+    public ComodinDescarte(String nombre, String descripcion, int valorPuntos,int valorMultiplicador, EstrategiaComodin estrategia) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
         this.puntos = valorPuntos;
+        this.multiplicador = valorMultiplicador;
         this.estrategia = estrategia;
     }
 

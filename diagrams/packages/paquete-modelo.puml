@@ -1,0 +1,41 @@
+@startuml Diagrama Paquetes Modelo
+
+package "Modelo" {
+
+    package "Fabrica"{
+    }
+
+    package "Carta"{
+    }
+    
+    package "Comodin"{
+    }
+    
+    package "Dtos"{
+    }
+    
+    package "Juego"{
+    }
+    
+    package "Lector"{
+    }
+    
+    package "Mano"{
+    }
+   
+    package "Tarot"{
+    }
+}
+
+Juego .left.> Fabrica
+Juego .down.> Carta
+Juego .down.> Comodin
+Juego .down.> Mano
+Juego .down.> Tarot
+Dtos .up.> Lector
+Fabrica .left.> Dtos
+Mano .left.> Comodin
+Mano .right.> Tarot
+Mano .down.> Carta
+
+@enduml

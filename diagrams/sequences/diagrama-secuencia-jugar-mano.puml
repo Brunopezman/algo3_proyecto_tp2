@@ -1,0 +1,79 @@
+@startuml Diagrama secuencia jugar mano
+    actor Interfaz
+    participant ":Juego" as Juego
+    participant "rondaActual:Ronda" as RondaActual
+    participant "turno:Turno" as Turno
+    participant "mano:Mano" as Mano
+    participant "tarotUsar:Tarot" as Tarot 
+    participant "carta:Carta" as Carta
+    participant "comodin:Comodin" as Comodin
+    
+    Interfaz -> Juego: jugarMano(cartas,mano)
+
+    activate Juego
+
+    Juego -> Juego: getRondaActual()
+
+    activate Juego
+    deactivate Juego
+    
+    Juego -> RondaActual: jugarTurno(cartas,mano)
+
+    activate RondaActual
+
+    RondaActual -> Mano: sumarDescartes(descartesActuales)
+
+    RondaActual -> RondaActual: getTurnoActual()
+
+    activate RondaActual
+    deactivate RondaActual
+
+    RondaActual -> Turno: calcularJugada(cartas,mano)
+
+    activate Turno
+
+    Turno -> Tarot: aplicarEfectos(cartas,mano)
+    
+    loop por cada carta jugada
+    Turno -> Carta: puntaje()
+
+    activate Carta
+
+    Carta -> Turno: puntaje
+
+    deactivate Carta
+
+    end
+
+    Turno -> Mano: sumarPuntos(puntajeFinal)
+
+    loop por cada comodin de esa ronda
+    Turno -> Comodin: aplicarEfecto(mano)
+    end 
+    
+    Turno -> Mano: puntajeFinal()
+
+    activate Mano
+
+    Mano --> Turno: puntajeFinal
+
+    deactivate Mano
+
+    Turno --> RondaActual: puntajeFinal
+
+    deactivate Turno
+
+    RondaActual -> RondaActual: sumarPuntos(puntajeFinal)
+
+    activate RondaActual
+    deactivate RondaActual
+
+    RondaActual --> Juego: puntajeFinal
+
+    deactivate RondaActual
+
+    Juego --> Interfaz: puntajeFinal
+
+    deactivate Juego
+
+@enduml

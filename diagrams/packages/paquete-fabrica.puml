@@ -1,0 +1,19 @@
+@startuml Diagrama Paquetes Fabrica
+
+package "Fabrica " {
+    class CartaFabrica
+    class ComodinFabrica
+    class JuegoFabrica
+    class RondaFabrica
+    class TarotFabrica
+    class TiendaFabrica
+}
+
+JuegoFabrica .left.> RondaFabrica
+TiendaFabrica .up.> CartaFabrica 
+TiendaFabrica .left.> TarotFabrica
+JuegoFabrica .right.> CartaFabrica
+TiendaFabrica .right.> ComodinFabrica
+RondaFabrica ..> TiendaFabrica
+
+@enduml

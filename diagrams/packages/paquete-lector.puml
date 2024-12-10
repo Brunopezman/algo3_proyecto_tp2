@@ -1,0 +1,10 @@
+@startuml Diagrama Paquetes Lector
+
+package "Lector " {
+    class LectorJson
+    class ComodinDeserializador
+}
+
+LectorJson ..> ComodinDeserializador
+
+@enduml

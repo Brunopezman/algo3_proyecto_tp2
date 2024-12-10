@@ -11,4 +11,5 @@ module edu.fiuba.algo3 {
     opens edu.fiuba.algo3.modelo.lector to com.google.gson;
     exports edu.fiuba.algo3.vistas.boton;
     exports edu.fiuba.algo3.vistas.pantalla;
+    exports edu.fiuba.algo3.controllers;
 }

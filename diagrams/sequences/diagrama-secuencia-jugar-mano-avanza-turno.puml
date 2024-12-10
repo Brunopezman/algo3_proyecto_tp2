@@ -1,0 +1,48 @@
+@startuml Diagrama secuencia jugar mano y avanzar turno
+    actor Interfaz
+    participant ":Juego" as Juego
+    participant ":Ronda" as Ronda
+    
+    Interfaz -> Juego: jugarMano(cartas,mano)
+
+    activate Juego
+
+    Juego --> Interfaz: puntajeFinal
+
+    deactivate Juego
+
+    Interfaz -> Juego: avanzarTurno()
+
+    activate Juego
+
+    Juego -> Juego: getRondaActual()
+
+    activate Juego
+    deactivate Juego
+
+    Juego -> Ronda: seAlcanzoElPuntajeDeRonda()
+
+    activate Ronda
+
+    Ronda --> Juego: false
+
+    deactivate Ronda
+
+    Juego -> Ronda: avanzarTurno()
+
+    activate Ronda
+
+    Ronda -> Ronda: hayMasTurnos()
+
+    activate Ronda
+    deactivate Ronda
+
+    Ronda --> Juego: true
+
+    deactivate Ronda
+
+    Juego --> Interfaz: true
+
+    deactivate Juego
+
+@enduml

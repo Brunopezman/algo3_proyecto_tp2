@@ -15,6 +15,8 @@ public class Valor {
 
     public int getPuntaje() {return puntaje; }
 
+    public String getConsecutivo() { return consecutivo; }
+
     public boolean sonConsecutivos(String otroNumero) { return numero.equals(otroNumero); }
 
     public boolean sonIguales(Carta otraCarta) { return this.numero.equals(otraCarta.numero());}

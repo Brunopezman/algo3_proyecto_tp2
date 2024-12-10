@@ -1,0 +1,37 @@
+@startuml Diagrama de Clases
+
+skinparam monochrome true
+hide circle
+skinparam classAttributeIconSize 0
+
+class Ronda {
+    -turnos: List<Turno>
+    -comodines: List<Comodin>
+    -tarots: List<Tarot>
+    -tienda: Tienda
+    -puntajeAlcanzado: int
+    -puntajeASuperar: int
+    -descartesActuales: int
+    -descartesMaximos: int
+    -turnosActual: int
+    -cantidadTurnos: int
+    -nroRonda: int
+
+    +Ronda(nro,manos,descartesMaximos,puntajeAObtener:int, tienda:Tienda)
+    -sumarPuntos(puntos:int): void
+    +cargarComodinesRonda(comodinesElegidos:List<Comodin>): void
+    +cargarTarotsRonda(tarotsElegidos:List<Tarot>): void
+    +iniciarRonda(): void
+    +avanzarTurno(): boolean
+    +calcularPuntajeRonda(): int
+    +seAlcanzoPuntajeRonda(): boolean
+    +existeMano(posibleMano:List<Carta>): Mano
+    +jugarTurno(cartas:List<Carta>, mano:Mano): int
+    +descartar(mazo:Mazo, cartasActuales,cartasADescartar:List<Carta>): List<Carta>
+    +consumirTarot(): void
+    +usarTarotEnEsteTurno(tarotElegido:Tarot): void
+    +usarTarotEnCarta(tarotElegido:Tarot, carta:Carta): void
+    +sePuedeAvanzar(): boolean
+}
+
+@enduml

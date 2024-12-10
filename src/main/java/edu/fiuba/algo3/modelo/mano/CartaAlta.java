@@ -6,8 +6,8 @@ import java.util.List;
 
 public class CartaAlta extends Mano {
     // Constantes
-    public static int PUNTAJE_INICIAL = 40;
-    public static int MULTIPLICADOR_INICIAL = 4;
+    public static int PUNTAJE_INICIAL = 5;
+    public static int MULTIPLICADOR_INICIAL = 1;
 
     public CartaAlta() {
         this.nombre = "carta alta";

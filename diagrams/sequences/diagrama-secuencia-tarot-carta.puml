@@ -1,0 +1,38 @@
+@startuml Diagrama secuencia aplicarEfectos Tarot Carta
+    participant ":Turno" as Turno    
+    participant "tarot:TarotCarta" as Tarot
+    participant "carta:Carta" as Carta 
+    participant "valor:Valor" as Valor
+
+    Turno -> Tarot: aplicarEfecto(cartas,mano)
+
+    activate Tarot
+    alt caso que la carta es la misma que la que aplica el tarot
+    Tarot -> Carta: EsIgual(aQueAplica)
+
+    activate Carta
+
+    Carta --> Tarot: true
+    
+    deactivate Carta
+
+    Tarot -> Carta: modificarPorTarot(puntaje,multiplicador)
+
+    activate Carta
+    
+    Carta -> Valor: sumarPuntaje(puntaje)
+
+    activate Valor
+    deactivate Valor
+
+    Carta -> Valor : multiplicarPuntaje(multiplicador)
+
+    activate Valor
+    deactivate Valor
+
+    deactivate Carta
+
+    deactivate Tarot
+    end
+
+@enduml

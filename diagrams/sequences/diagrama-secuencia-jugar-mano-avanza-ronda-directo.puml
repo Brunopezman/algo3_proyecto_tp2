@@ -1,0 +1,87 @@
+@startuml Diagrama secuencia jugar mano y avanzar ronda
+    actor Interfaz
+    participant ":Juego" as Juego
+    participant "rondaActual:Ronda" as RondaActual 
+    participant "rondaSiguiente:Ronda" as RondaSiguiente
+    
+    Interfaz -> Juego: jugarMano(cartas,mano)
+
+    activate Juego
+
+    Juego --> Interfaz: puntajeFinal
+
+    deactivate Juego
+
+    Interfaz -> Juego: avanzarTurno()
+
+    activate Juego
+
+    Juego -> Juego: getRondaActual()
+
+    activate Juego
+    deactivate Juego
+
+    Juego -> RondaActual: seAlcanzoElPuntajeDeRonda()
+
+    activate RondaActual
+
+    RondaActual --> Juego: true
+
+    deactivate RondaActual
+
+    Juego --> Interfaz: false
+
+    deactivate Juego
+
+    Interfaz -> Juego: avanzarRonda()
+
+    activate Juego
+
+    Juego -> Juego: getRondaActual()
+
+    activate Juego
+    deactivate Juego
+
+    Juego -> RondaActual: seAlcanzoElPuntajeDeRonda()
+
+    activate RondaActual
+
+    RondaActual --> Juego: true
+
+    deactivate RondaActual
+
+    Juego -> Juego: esUltimaRonda()
+
+    activate Juego
+    deactivate Juego
+
+    Juego -> Juego: cargarComodinesActuales()
+
+    activate Juego
+
+    Juego -> Juego: siguienteRonda()
+
+    activate Juego
+    deactivate Juego
+
+    Juego -> RondaActual: transferirComodines(siguienteRonda)
+
+    activate RondaActual
+
+    RondaActual -> RondaSiguiente: cargarComodinesRonda(comodines)
+
+    deactivate RondaActual
+    deactivate Juego
+    
+    Juego -> RondaSiguiente: iniciarRonda()
+
+    Juego -> Juego: resetMazo()
+
+    activate Juego
+    deactivate Juego
+
+    Juego --> Interfaz: true
+
+    deactivate Juego
+
+@enduml

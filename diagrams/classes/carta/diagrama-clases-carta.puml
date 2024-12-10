@@ -1,0 +1,38 @@
+@startuml Diagrama de Clases
+
+skinparam monochrome true
+hide circle
+skinparam classAttributeIconSize 0
+
+class Carta{
+    -nombre: string
+    +Carta(nombre,palo,numero,consecutivo:string, puntos:int)
+    +esConsecutiva(otraCarta:Carta): boolean
+    +esIgual(nombreCarta:string): boolean
+    +tieneMismoPalo(otraCarta:Carta): boolean
+    +tieneMismoNumero(otraCarta:Carta): boolean 
+    +multiplicarValor(multiplicador:int): void
+    +modificarPorTarot(multiplicador,puntosAgregar:int): void
+}
+
+class Palo{
+    -palo: string
+    +Palo(palo:string)
+    +sonIgules(otraCarta:Carta): boolean
+}
+
+class Valor{
+    -numero:string
+    -consecutivo:string
+    -puntaje:int
+    +Valor(nombre,consecutivo:string, puntaje:int)
+    +sonConsecutivos(otroNumero:string): boolean
+    +sonIgual(otraCarta:Carta): boolean
+    +sumarPuntaje(puntaje:int): void
+    +multiplicarPuntaje(puntaje:int): void
+}
+
+Carta *-- Palo
+Carta *-- Valor
+
+@enduml

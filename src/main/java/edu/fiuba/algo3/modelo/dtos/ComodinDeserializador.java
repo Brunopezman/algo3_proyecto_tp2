@@ -2,7 +2,6 @@ package edu.fiuba.algo3.modelo.dtos;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-import edu.fiuba.algo3.modelo.comodin.Comodin;
 
 import java.lang.reflect.Type;
 import java.util.List;
