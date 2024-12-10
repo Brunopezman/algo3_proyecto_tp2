@@ -200,7 +200,7 @@ public class PantallaTienda {
         layout.setAlignment(Pos.CENTER);
         layout.setPadding(new Insets(20));
 
-        stackPane.getChildren().addAll(layout, mensajeTemporalComodin, mensajeTemporalTarot);
+        stackPane.getChildren().addAll(layout, mensajeTemporalComodin, mensajeTemporalTarot, mensajeTemporalCarta);
 
         Scene scene = new Scene(stackPane, 640, 480);
         tiendaStage.setScene(scene);

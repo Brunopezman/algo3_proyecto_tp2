@@ -42,7 +42,7 @@ public class CartaSeleccionadaHandler implements EventHandler<ActionEvent> {
         } else if (cartasSeleccionadas.size() < 5) {
             // Seleccionar carta
             cartasSeleccionadas.add(carta);
-            imagenCarta.setStyle("-fx-effect: dropshadow(gaussian, blue, 10, 0.5, 0, 0);");
+            imagenCarta.setStyle("-fx-effect: dropshadow(gaussian, red, 10, 0.7, 0, 0);");
             if (cartasSeleccionadas.size() == 5) {
                 Juego juego = Juego.getInstance();
                 Mano posibleMano = juego.queManoEs(cartasSeleccionadas);
