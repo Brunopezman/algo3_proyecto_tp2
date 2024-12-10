@@ -77,6 +77,6 @@ public class Turno {
 
     ////
 
-    public List<Comodin> getComodines(){return comodines;}
+    public List<Comodin> getComodines() {return comodines;}
 }
 

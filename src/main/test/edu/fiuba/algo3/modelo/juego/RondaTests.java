@@ -1,11 +1,5 @@
 package edu.fiuba.algo3.modelo.juego;
 
-import edu.fiuba.algo3.modelo.NoHayMasTurnosException;
-import edu.fiuba.algo3.modelo.comodin.*;
-import edu.fiuba.algo3.modelo.mano.Escalera;
-import edu.fiuba.algo3.modelo.mano.Mano;
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

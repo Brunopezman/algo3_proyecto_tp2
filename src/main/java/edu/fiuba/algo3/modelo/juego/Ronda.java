@@ -1,6 +1,5 @@
 package edu.fiuba.algo3.modelo.juego;
 
-import edu.fiuba.algo3.modelo.NoHayMasTurnosException;
 import edu.fiuba.algo3.modelo.carta.Carta;
 import edu.fiuba.algo3.modelo.comodin.Comodin;
 import edu.fiuba.algo3.modelo.mano.Mano;
@@ -19,7 +18,7 @@ public class Ronda {
     private List <Tarot> tarots;
     private int turnoActual;
     private int cantidadTurnos;
-    private int puntajeAlcanzado;
+    //private int puntajeAlcanzado;
     private int puntajeASuperar;
     private int descartesMaximos;
     private Tienda tienda;
@@ -104,7 +103,7 @@ public class Ronda {
     private boolean hayMasTurnos(){ return cantidadTurnos > turnoActual; }
 
     public int calcularPuntajeRonda() {
-
+        int puntajeAlcanzado = 0;
         for(Turno turno : turnos){
             puntajeAlcanzado += turno.puntajeDelTurno();
         }
@@ -112,7 +111,7 @@ public class Ronda {
         return puntajeAlcanzado;
     }
 
-    public boolean seAlcanzoElPuntajeDeRonda() { return (puntajeAlcanzado >= puntajeASuperar); }
+    public boolean seAlcanzoElPuntajeDeRonda() { return (this.calcularPuntajeRonda() >= puntajeASuperar); }
 
     public void transferirComodines(Ronda ronda) {
         ronda.cargarComodinesRonda(comodines);
@@ -131,7 +130,6 @@ public class Ronda {
         mano.sumarDescartes(descartesActuales);
         Turno turno = this.getTurnoActual();
         int puntaje = turno.calcularJugada(cartas,mano);
-        //sumarPuntos(puntaje);
         return puntaje; //carga puntaje final en turno y devolvemos valor;
     }
 

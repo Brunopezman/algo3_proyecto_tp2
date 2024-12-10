@@ -19,9 +19,6 @@ public class TarotCarta extends Tarot {
     //HAY QUE AGREGAR UNA FORMA DE COPARAR CARTAS PARA APLICAR EFECTOS
 
     public void aplicarEfectos(List<Carta> cartas, Mano mano) {
-        /*for (Carta carta : cartas) {
-            if (carta.esIgual(aQueAplica)) {carta.modificarPorTarot(puntaje, multiplicador);}
-        }*/
         Carta cartaModificar = new Carta("", "", "", "", 0);
         for (Carta carta : cartas) {
             if (cartaModificar.puntaje() < carta.puntaje()) {

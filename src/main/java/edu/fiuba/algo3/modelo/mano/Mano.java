@@ -12,14 +12,6 @@ public abstract class Mano {
 
     abstract public Mano esJugable(List<Carta> cartas);
 
-    protected void setPuntaje(int nuevoPuntaje) {
-        puntaje = nuevoPuntaje;
-    }
-
-    protected void setMultiplicador(int nuevoMultiplicador) {
-        multiplicador = nuevoMultiplicador;
-    }
-
     public int getPuntaje() {
         return puntaje;
     }

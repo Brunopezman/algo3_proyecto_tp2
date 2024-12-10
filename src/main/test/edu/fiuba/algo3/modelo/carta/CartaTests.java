@@ -1,9 +1,5 @@
 package edu.fiuba.algo3.modelo.carta;
 
-import edu.fiuba.algo3.modelo.ValorInvalidoException;
-import edu.fiuba.algo3.modelo.PaloInvalidoException;
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
