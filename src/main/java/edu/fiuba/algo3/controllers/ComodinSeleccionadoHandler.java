@@ -3,58 +3,60 @@ package edu.fiuba.algo3.controllers;
 import edu.fiuba.algo3.modelo.comodin.Comodin;
 import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.vistas.pantalla.PantallaTienda;
-import edu.fiuba.algo3.vistas.pantalla.ParteDerecha;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.media.AudioClip;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.scene.control.Label;
+import javafx.util.Duration;
 
 import java.util.List;
 
 public class ComodinSeleccionadoHandler implements EventHandler<ActionEvent> {
 
+    private final Comodin comodin;
     private final ImageView cartaView;
     private final List<Comodin> comodinesSeleccionados;
-    private final Comodin comodin;
-    private final AudioClip sonido;
+    private final Label mensajeTemporal;
 
-    public ComodinSeleccionadoHandler(Comodin comodin, ImageView cartaView, AudioClip sonidoClick, List<Comodin> comodinesSeleccionados) {
+    public ComodinSeleccionadoHandler(Comodin comodin, ImageView cartaView, List<Comodin> comodinesSeleccionados, Label mensajeTemporal) {
         this.comodin = comodin;
         this.cartaView = cartaView;
-        this.sonido = sonidoClick;
         this.comodinesSeleccionados = comodinesSeleccionados;
+        this.mensajeTemporal = mensajeTemporal;
     }
 
     @Override
     public void handle(ActionEvent actionEvent) {
         Juego juego = Juego.getInstance();
-        //System.out.println(comodinesSeleccionados.size());
         if (comodinesSeleccionados.contains(comodin)) {
-            // Deseleccionar: quitar el efecto azul
-            comodinesSeleccionados.remove(comodin);
+            comodinesSeleccionados.remove(comodin); //sacar efecto azul
             cartaView.setStyle("");
             PantallaTienda.reducirContador();
         } else if (PantallaTienda.sePuedeSeguirEligiendo()) {
             int comodinesYaGuardados = juego.getRondaActual().cantidadComodines();
             if ((comodinesYaGuardados + comodinesSeleccionados.size()) == 5){
-                System.out.println("Ya completaste/completarias los comodines maximos (5)");
+                mostrarMensajeTemporal("Ya completaste/completarias los comodines maximos (5)");
             }else {
                 comodinesSeleccionados.add(comodin);
-                sonido.play();
                 cartaView.setStyle("-fx-effect: dropshadow(gaussian, blue, 15, 0.8, 0, 0);");
                 PantallaTienda.aumentarContador();
+
+                PantallaTienda.mostrarDescripcionTemporal(comodin.getDescripcion());
             }
         }else{
-            System.out.println("No se puede seleccionar un comodin, ya seleccionaste 3 de las opciones de la tienda!");
+            mostrarMensajeTemporal("¡No puedes seleccionar más comodines! Ya elegiste 3 opciones.");
         }
-        //Actualizar la parte derecha solo si se ha realizado una selección
-        /*
-        if (!comodinesSeleccionados.isEmpty()) {
-            parteDerecha.actualizarComodines(comodinesSeleccionados);
-        }
-        */
+    }
 
+    private void mostrarMensajeTemporal(String mensaje) {
+        mensajeTemporal.setText(mensaje);
+        mensajeTemporal.setVisible(true);
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), e -> mensajeTemporal.setVisible(false)));
+        timeline.setCycleCount(1); // Solo ejecutar una vez
+        timeline.play();
     }
 }

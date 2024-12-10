@@ -5,7 +5,7 @@ import javafx.stage.Stage;
 
 public class VistaBalatro {
 
-    private static final int ANCHO = 800;
+    private static final int ANCHO = 880;
     private static final int ALTO = 600;
     private static VistaBalatro vistaBalatro;
     private final Stage stage;
@@ -24,7 +24,7 @@ public class VistaBalatro {
         stage.setTitle("Balatro");
         stage.setWidth(ANCHO);
         stage.setHeight(ALTO);
-        stage.setResizable(false);
+        stage.setResizable(true);
         stage.show();
     }
 

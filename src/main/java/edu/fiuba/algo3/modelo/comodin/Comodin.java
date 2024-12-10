@@ -1,7 +1,6 @@
 package edu.fiuba.algo3.modelo.comodin;
 
 import edu.fiuba.algo3.modelo.mano.Mano;
-import edu.fiuba.algo3.modelo.mano.Trio;
 
 import java.util.List;
 
@@ -40,5 +39,4 @@ public abstract class Comodin {
     public int getMultiplicador() { return multiplicador; }
     public int getPuntos() { return puntos; }
     public EstrategiaComodin getEstrategia() { return estrategia; }
-    public List<Comodin> getComodinesInternos() { return comodinesInternos; }
 }

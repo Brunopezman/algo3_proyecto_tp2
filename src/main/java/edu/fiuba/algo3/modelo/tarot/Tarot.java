@@ -24,6 +24,8 @@ public abstract class Tarot {
 
     //Getters y Setters
     public String getNombre(){ return nombre; }
+    public String getDescripcion() { return descripcion; }
+    public int getMultiplicador() { return multiplicador; }
 
     ////////////////////////
 
@@ -33,8 +35,5 @@ public abstract class Tarot {
         return this.nombre.equals(tarotElegido.nombre);
     }
 
-    public void modificarAQueAplica(String cartaQueAplica){
-        this.aQueAplica = cartaQueAplica;
-    }
 }
 

@@ -23,7 +23,4 @@ public class TarotDTO {
 
     public void setEfecto(EfectoDTO efecto) { this.efecto = efecto; }
 
-    public void setSobre(String sobre) { this.sobre = sobre; }
-
-    public void setEjemplar (String ejemplar) { this.ejemplar = ejemplar; }
 }

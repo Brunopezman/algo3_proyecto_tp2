@@ -6,7 +6,6 @@ import edu.fiuba.algo3.vistas.pantalla.PantallaTienda;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
-import javafx.scene.media.AudioClip;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
@@ -27,16 +26,9 @@ public class BotonConfirmarHandler implements EventHandler<ActionEvent>{
 
     @Override
     public void handle(ActionEvent event) {
-
-        // Cargar y reproducir el sonido al hacer clic en el botón
-        String rutaSonido = "src/main/java/edu/fiuba/algo3/resources/sonidos/click.mp3"; // Cambia "click.mp3" por tu archivo de sonido
-        AudioClip sonido = new AudioClip(Paths.get(rutaSonido).toUri().toString());
-
         String nombreIngresado = campoNombre.getText().trim();
-        sonido.play();
         if (nombreIngresado.isEmpty()) {
             textoIngreseNombre.setText("Por favor ingresa tu nombre");
-            sonido.play();
         }else{
             mostrarPantallaJuego(nombreIngresado);
             PantallaTienda.mostrarTienda();

@@ -1,14 +1,16 @@
 package edu.fiuba.algo3.controllers;
 
-import edu.fiuba.algo3.modelo.comodin.Comodin;
 import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.modelo.tarot.Tarot;
 import edu.fiuba.algo3.vistas.pantalla.PantallaTienda;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
-import javafx.scene.media.AudioClip;
-import javafx.scene.input.MouseEvent;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.scene.control.Label;
+import javafx.util.Duration;
 
 import java.util.List;
 
@@ -16,44 +18,46 @@ public class TarotSeleccionadoHandler implements EventHandler<ActionEvent> {
 
     private final Tarot tarot;
     private final ImageView cartaView;
-    private final AudioClip sonido;
     private List<Tarot> tarotsSeleccionados;
-    //private boolean estaSeleccionado = false;
+    private final Label mensajeTemporal;
 
-    public TarotSeleccionadoHandler( Tarot tarot, List<Tarot> tarotsSeleccionados, ImageView cartaView, AudioClip sonido) {
+    public TarotSeleccionadoHandler(Tarot tarot, ImageView cartaView, List<Tarot> tarotsSeleccionados, Label mensajeTemporal) {
         this.tarot = tarot;
         this.cartaView = cartaView;
-        this.sonido = sonido;
         this.tarotsSeleccionados = tarotsSeleccionados;
+        this.mensajeTemporal = mensajeTemporal;
     }
 
     @Override
     public void handle(ActionEvent actionEvent) {
-        // Reproducir el sonido de clic
-        sonido.play();
         Juego juego = Juego.getInstance();
         if (tarotsSeleccionados.contains(tarot)) {
-            tarotsSeleccionados.remove(tarot);
-            // Deseleccionar: quitar el efecto azul
+            tarotsSeleccionados.remove(tarot); //sacar efecto azul
             cartaView.setStyle("");
             PantallaTienda.reducirContador();
         } else if(PantallaTienda.sePuedeSeguirEligiendo()){
             int tarotsYaGuardados = juego.getRondaActual().cantidadTarots();
             if ((tarotsYaGuardados + tarotsSeleccionados.size()) == 2){
-                System.out.println("Ya completaste/completarias los tarots maximos (2)");
+                mostrarMensajeTemporal("Ya completaste/completarias los tarots maximos (2)");
             }else {
-                tarotsSeleccionados.add(tarot);
-                // Seleccionar: añadir efecto azul
-                sonido.play();
+                tarotsSeleccionados.add(tarot); //poner efecto azul
                 cartaView.setStyle("-fx-effect: dropshadow(gaussian, blue, 15, 0.8, 0, 0);");
                 PantallaTienda.aumentarContador();
+
+                PantallaTienda.mostrarDescripcionTemporal(tarot.getDescripcion());
             }
         } else {
-            System.out.println("No se puede seleccionar una tarot, ya seleccionaste 3 de las opciones de la tienda!");
+            mostrarMensajeTemporal("No se puede seleccionar una tarot, ya seleccionaste 3 de las opciones de la tienda!");
         }
+    }
 
-        // Cambiar el estado de selección
-        //estaSeleccionado = !estaSeleccionado;
+    private void mostrarMensajeTemporal(String mensaje) {
+        mensajeTemporal.setText(mensaje);
+        mensajeTemporal.setVisible(true);
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), e -> mensajeTemporal.setVisible(false)));
+        timeline.setCycleCount(1); //Solo ejecutar una vez
+        timeline.play();
     }
 }
 

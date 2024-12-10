@@ -16,30 +16,30 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.nio.file.Paths;
-import java.util.Objects;
 
 public class PantallaFinal extends Parent {
-    private static Stage popupStage;
+    private String resultado;
     private BorderPane root;
     private static final String MENSAJE_GANASTE = "GANASTE";
 
+    private static final String PANTALLA_GANASTE ="src/main/java/edu/fiuba/algo3/resources/fondos/fondos_pantalla_ganada.jpg";
+    private static final String PANTALLA_PERDISTE ="src/main/java/edu/fiuba/algo3/resources/fondos/fondos_pantalla_perdida.jpg";
+
     public PantallaFinal(String resultado) {
         Stage popupStage = new Stage();
+        this.resultado = resultado;
         popupStage.initModality(Modality.APPLICATION_MODAL);
         popupStage.setTitle("Resultado de la Partida");
         popupStage.setResizable(false);
 
         // Cargar la fuente
         Font fuente= cargarFuente("src/main/java/edu/fiuba/algo3/resources/fuentes/fuente2.otf", 40);
-        String rutaImagen;
-        // Cargar la imagen de fondo
-        if (Objects.equals(resultado, MENSAJE_GANASTE)) {
-            rutaImagen = "src/main/java/edu/fiuba/algo3/resources/fondos/fondo_pantalla_ganada.jpg";
-
+        Image imagenFondo;
+        if (MENSAJE_GANASTE.equals(resultado)) {
+            imagenFondo = new Image(Paths.get(PANTALLA_GANASTE).toUri().toString());
         } else {
-            rutaImagen = "src/main/java/edu/fiuba/algo3/resources/fondos/fondos-pantalla_perdida.jpg";
+            imagenFondo = new Image(Paths.get(PANTALLA_PERDISTE).toUri().toString());
         }
-        Image imagenFondo = new Image(Paths.get(rutaImagen).toUri().toString());
 
         // Configurar el fondo
         Background background = new Background(new BackgroundImage(imagenFondo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT));
@@ -83,8 +83,7 @@ public class PantallaFinal extends Parent {
         }
     }
 
-    public static void mostrarPantallaFinal(String mensaje) {
-        new PantallaFinal(mensaje);
+    public static void mostrarPantallaFinal(String resultado) {
+        new PantallaFinal(resultado);
     }
-
 }

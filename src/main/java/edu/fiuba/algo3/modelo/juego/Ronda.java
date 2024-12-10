@@ -1,6 +1,5 @@
 package edu.fiuba.algo3.modelo.juego;
 
-import edu.fiuba.algo3.modelo.NoHayMasTurnosException;
 import edu.fiuba.algo3.modelo.carta.Carta;
 import edu.fiuba.algo3.modelo.comodin.Comodin;
 import edu.fiuba.algo3.modelo.mano.Mano;
@@ -19,21 +18,10 @@ public class Ronda {
     private List <Tarot> tarots;
     private int turnoActual;
     private int cantidadTurnos;
-    private int puntajeAlcanzado;
+    //private int puntajeAlcanzado;
     private int puntajeASuperar;
     private int descartesMaximos;
     private Tienda tienda;
-
-    /*
-    public Ronda(int cantTurnos, int cantDescartes, int puntASuperar, Jugador jugadorActual) {
-        this.turnos = new ArrayList<Turno>();
-        this.turnoActual = INICIO;
-        this.comodines = new ArrayList <Comodin>();
-        this.cantidadTurnos = cantTurnos;
-        this.puntajeASuperar = puntASuperar;
-        jugadorActual.setDescartesMaximos(cantDescartes);
-    }
-    */
 
     public Ronda(int nro,int manos,int descartesMaximos, int puntajeAObtener, Tienda tienda){
         this.nroRonda = nro;
@@ -43,8 +31,8 @@ public class Ronda {
         this.descartesActuales = 0;
         this.puntajeASuperar = puntajeAObtener;
         this.tienda = tienda;
-        this.comodines = new ArrayList <Comodin>();
-        this.tarots = new ArrayList<Tarot>();
+        this.comodines = new ArrayList<>();
+        this.tarots = new ArrayList<>();
         this.cantidadTurnos = manos;
     }
 
@@ -61,8 +49,6 @@ public class Ronda {
     public int cantidadTurnos(){ return turnos.size(); }
 
     public int turnoActual(){ return turnoActual; }
-
-    public int puntosTurnoActual(){ return this.getTurnoActual().puntajeDelTurno(); }
 
     public int cantidadComodines(){ return comodines.size(); }
 
@@ -87,10 +73,6 @@ public class Ronda {
     public List<Comodin> getComodines() {return comodines; }
 
     public List<Tarot> getTarots() {return tarots; }
-
-    public Turno getTurno(int i) {
-        return turnos.get(i-1);
-    }
 
     ////////////////////////////////////
 
@@ -121,13 +103,15 @@ public class Ronda {
     private boolean hayMasTurnos(){ return cantidadTurnos > turnoActual; }
 
     public int calcularPuntajeRonda() {
+        int puntajeAlcanzado = 0;
         for(Turno turno : turnos){
             puntajeAlcanzado += turno.puntajeDelTurno();
         }
+
         return puntajeAlcanzado;
     }
 
-    public boolean seAlcanzoElPuntajeDeRonda() { return (puntajeAlcanzado >= puntajeASuperar); }
+    public boolean seAlcanzoElPuntajeDeRonda() { return (this.calcularPuntajeRonda() >= puntajeASuperar); }
 
     public void transferirComodines(Ronda ronda) {
         ronda.cargarComodinesRonda(comodines);
@@ -143,18 +127,9 @@ public class Ronda {
     }
 
     public int jugarTurno(List<Carta> cartas, Mano mano) {
-        /*
-        int puntaje = 0;
-        for (Carta carta : posibleMano) {;
-            puntaje += carta.puntaje();
-        }
-        mano.sumarPuntos(puntaje);
-        mano.sumarDescartes(descartesActuales);
-        */
         mano.sumarDescartes(descartesActuales);
         Turno turno = this.getTurnoActual();
         int puntaje = turno.calcularJugada(cartas,mano);
-        sumarPuntos(puntaje);
         return puntaje; //carga puntaje final en turno y devolvemos valor;
     }
 
@@ -173,11 +148,7 @@ public class Ronda {
         //dar nuevamente la cantidad de cartas que descartó
         int cantidadARecibir = cartasADescartar.size();
         List<Carta> nuevasCartas= mazo.darCartas(cantidadARecibir);
-        /*
-        for (int i = 0; i < cantidadARecibir; i++) {
-            this.agregarCarta(cartasActuales, nuevasCartas.get(i));
-        }
-        */
+
         for (Carta carta : nuevasCartas) {
             this.agregarCarta(cartasActuales, carta);
         }
@@ -202,24 +173,9 @@ public class Ronda {
         }
     }
 
-
     public void usarTarotEnEsteTurno(Tarot tarotElegido){
         this.consumirTarot(tarotElegido);
         Turno turno = this.getTurnoActual();
         turno.agregarTarot(tarotElegido);
     }
-
-    /*
-    public void usarTarotEnCarta(Tarot tarotElegido, Carta carta){
-        this.consumirTarot(tarotElegido);
-        tarotElegido.modificarAQueAplica(carta.getNombre());
-    }
-     */
-
-    public void sumarPuntos(int puntos){ puntajeAlcanzado += puntos;}
-
-    public boolean sePuedeAvanzar() {
-        return this.seAlcanzoElPuntajeDeRonda();
-    }
-
 }

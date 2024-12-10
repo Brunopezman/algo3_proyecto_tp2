@@ -1,0 +1,30 @@
+@startuml Diagrama Paquetes Mano
+
+package "Mano " {
+    abstract Mano
+    class Operador
+    class CartaAlta
+    class Par
+    class DoblePar
+    class Trio
+    class Escalera
+    class Color
+    class FullHouse
+    class EscaleraColor
+    class Poker
+    class EscaleraReal
+}
+
+Mano -right-> Operador
+Mano <|-- CartaAlta
+Mano <|-- Par
+Mano <|-- Color
+Mano <|-- Trio
+Mano <|-- Escalera
+Mano <|-up- DoblePar
+Mano <|-up- FullHouse
+Mano <|-up- EscaleraColor
+Mano <|-up- Poker
+Mano <|-up- EscaleraReal
+
+@enduml
