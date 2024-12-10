@@ -88,6 +88,10 @@ public class Ronda {
 
     public List<Tarot> getTarots() {return tarots; }
 
+    public Turno getTurno(int i) {
+        return turnos.get(i-1);
+    }
+
     ////////////////////////////////////
 
     public void cargarComodinesRonda(List<Comodin> comodinesElegidos){
@@ -212,9 +216,10 @@ public class Ronda {
     }
      */
 
-    private void sumarPuntos(int puntos){ puntajeAlcanzado += puntos;}
+    public void sumarPuntos(int puntos){ puntajeAlcanzado += puntos;}
 
     public boolean sePuedeAvanzar() {
         return this.seAlcanzoElPuntajeDeRonda();
     }
+
 }

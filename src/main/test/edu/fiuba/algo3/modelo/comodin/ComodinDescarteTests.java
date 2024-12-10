@@ -6,14 +6,14 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ComodinDescarteTests {
-    /*
+
     @Test
-    public void testComodinSumaAlPuntajeSiSeDescarto(){
+    public void testComodinSumaAlPuntajeSiSeDescarto() {
         Mano mano = new Color();
-        EstrategiaComodin estrategia = new EstrategiaSumarPuntos();
+        EstrategiaComodin estrategia = new EstrategiaSumarMultiplicar();
         mano.sumarPuntos(20);
         mano.sumarDescartes(1);
-        Comodin comodin = new ComodinDescarte(10,10,estrategia);
+        Comodin comodin = new ComodinDescarte("Comodin Descarte", "...", 10, 1, estrategia);
         comodin.aplicarEfecto(mano);
         int puntajeEsperado = 260;
         //act
@@ -23,28 +23,14 @@ public class ComodinDescarteTests {
     }
 
     @Test
-    public void testComodinNoSumaAlPuntajeSiNoSeDescarto(){
+    public void testComodinMultiplicaAlMultiplicadorSiSeDescarto() {
         Mano mano = new Color();
-        EstrategiaComodin estrategia = new EstrategiaSumarPuntos();
-        mano.sumarPuntos(20);
-        Comodin comodin = new ComodinDescarte(10,10,estrategia);
-        comodin.aplicarEfecto(mano);
-        int puntajeEsperado = 220;
-        //act
-        int puntajeObtenido = mano.puntajeFinal();
-        //assert
-        assertEquals(puntajeEsperado, puntajeObtenido);
-    }
-
-    @Test
-    public void testComodinSumaAlMultiplicadorSiSeDescarto(){
-        Mano mano = new Color();
-        EstrategiaComodin estrategia = new EstrategiaSumarMultiplicador();
+        EstrategiaComodin estrategia = new EstrategiaSumarMultiplicar();
         mano.sumarPuntos(20);
         mano.sumarDescartes(1);
-        Comodin comodin = new ComodinDescarte(10,10,estrategia);
+        Comodin comodin = new ComodinDescarte("Comodin Descarte", "...", 0, 4, estrategia);
         comodin.aplicarEfecto(mano);
-        int puntajeEsperado = 770;
+        int puntajeEsperado = 880;
         //act
         int puntajeObtenido = mano.puntajeFinal();
         //assert
@@ -52,28 +38,14 @@ public class ComodinDescarteTests {
     }
 
     @Test
-    public void testComodinNoSumaAlMultiplicadorSiNoSeDescarto(){
+    public void testComodinAplicaSuEfectoCompletoSiSeDescarto() {
         Mano mano = new Color();
-        EstrategiaComodin estrategia = new EstrategiaSumarMultiplicador();
-        mano.sumarPuntos(20);
-        Comodin comodin = new ComodinDescarte(10,10,estrategia);
-        comodin.aplicarEfecto(mano);
-        int puntajeEsperado = 220;
-        //act
-        int puntajeObtenido = mano.puntajeFinal();
-        //assert
-        assertEquals(puntajeEsperado, puntajeObtenido);
-    }
-
-    @Test
-    public void testComodinMultiplicaAlMultiplicadorSiSeDescarto(){
-        Mano mano = new Color();
-        EstrategiaComodin estrategia = new EstrategiaMultiplicarMultiplicador();
+        EstrategiaComodin estrategia = new EstrategiaSumarMultiplicar();
         mano.sumarPuntos(20);
         mano.sumarDescartes(1);
-        Comodin comodin = new ComodinDescarte(10,10,estrategia);
+        Comodin comodin = new ComodinDescarte("Comodin Descarte", "...", 10, 4, estrategia);
         comodin.aplicarEfecto(mano);
-        int puntajeEsperado = 2200;
+        int puntajeEsperado = 1040;
         //act
         int puntajeObtenido = mano.puntajeFinal();
         //assert
@@ -81,11 +53,11 @@ public class ComodinDescarteTests {
     }
 
     @Test
-    public void testComodinNoMultiplicaAlMultiplicadorSiNoSeDescarto(){
+    public void testComodinNoAplicaSuEfectoSiNoSeDescarto() {
         Mano mano = new Color();
-        EstrategiaComodin estrategia = new EstrategiaMultiplicarMultiplicador();
+        EstrategiaComodin estrategia = new EstrategiaSumarMultiplicar();
         mano.sumarPuntos(20);
-        Comodin comodin = new ComodinDescarte(10,10,estrategia);
+        Comodin comodin = new ComodinDescarte("Comodin Descarte", "...", 10, 4, estrategia);
         comodin.aplicarEfecto(mano);
         int puntajeEsperado = 220;
         //act
@@ -93,6 +65,5 @@ public class ComodinDescarteTests {
         //assert
         assertEquals(puntajeEsperado, puntajeObtenido);
     }
-
-     */
 }
+
