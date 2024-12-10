@@ -56,6 +56,8 @@ public class Ronda {
 
     public Turno getTurnoActual(){ return turnos.get(turnoActual-1); }
 
+    public Turno getTurno(int i){ return turnos.get(i-1); }
+
     public int getPuntajeNecesario(){
         return puntajeASuperar;
     }

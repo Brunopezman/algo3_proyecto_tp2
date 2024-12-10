@@ -47,7 +47,7 @@ public class JugadorTests {
     public void testSeCreaUnJugadorSinCartasEnMano() {
         Jugador jugador = new Jugador("Muniain");
         int cantidadEsperada = 0;
-        int cantidadRecibida = jugador.getCantidadCartasActuales();
+        int cantidadRecibida = jugador.getCartasActuales().size();
         assertEquals(cantidadEsperada, cantidadRecibida);
     }
 
@@ -73,7 +73,7 @@ public class JugadorTests {
         //act
         jugador.eliminarCartasUsadas(obtenido);
         //assert
-        assertEquals(esperado, jugador.getCantidadCartasActuales());
+        assertEquals(esperado, jugador.getCartasActuales().size());
     }
 }
 

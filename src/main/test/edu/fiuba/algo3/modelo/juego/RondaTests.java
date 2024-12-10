@@ -1,6 +1,5 @@
 package edu.fiuba.algo3.modelo.juego;
 
-import edu.fiuba.algo3.modelo.NoHayMasTurnosException;
 import edu.fiuba.algo3.modelo.carta.Carta;
 import edu.fiuba.algo3.modelo.comodin.*;
 import edu.fiuba.algo3.modelo.mano.Color;
@@ -144,7 +143,7 @@ public class RondaTests {
         ronda.iniciarRonda();
         ronda.avanzarTurno();
         ronda.avanzarTurno();
-        int puntosTurno = ronda.puntosTurnoActual();
+        int puntosTurno = ronda.getTurnoActual().puntajeDelTurno();
         int puntajeEsperado = 0;
         assertEquals(puntajeEsperado, puntosTurno);
     }

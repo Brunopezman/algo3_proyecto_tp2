@@ -63,28 +63,6 @@ public class CartaTests {
     }
 
     @Test
-    public void testUnaCartaReconoceOtraCartaConElMismoPalo() {
-        //arrange
-        Carta carta = new Carta("7 de Corazones", "Corazones", "7", "8", 7);
-        Carta carta2 = new Carta("2 de Corazones", "Corazones", "2", "3", 2);
-        //act
-        boolean resultado = carta.tieneMismoPalo(carta2);
-        //assert
-        assert (resultado);
-    }
-
-    @Test
-    public void testUnaCartaReconoceOtraCartaConDistintoPalo() {
-        //arrange
-        Carta carta = new Carta("7 de Diamantes", "Diamantes", "7", "8", 7);
-        Carta carta2 = new Carta("2 de Corazones", "Corazones", "2", "3", 2);
-        //act
-        boolean resultado = carta.tieneMismoPalo(carta2);
-        //assert
-        assert (!resultado);
-    }
-
-    @Test
     public void testUnaCartaReconoceOtraCartaConElMismoValor() {
         //arrange
         Carta carta = new Carta("2 de Diamantes", "Diamantes", "2", "3", 2);

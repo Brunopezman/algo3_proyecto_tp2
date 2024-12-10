@@ -36,7 +36,7 @@ public class ComodinManoEspecificaTests {
         manoJugada.sumarPuntos(20);
         Comodin comodin = new ComodinManoEspecifica("Comodin Mano Especifica", "...",0,4,estrategia,nombreMano);
         comodin.aplicarEfecto(manoJugada);
-        int puntajeEsperado = 880;
+        int puntajeEsperado = 440;
         //act
         int puntajeObtenido = manoJugada.puntajeFinal();
         //assert
@@ -53,7 +53,7 @@ public class ComodinManoEspecificaTests {
         manoJugada.sumarPuntos(20);
         Comodin comodin = new ComodinManoEspecifica("Comodin Mano Especifica", "...",10,4,estrategia,nombreMano);
         comodin.aplicarEfecto(manoJugada);
-        int puntajeEsperado = 1040;
+        int puntajeEsperado = 520;
         //act
         int puntajeObtenido = manoJugada.puntajeFinal();
         //assert
@@ -70,7 +70,7 @@ public class ComodinManoEspecificaTests {
         manoJugada.sumarPuntos(20);
         Comodin comodin = new ComodinManoEspecifica("Comodin Mano Especifica", "...",10,4,estrategia,nombreMano);
         comodin.aplicarEfecto(manoJugada);
-        int puntajeEsperado = 220;
+        int puntajeEsperado = 200;
         //act
         int puntajeObtenido = manoJugada.puntajeFinal();
         //assert

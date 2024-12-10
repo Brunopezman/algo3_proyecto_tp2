@@ -16,7 +16,7 @@ public class JuegoTest {
 
     @Test
     public void testSeAvanzaDeTurnoCorrectamente(){
-        Juego juego = Juego.getInstance();
+        Juego juego = Juego.updateInstance();
         juego.inicializarRonda();
         juego.avanzarTurno();
         juego.avanzarTurno();
@@ -28,7 +28,7 @@ public class JuegoTest {
 
     @Test
     public void testNoSeAvanzaDeTurnoAlLlegarAlUltimo(){
-        Juego juego = Juego.getInstance();
+        Juego juego = Juego.updateInstance();
         juego.inicializarRonda();
         juego.avanzarTurno();
         juego.avanzarTurno();
@@ -38,35 +38,37 @@ public class JuegoTest {
 
     @Test
     public void testNoSeAvanzaDeTurnoSiSeAlcanzaElPuntajeDeLaRonda(){
-        Juego juego = Juego.getInstance();
-        juego.inicializarRonda();
-        juego.getRondaActual().sumarPuntos(3500);
+        Juego juego = Juego.updateInstance();
+        Ronda ronda = juego.getRondaActual();
+        ronda.iniciarRonda().setPuntaje(3500);
         assert(!juego.avanzarTurno());
     }
 
     @Test
     public void testSeAvanzaDeRondaCorrectamenteAlAlcanzarElPuntajeNecesario() {
-        Juego juego = Juego.getInstance();
-        juego.inicializarRonda();
-        juego.getRondaActual().sumarPuntos(3500);
+        Juego juego = Juego.updateInstance();
+
+        Ronda ronda = juego.getRondaActual();
+        ronda.iniciarRonda().setPuntaje(3500);
         assert(juego.avanzarRonda());
     }
 
     @Test
     public void testNoSeAvanzaDeRondaAlNoAlcanzarElPuntajeNecesario() {
-        Juego juego = Juego.getInstance();
-        juego.inicializarRonda();
-        juego.getRondaActual().sumarPuntos(2500);
+        Juego juego = Juego.updateInstance();
+        Ronda ronda = juego.getRondaActual();
+        ronda.iniciarRonda().setPuntaje(2500);
         assert(!juego.avanzarRonda());
     }
 
     @Test
     public void testNoSeAvanzaDeRondaAlLlegarALaUltimaRonda() {
-        Juego juego = Juego.getInstance();
-        juego.inicializarRonda();
-        int contador = 1;
+        Juego juego = Juego.updateInstance();
+        Ronda ronda;
+        int contador = 0;
         while(contador < juego.rondasTotales()) {
-            juego.getRondaActual().sumarPuntos(12000);
+            ronda = juego.getRondaActual();
+            ronda.iniciarRonda().setPuntaje(12000);
             juego.avanzarRonda();
             contador++;
         }
@@ -75,11 +77,12 @@ public class JuegoTest {
 
     @Test
     public void testAlGanarLaUltimaRondaSeGanaElJuego() {
-        Juego juego = Juego.getInstance();
-        juego.inicializarRonda();
+        Juego juego = Juego.updateInstance();
+        Ronda ronda;
         int contador = 0;
         while(contador < juego.rondasTotales()) {
-            juego.getRondaActual().sumarPuntos(12000);
+            ronda = juego.getRondaActual();
+            ronda.iniciarRonda().setPuntaje(12000);
             juego.avanzarRonda();
             contador++;
         }
@@ -88,13 +91,15 @@ public class JuegoTest {
 
     @Test
     public void testAlPerderAlgunaRondaSePierdeElJuego() {
-        Juego juego = Juego.getInstance();
-        juego.inicializarRonda();
-        juego.getRondaActual().sumarPuntos(12000);
+        Juego juego = Juego.updateInstance();
+        Ronda ronda = juego.getRondaActual();
+        ronda.iniciarRonda().setPuntaje(12000);
         juego.avanzarRonda();
-        juego.getRondaActual().sumarPuntos(12000);
+        ronda = juego.getRondaActual();
+        ronda.iniciarRonda().setPuntaje(12000);
         juego.avanzarRonda();
-        juego.getRondaActual().sumarPuntos(2000);
+        ronda = juego.getRondaActual();
+        ronda.iniciarRonda().setPuntaje(2000);
         juego.avanzarRonda();
         assert(!juego.seGanoPartida());
     }
