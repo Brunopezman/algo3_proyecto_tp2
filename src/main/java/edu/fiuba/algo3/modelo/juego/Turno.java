@@ -38,7 +38,7 @@ public class Turno {
         return puntaje;
     }
 
-    private void setPuntaje(int nuevoPuntaje){
+    public void setPuntaje(int nuevoPuntaje){
         this.puntaje = nuevoPuntaje;
     }
 
