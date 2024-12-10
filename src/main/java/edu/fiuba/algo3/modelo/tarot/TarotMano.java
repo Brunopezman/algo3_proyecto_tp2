@@ -20,6 +20,8 @@ public class TarotMano extends Tarot {
     }
 
     public void aplicarEfectos(List<Carta> cartas, Mano mano) {
-        mano.aumentarAtributos(puntaje, multiplicador);
+        if (mano.esMismaMano(aQueAplica)){
+            mano.aumentarAtributos(puntaje, multiplicador);
+        }
     }
 }
