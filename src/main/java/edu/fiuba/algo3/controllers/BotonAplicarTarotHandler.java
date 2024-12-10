@@ -25,13 +25,13 @@ public class BotonAplicarTarotHandler implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent actionEvent) {
-
         if (tarots.size() == 1){
             Tarot tarot = tarots.get(0);
             Juego juego = Juego.getInstance();
             Ronda rondaActual = juego.getRondaActual();
             rondaActual.usarTarotEnEsteTurno(tarot);
             mostrarMensajeTemporal("Use un tarot");
+            tarots.clear();
             ParteDerecha.actualizarVisualTarot();
         }
     }

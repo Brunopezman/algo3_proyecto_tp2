@@ -104,9 +104,11 @@ public class Ronda {
     private boolean hayMasTurnos(){ return cantidadTurnos > turnoActual; }
 
     public int calcularPuntajeRonda() {
+
         for(Turno turno : turnos){
             puntajeAlcanzado += turno.puntajeDelTurno();
         }
+
         return puntajeAlcanzado;
     }
 
@@ -129,7 +131,7 @@ public class Ronda {
         mano.sumarDescartes(descartesActuales);
         Turno turno = this.getTurnoActual();
         int puntaje = turno.calcularJugada(cartas,mano);
-        sumarPuntos(puntaje);
+        //sumarPuntos(puntaje);
         return puntaje; //carga puntaje final en turno y devolvemos valor;
     }
 
@@ -173,21 +175,9 @@ public class Ronda {
         }
     }
 
-
     public void usarTarotEnEsteTurno(Tarot tarotElegido){
         this.consumirTarot(tarotElegido);
         Turno turno = this.getTurnoActual();
         turno.agregarTarot(tarotElegido);
-    }
-
-//    public void usarTarotEnCarta(Tarot tarotElegido, Carta carta){
-//        this.consumirTarot(tarotElegido);
-//        tarotElegido.modificarAQueAplica(carta.getNombre());
-//    }
-
-    private void sumarPuntos(int puntos){ puntajeAlcanzado += puntos;}
-
-    public boolean sePuedeAvanzar() {
-        return this.seAlcanzoElPuntajeDeRonda();
     }
 }

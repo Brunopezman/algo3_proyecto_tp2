@@ -56,6 +56,7 @@ public class Turno {
             comodin.aplicarEfecto(mano);
         }
         puntaje = mano.puntajeFinal();
+        this.setPuntaje(puntaje);
         return puntaje;
     }
 

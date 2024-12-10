@@ -32,7 +32,6 @@ public class CartaSeleccionadaHandler implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent event) {
-        System.out.println(cartasSeleccionadas.size());
         if (cartasSeleccionadas.contains(carta)) {
             // Deseleccionar carta
             cartasSeleccionadas.remove(carta);
