@@ -6,9 +6,11 @@ public class ComodinManoEspecifica extends Comodin{
 
     private String manoQueAfecta;
 
-    public ComodinManoEspecifica(int valorMultiplicador, int valorPuntos, EstrategiaComodin estrategia, String nombreMano) {
-        this.multiplicador = valorMultiplicador;
+    public ComodinManoEspecifica(String nombre, String descripcion, int valorPuntos, int valorMultiplicador, EstrategiaComodin estrategia, String nombreMano) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
         this.puntos = valorPuntos;
+        this.multiplicador = valorMultiplicador;
         this.estrategia = estrategia;
         this.manoQueAfecta = nombreMano;
     }

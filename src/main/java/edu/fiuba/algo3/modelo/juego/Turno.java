@@ -16,6 +16,7 @@ public class Turno {
     private int cantidadDescartes;
 
     public Turno(List<Comodin> comodines) {
+        this.manosJugables = new ArrayList<>();
         this.manosJugables.add(new EscaleraReal());
         this.manosJugables.add(new EscaleraColor());
         this.manosJugables.add(new Poker());
@@ -26,28 +27,20 @@ public class Turno {
         this.manosJugables.add(new DoblePar());
         this.manosJugables.add(new Par());
         this.manosJugables.add(new CartaAlta());
-        this.manosJugables = new ArrayList<>();
         this.comodines = comodines;
         this.tarotUsar = null;
         this.puntaje = 0;
         this.cantidadDescartes = 0;
     }
-    /*
-    public Turno() {
-        this.manosJugables = new ArrayList<>();
-        this.puntaje = 0;
-        this.manosJugables.add(new EscaleraReal());
-        this.manosJugables.add(new EscaleraColor());
-        this.manosJugables.add(new Poker());
-        this.manosJugables.add(new FullHouse());
-        this.manosJugables.add(new Color());
-        this.manosJugables.add(new Escalera());
-        this.manosJugables.add(new Trio());
-        this.manosJugables.add(new DoblePar());
-        this.manosJugables.add(new Par());
-        this.manosJugables.add(new CartaAlta());
-        this.cantidadDescartes = 0;
-    }*/
+
+    //Getters y Setters
+    public int puntajeDelTurno(){
+        return puntaje;
+    }
+
+    public void setPuntaje(int nuevoPuntaje){
+        this.puntaje = nuevoPuntaje;
+    }
 
 
     public int calcularJugada(List<Carta> cartas, Mano mano){
@@ -63,6 +56,7 @@ public class Turno {
             comodin.aplicarEfecto(mano);
         }
         puntaje = mano.puntajeFinal();
+        this.setPuntaje(puntaje);
         return puntaje;
     }
 
@@ -77,35 +71,12 @@ public class Turno {
         return mano;
     }
 
-    public int puntajeDelTurno(){
-        return puntaje;
-    }
-
-    public void sumarManoJugada(int valor){
-        this.setPuntaje(valor);
-    }
-
-    public void sumarDescartes(int cantidad){
-        this.cantidadDescartes += cantidad;
-    }
-
-    public boolean puedeDescartar(){
-        if(this.cantidadDescartes == 3){
-            return false;
-        }
-        return true;
-    }
-
-    private void setPuntaje(int nuevoPuntaje){
-        this.puntaje = nuevoPuntaje;
-    }
-
-    public void registrarDescarte() {
-        this.cantidadDescartes++;
-    }
-
     public void agregarTarot(Tarot tarotElegido) {
         this.tarotUsar = tarotElegido;
     }
+
+    ////
+
+    public List<Comodin> getComodines() {return comodines;}
 }
 

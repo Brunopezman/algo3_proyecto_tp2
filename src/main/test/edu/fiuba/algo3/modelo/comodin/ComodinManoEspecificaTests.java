@@ -8,14 +8,16 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ComodinManoEspecificaTests {
-    /*
+
     @Test
     public void testComodinSumaAlPuntajeSiSeJuegaManoEspecifica() {
+        //arrange
         Mano manoJugada = new Color();
         Mano manoEspecifica = new Color();
-        EstrategiaComodin estrategia = new EstrategiaSumarPuntos();
+        String nombreMano = manoEspecifica.getNombre();
+        EstrategiaComodin estrategia = new EstrategiaSumaSuma();
         manoJugada.sumarPuntos(20);
-        Comodin comodin = new ComodinManoEspecifica(10,10,estrategia,manoEspecifica);
+        Comodin comodin = new ComodinManoEspecifica("Comodin Mano Especifica", "...",10,0,estrategia,nombreMano);
         comodin.aplicarEfecto(manoJugada);
         int puntajeEsperado = 260;
         //act
@@ -25,29 +27,16 @@ public class ComodinManoEspecificaTests {
     }
 
     @Test
-    public void testComodinNoSumaAlPuntajeSiNoSeJuegaManoEspecifica() {
-        Mano manoJugada = new Color();
-        Mano manoEspecifica = new Escalera();
-        EstrategiaComodin estrategia = new EstrategiaSumarPuntos();
-        manoJugada.sumarPuntos(20);
-        Comodin comodin = new ComodinManoEspecifica(10,10,estrategia,manoEspecifica);
-        comodin.aplicarEfecto(manoJugada);
-        int puntajeEsperado = 220;
-        //act
-        int puntajeObtenido = manoJugada.puntajeFinal();
-        //assert
-        assertEquals(puntajeEsperado, puntajeObtenido);
-    }
-
-    @Test
     public void testComodinSumaAlMultiplicadorSiSeJuegaManoEspecifica() {
+        //arrange
         Mano manoJugada = new Color();
         Mano manoEspecifica = new Color();
-        EstrategiaComodin estrategia = new EstrategiaSumarMultiplicador();
+        String nombreMano = manoEspecifica.getNombre();
+        EstrategiaComodin estrategia = new EstrategiaSumaSuma();
         manoJugada.sumarPuntos(20);
-        Comodin comodin = new ComodinManoEspecifica(10,10,estrategia,manoEspecifica);
+        Comodin comodin = new ComodinManoEspecifica("Comodin Mano Especifica", "...",0,4,estrategia,nombreMano);
         comodin.aplicarEfecto(manoJugada);
-        int puntajeEsperado = 770;
+        int puntajeEsperado = 440;
         //act
         int puntajeObtenido = manoJugada.puntajeFinal();
         //assert
@@ -55,29 +44,16 @@ public class ComodinManoEspecificaTests {
     }
 
     @Test
-    public void testComodinNoSumaAlMultiplicadorSiNoSeJuegaManoEspecifica() {
-        Mano manoJugada = new Color();
-        Mano manoEspecifica = new Escalera();
-        EstrategiaComodin estrategia = new EstrategiaSumarMultiplicador();
-        manoJugada.sumarPuntos(20);
-        Comodin comodin = new ComodinManoEspecifica(10,10,estrategia,manoEspecifica);
-        comodin.aplicarEfecto(manoJugada);
-        int puntajeEsperado = 220;
-        //act
-        int puntajeObtenido = manoJugada.puntajeFinal();
-        //assert
-        assertEquals(puntajeEsperado, puntajeObtenido);
-    }
-
-    @Test
-    public void testComodinMultiplicaAlMultiplicadorSiSeJuegaManoEspecifica() {
+    public void testComodinAplicaSuEfectoCompletoSiSeJuegaManoEspecifica() {
+        //arrange
         Mano manoJugada = new Color();
         Mano manoEspecifica = new Color();
-        EstrategiaComodin estrategia = new EstrategiaMultiplicarMultiplicador();
+        String nombreMano = manoEspecifica.getNombre();
+        EstrategiaComodin estrategia = new EstrategiaSumaSuma();
         manoJugada.sumarPuntos(20);
-        Comodin comodin = new ComodinManoEspecifica(10,10,estrategia,manoEspecifica);
+        Comodin comodin = new ComodinManoEspecifica("Comodin Mano Especifica", "...",10,4,estrategia,nombreMano);
         comodin.aplicarEfecto(manoJugada);
-        int puntajeEsperado = 2200;
+        int puntajeEsperado = 520;
         //act
         int puntajeObtenido = manoJugada.puntajeFinal();
         //assert
@@ -85,19 +61,19 @@ public class ComodinManoEspecificaTests {
     }
 
     @Test
-    public void testComodinNoMultiplicaAlMultiplicadorSiNoSeJuegaManoEspecifica() {
-        Mano manoJugada = new Color();
-        Mano manoEspecifica = new Escalera();
-        EstrategiaComodin estrategia = new EstrategiaMultiplicarMultiplicador();
+    public void testComodinNoAplicaSuEfectoSiNoSeJuegaManoEspecifica() {
+        //arrange
+        Mano manoJugada = new Escalera();
+        Mano manoEspecifica = new Color();
+        String nombreMano = manoEspecifica.getNombre();
+        EstrategiaComodin estrategia = new EstrategiaSumaSuma();
         manoJugada.sumarPuntos(20);
-        Comodin comodin = new ComodinManoEspecifica(10,10,estrategia,manoEspecifica);
+        Comodin comodin = new ComodinManoEspecifica("Comodin Mano Especifica", "...",10,4,estrategia,nombreMano);
         comodin.aplicarEfecto(manoJugada);
-        int puntajeEsperado = 220;
+        int puntajeEsperado = 200;
         //act
         int puntajeObtenido = manoJugada.puntajeFinal();
         //assert
         assertEquals(puntajeEsperado, puntajeObtenido);
     }
-
-     */
 }

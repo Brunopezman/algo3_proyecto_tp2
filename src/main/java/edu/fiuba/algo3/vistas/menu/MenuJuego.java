@@ -1,9 +1,9 @@
 package edu.fiuba.algo3.vistas.menu;
 
-import edu.fiuba.algo3.vistas.boton.AccionBoton;
-import edu.fiuba.algo3.vistas.boton.BotonHandler;
-import edu.fiuba.algo3.vistas.boton.MostrarReglas;
-import edu.fiuba.algo3.vistas.boton.Salir;
+import edu.fiuba.algo3.controllers.AccionBoton;
+import edu.fiuba.algo3.controllers.BotonHandler;
+import edu.fiuba.algo3.vistas.boton.BotonMostrarReglas;
+import edu.fiuba.algo3.vistas.boton.BotonSalir;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -16,12 +16,19 @@ public class MenuJuego {
     private final MenuBar menuBar;
     private MediaPlayer mediaPlayer;
     private boolean musicaReproduciendose; // Variable de estado
+    private static MenuJuego menuJuego;
 
     public MenuJuego(Stage stage) {
         this.menuBar = new MenuBar();
         this.menuBar.getMenus().add(crearMenuOpciones(stage));
         this.menuBar.getMenus().add(crearMenuMusica());
         this.musicaReproduciendose = false; // Inicializamos como false
+    }
+    public static MenuJuego getInstance(Stage stage) {
+        if (menuJuego == null) {
+            menuJuego = new MenuJuego(stage);
+        }
+        return menuJuego;
     }
 
     private Menu crearMenuOpciones(Stage stage) {
@@ -36,7 +43,7 @@ public class MenuJuego {
     private MenuItem crearMenuItemReglas(Stage stage) {
         MenuItem menuReglas = new MenuItem("Reglas");
         menuReglas.setOnAction(event -> {
-            MostrarReglas accionMostrarReglas = new MostrarReglas(stage);
+            BotonMostrarReglas accionMostrarReglas = new BotonMostrarReglas(stage);
             accionMostrarReglas.ejecutar();
         });
         return menuReglas;
@@ -44,7 +51,7 @@ public class MenuJuego {
 
     private MenuItem crearMenuItemSalir(Stage stage) {
         MenuItem menuSalir = new MenuItem("Salir del Juego");
-        AccionBoton accionSalir = new Salir(stage);
+        AccionBoton accionSalir = new BotonSalir(stage);
         menuSalir.setOnAction(new BotonHandler(accionSalir));
         return menuSalir;
     }

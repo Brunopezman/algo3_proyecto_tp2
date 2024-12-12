@@ -13,6 +13,9 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 public class PantallaReglas {
     private final Stage stage;
 
@@ -43,8 +46,7 @@ public class PantallaReglas {
                 "-\tDoble Par: combinación de dos pares diferentes.\n" +
                 "-\tPar: combinación de un par del mismo palo.\n" +
                 "-\tCarta Alta: las cinco cartas no interactúan entre sí.");
-        textoReglas.setStyle("-fx-font-size: 18px;");
-
+        textoReglas.setStyle("-fx-font-size: 14px;");
         // TextFlow para mostrar texto con desplazamiento
         TextFlow contenedorTexto = new TextFlow(textoReglas);
         contenedorTexto.setMaxWidth(600);
@@ -52,7 +54,8 @@ public class PantallaReglas {
 
         // Botón para cerrar la ventana
         Button botonCerrar = new Button("Cerrar");
-        botonCerrar.setFont(Font.font("Arial", 20));
+        botonCerrar.setFont(Font.font("Arial",10));
+        botonCerrar.setStyle("-fx-font-size: 20px;");
         botonCerrar.setOnAction(event -> stage.close());
 
         // Diseño vertical
@@ -72,5 +75,14 @@ public class PantallaReglas {
 
     public void mostrar() {
         stage.showAndWait();
+    }
+
+    private Font cargarFuente(String rutaFuente, int tamanio) {
+        try {
+            return Font.loadFont(new FileInputStream(rutaFuente), tamanio);
+        } catch (FileNotFoundException e) {
+            System.err.println("Fuente no encontrada: " + rutaFuente);
+            return Font.font("Arial", tamanio);
+        }
     }
 }

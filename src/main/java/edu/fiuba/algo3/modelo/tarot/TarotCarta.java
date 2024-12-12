@@ -1,23 +1,11 @@
 package edu.fiuba.algo3.modelo.tarot;
 
-
 import edu.fiuba.algo3.modelo.carta.Carta;
 import edu.fiuba.algo3.modelo.mano.Mano;
 
 import java.util.List;
 
 public class TarotCarta extends Tarot {
-    //private String cartaQueModifica;
-    //private EstrategiaCarta estrategia;
-
-    /*
-    public TarotCarta(int puntaje, int multiplicador, Carta carta, EstrategiaCarta estrategia) {
-        this.puntaje = puntaje;
-        this.multiplicador = multiplicador;
-        this.cartaQueModifica = cartaQueModifica;
-        this.estrategia = estrategia;
-    }
-    */
 
     public TarotCarta(String nombre, String descripcion, int puntos, int mult, String ejemplar){
         this.nombre = nombre;
@@ -30,10 +18,14 @@ public class TarotCarta extends Tarot {
 
     //HAY QUE AGREGAR UNA FORMA DE COPARAR CARTAS PARA APLICAR EFECTOS
 
-    public void aplicarEfectos(List<Carta> cartas, Mano mano){
+    public void aplicarEfectos(List<Carta> cartas, Mano mano) {
+        Carta cartaModificar = new Carta("", "", "", "", 0);
         for (Carta carta : cartas) {
-            if (carta.esIgual(aQueAplica)) {carta.modificarPorTarot(puntaje, multiplicador);}
+            if (cartaModificar.puntaje() < carta.puntaje()) {
+                cartaModificar = carta;
+            }
         }
+        cartaModificar.modificarPorTarot(puntaje, multiplicador);
     }
 
 

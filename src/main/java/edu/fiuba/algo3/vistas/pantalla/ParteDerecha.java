@@ -1,20 +1,29 @@
 package edu.fiuba.algo3.vistas.pantalla;
 
+import edu.fiuba.algo3.controllers.*;
 import edu.fiuba.algo3.modelo.carta.Carta;
+import edu.fiuba.algo3.modelo.comodin.Comodin;
 import edu.fiuba.algo3.modelo.juego.Juego;
+import edu.fiuba.algo3.modelo.tarot.Tarot;
+import edu.fiuba.algo3.vistas.boton.BotonAplicarTarot;
+import edu.fiuba.algo3.vistas.boton.BotonDescartar;
+import edu.fiuba.algo3.vistas.boton.BotonJugarMano;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.media.AudioClip;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -23,17 +32,21 @@ import java.util.List;
 public class ParteDerecha {
     private final BorderPane parteDerecha;
     private final Juego juego;
-    private final List<Carta> cartasSeleccionadas;
-    private final ParteIzquierda parteIzquierda;
-    private HBox visualCartas;
-    private Text cartasRestantesText;
-    private PantallaJuego pantallaJuego;
+    private static ParteIzquierda parteIzquierda;
+    private static HBox visualCartas;
+    private static Text cartasRestantesText;
+    private static HBox comodinesBox;
+    private static HBox tarotsBox;
+    private static HBox botonAplicar;
+    private static List<Tarot> tarotSeleccionados;
+    private static Label mensajeTemporal;
+    private static VBox comodinesYCantidad;
+    private static VBox tarotsYCantidad;
 
     public ParteDerecha(Juego juego, ParteIzquierda parteIzquierda) {
         this.juego = juego;
         this.parteIzquierda = parteIzquierda;
         this.parteDerecha = new BorderPane();
-        this.cartasSeleccionadas = new ArrayList<>();
         inicializarUI();
     }
 
@@ -45,83 +58,101 @@ public class ParteDerecha {
         visualCartas.setSpacing(5);
         visualCartas.setAlignment(Pos.CENTER);
 
-        // Llama a repartirCartas para inicializar las cartas desde el comienzo
-        repartirCartas();
+        mensajeTemporal = new Label();
+        mensajeTemporal.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7); -fx-text-fill: white; -fx-padding: 10px; -fx-font-size: 14px;");
+        mensajeTemporal.setVisible(false);
 
-        centro.getChildren().add(visualCartas);
-        parteDerecha.setCenter(centro);
+        // Llama a repartirCartas para inicializar las cartas desde el comienzo
+        juego.repartirCartasJugador(8);
+        List<Carta> cartasSeleccionadas = new ArrayList<>();
+        tarotSeleccionados = new ArrayList<>();
 
         // Comodines y Tarots
         HBox comodinesTarots = crearComodinesTarots();
         parteDerecha.setTop(comodinesTarots);
 
         // Botones y Mazo
-        HBox contenidoInferior = crearContenidoInferior();
+        HBox contenidoInferior = crearContenidoInferior(cartasSeleccionadas);
         parteDerecha.setBottom(contenidoInferior);
 
+        // Visualizacion de cartas en la mano
+        actualizarVisualMazo();
+        actualizarVisualCartas(cartasSeleccionadas);
+        actualizarVisualTarot();
+
+        centro.getChildren().addAll(visualCartas, mensajeTemporal);
+        StackPane.setAlignment(mensajeTemporal, Pos.TOP_CENTER);
+
+        parteDerecha.setCenter(centro);
         parteDerecha.setPadding(new Insets(10));
     }
 
-
     private HBox crearComodinesTarots() {
         HBox comodinesTarots = new HBox();
-        comodinesTarots.setSpacing(20);
+        comodinesTarots.setSpacing(8);
         comodinesTarots.setAlignment(Pos.CENTER);
 
         // Comodines
-        Rectangle comodines = new Rectangle(200, 80);
-        comodines.setStyle("-fx-fill: #ffffff; -fx-stroke: black; -fx-stroke-width: 1;");
         int cantidadComodines = juego.comodinesRonda();
         Text cantidadComodinesText = new Text(cantidadComodines + "/5");
         cantidadComodinesText.setStyle("-fx-font-size: 0.8em; -fx-fill: #efe7e7;");
-        VBox comodinesBox = new VBox(comodines, cantidadComodinesText);
+        comodinesBox = new HBox(5);
+        comodinesBox.setStyle("-fx-background-color: rgba(128, 128, 128, 0.5); -fx-padding: 10; -fx-border-radius: 5; -fx-background-radius: 5;");
+        comodinesBox.setAlignment(Pos.CENTER);
+        comodinesBox.setPrefSize(310, 100); // Tamaño fijo (ancho mayor para comodines)
+        comodinesBox.setMinSize(310, 100);
+        comodinesBox.setMaxSize(310, 100);
+        // Contenedor para los comodines y el contador
+        comodinesYCantidad = new VBox(10, comodinesBox, cantidadComodinesText);
+        comodinesYCantidad.setAlignment(Pos.CENTER);
 
         // Tarots
-        Rectangle tarots = new Rectangle(120, 80);
-        tarots.setStyle("-fx-fill: #ffffff; -fx-stroke: black; -fx-stroke-width: 1;");
         int cantidadTarots = 0;
         Text cantidadTarotsText = new Text(cantidadTarots + "/2");
         cantidadTarotsText.setStyle("-fx-font-size: 0.8em; -fx-fill: #ffffff;");
-        VBox tarotsBox = new VBox(tarots, cantidadTarotsText);
+        tarotsBox = new HBox(10);
+        tarotsBox.setStyle("-fx-background-color: rgba(128, 128, 128, 0.5); -fx-padding: 10; -fx-border-radius: 5; -fx-background-radius: 5;");
+        tarotsBox.setAlignment(Pos.CENTER);
+        tarotsBox.setPrefSize(130, 100); // Tamaño fijo (ancho menor para tarots)
+        tarotsBox.setMinSize(130, 100);
+        tarotsBox.setMaxSize(130, 100);
+        // Contenedor para los tarots y el contador
+        tarotsYCantidad = new VBox(10, tarotsBox, cantidadTarotsText);
+        tarotsYCantidad.setAlignment(Pos.CENTER);
 
-        comodinesTarots.getChildren().addAll(comodinesBox, tarotsBox);
+        // Boton para los a tarots
+        BotonAplicarTarotHandler handler = new BotonAplicarTarotHandler(tarotSeleccionados, mensajeTemporal);
+        BotonAplicarTarot botonAplicarTarot = new BotonAplicarTarot(handler);
+        botonAplicar = new HBox(botonAplicarTarot);
+
+        comodinesTarots.getChildren().addAll(comodinesYCantidad, tarotsYCantidad, botonAplicar);
         return comodinesTarots;
     }
 
-    private HBox crearContenidoInferior() {
+    private HBox crearContenidoInferior(List<Carta> cartasSeleccionadas) {
         HBox contenidoInferior = new HBox();
         HBox botones = new HBox();
         botones.setSpacing(20);
-        botones.setAlignment(Pos.CENTER);
+        botones.setAlignment(Pos.CENTER_RIGHT);
 
-        Button botonJugarMano = new Button("Jugar Mano");
-        Button botonDescartar = new Button("Descartar");
+        // Boton JugarMano
+        BotonJugarManoHandler botonJugarManoHandler = new BotonJugarManoHandler(juego,cartasSeleccionadas, parteIzquierda, cartasRestantesText, mensajeTemporal);
+        BotonJugarMano botonJugarMano = new BotonJugarMano(botonJugarManoHandler);
 
-        botonJugarMano.setStyle("-fx-font-size: 20px;-fx-background-color: \"#333333\"; -fx-font-weight: bold; -fx-text-fill: white;");
-        botonDescartar.setStyle("-fx-font-size: 20px; -fx-background-color: \"#333333\"; -fx-font-weight: bold; -fx-text-fill: white;");
-
-        // Configurar el evento para el botón "Jugar Mano"
-        botonJugarMano.setOnAction(event -> {
-            if (!cartasSeleccionadas.isEmpty()) {
-
-                // Actualizar el puntaje de la ronda en la vista
-//                parteIzquierda.actualizarPuntajeRonda(juego.jugarMano(cartasSeleccionadas,juego.queManoEs(cartasSeleccionadas)));
-
-            } else {
-                System.out.println("No has seleccionado ninguna carta.");
-            }
-        });
+        // Boton Descartar
+        BotonDescartarHandler botonDescartarHandler = new BotonDescartarHandler(juego,cartasSeleccionadas, parteIzquierda, cartasRestantesText, mensajeTemporal);
+        BotonDescartar botonDescartar = new BotonDescartar(botonDescartarHandler);
 
         botones.getChildren().addAll(botonJugarMano, botonDescartar);
 
         // Mazo
-        String rutaImagen = "src/main/java/edu/fiuba/algo3/resources/cartas/reverso.jpg";
+        String rutaImagen = "src/main/java/edu/fiuba/algo3/resources/cartas/reverso.png";
         Image imagen = new Image(Paths.get(rutaImagen).toUri().toString());
         ImageView imageView = new ImageView(imagen);
         imageView.setFitWidth(100);
         imageView.setFitHeight(150);
 
-        cartasRestantesText = new Text(juego.getMazo().cartasRestantes() + "/52");
+        cartasRestantesText = new Text(juego.getMazo().cartasRestantes() + "/" + juego.getCartasTotalesMazo());
         cartasRestantesText.setFont(Font.font("Arial", 16));
         cartasRestantesText.setStyle("-fx-font-size: 0.8em; -fx-fill: #ffffff;");
 
@@ -130,68 +161,90 @@ public class ParteDerecha {
 
         HBox botonesYMazo = new HBox(80, botones, imagenYTexto);
         contenidoInferior.getChildren().add(botonesYMazo);
+        contenidoInferior.setAlignment(Pos.CENTER);
 
         return contenidoInferior;
     }
 
-    private void repartirCartas() {
-        actualizarVisualCartas();
-
-        if (juego.descartesActuales() == 0) {
-            System.out.println("Ya tienes 8 cartas en pantalla, no puedes repartir más.");
-            return;
-        }
-
-        juego.repartirCartasJugador();
-
-        cartasRestantesText.setText(juego.getMazo().cartasRestantes() + "/52");
+    public static void actualizarVisualMazo(){
+        Juego juego = Juego.getInstance();
+        cartasRestantesText.setText(juego.getMazo().cartasRestantes() + "/" + juego.getCartasTotalesMazo());
     }
 
-    private void actualizarVisualCartas() {
-        // Limpiar la visualización actual
+    public static void actualizarVisualCartas(List<Carta> cartasSeleccionadas) {
         visualCartas.getChildren().clear();
-
-        // Cargar el sonido para reproducir al hacer clic en las cartas
-        String rutaSonido = "src/main/java/edu/fiuba/algo3/resources/sonidos/click.mp3"; // Cambia "click2.mp3" por tu archivo de sonido
+        String rutaSonido = "src/main/java/edu/fiuba/algo3/resources/sonidos/click.mp3";
         AudioClip sonido = new AudioClip(Paths.get(rutaSonido).toUri().toString());
-
-        // Agregar las cartas nuevas
-        for (Carta carta : juego.repartirCartasJugador()) {
+        Juego juego = Juego.getInstance();
+        for (Carta carta : juego.jugadoresCartasActuales()) {
             ImageView imagenCarta = new ImageView(new Image(Paths.get("src/main/java/edu/fiuba/algo3/resources/cartas/" + carta.numero() + "_" + carta.getPalo() + ".jpg").toUri().toString()));
-            imagenCarta.setFitWidth(56);
-            imagenCarta.setFitHeight(84);
-
-            imagenCarta.setOnMouseClicked(event -> {
-                if (cartasSeleccionadas.contains(carta)) {
-                    // Si la carta ya está seleccionada, la deseleccionamos
-                    cartasSeleccionadas.remove(carta);
-                    imagenCarta.setStyle("-fx-effect: null;");
-                } else if (cartasSeleccionadas.size() < 5) {
-                    // Si la carta no está seleccionada y se puede seleccionar más, la agregamos
-                    cartasSeleccionadas.add(carta);
-                    imagenCarta.setStyle("-fx-effect: dropshadow(gaussian, blue, 10, 0.5, 0, 0);");
-                    sonido.play(); // Reproduce el sonido solo si la carta se selecciona efectivamente
-                } else {
-                    // Si ya se han seleccionado 5 cartas, no se puede seleccionar más
-                    System.out.println("No puedes seleccionar más de 5 cartas.");
-                }
-            });
-
-            //sin sonido
-//            imagenCarta.setOnMouseClicked(event -> {
-//                if (cartasSeleccionadas.contains(carta)) {
-//                    cartasSeleccionadas.remove(carta);
-//                    imagenCarta.setStyle("-fx-effect: null;");
-//                } else if (cartasSeleccionadas.size() < 5) {
-//                    cartasSeleccionadas.add(carta);
-//                    imagenCarta.setStyle("-fx-effect: dropshadow(gaussian, blue, 10, 0.5, 0, 0);");
-//                } else {
-//                    System.out.println("No puedes seleccionar más de 5 cartas.");
-//                }
-//            });
-
+            imagenCarta.setFitWidth(67.2);
+            imagenCarta.setFitHeight(100.8);
+            CartaSeleccionadaHandler seleccion = new CartaSeleccionadaHandler(cartasSeleccionadas, carta, imagenCarta, parteIzquierda,mensajeTemporal);
+            imagenCarta.setOnMouseClicked(event -> seleccion.handle(new ActionEvent()));
             visualCartas.getChildren().add(imagenCarta);
         }
+    }
+
+    public static void actualizarVisualComodines(){
+        comodinesBox.getChildren().clear();
+        comodinesYCantidad.getChildren().clear();
+        Juego juego = Juego.getInstance();
+        List<Comodin> comodines = juego.getRondaActual().getComodines();
+        int cantidadComodines = 0;
+        for (Comodin comodin : comodines) {
+            Image comodinImagen = new Image(Paths.get("src/main/java/edu/fiuba/algo3/resources/comodines/" + comodin.getNombre() + ".png").toUri().toString());
+            ImageView cartaView = new ImageView(comodinImagen);
+            cartaView.setFitWidth(56); // Ancho de las cartas
+            cartaView.setFitHeight(84); // Alto de las cartas
+            cantidadComodines++;
+
+            comodinesBox.getChildren().add(cartaView);
+        }
+
+        Text cantidadComodinesText = new Text(cantidadComodines +"/5");
+        cantidadComodinesText.setStyle("-fx-font-size: 0.8em; -fx-fill: #efe7e7;");
+        comodinesYCantidad.getChildren().addAll(comodinesBox, cantidadComodinesText);
+    }
+
+    public static void actualizarVisualTarot(){
+        tarotsBox.getChildren().clear();
+        tarotsYCantidad.getChildren().clear();
+        tarotsBox.setSpacing(5);
+        tarotsBox.setAlignment(Pos.CENTER);
+        int cantidadTarots = 0;
+        String rutaSonido = "src/main/java/edu/fiuba/algo3/resources/sonidos/click.mp3";
+        Juego juego = Juego.getInstance();
+        List<Tarot> tarots = juego.getRondaActual().getTarots();
+        AudioClip sonido = new AudioClip(Paths.get(rutaSonido).toUri().toString());
+        for (Tarot tarot : tarots) {
+            ImageView imagenTarot = new ImageView(Paths.get("src/main/java/edu/fiuba/algo3/resources/tarots/" + tarot.getNombre() + ".png").toUri().toString());
+            imagenTarot.setFitWidth(56); // Ancho de las cartas
+            imagenTarot.setFitHeight(84); // Alto de las cartas
+            cantidadTarots++;
+            TarotAplicarHandler seleccion = new TarotAplicarHandler(tarotSeleccionados, tarot, imagenTarot, mensajeTemporal);
+            imagenTarot.setOnMouseClicked(event -> seleccion.handle(new ActionEvent()));
+            tarotsBox.getChildren().add(imagenTarot);
+        }
+        Text cantidadTarotsText = new Text(cantidadTarots +"/2");
+        cantidadTarotsText.setStyle("-fx-font-size: 0.8em; -fx-fill: #efe7e7;");
+        tarotsYCantidad.getChildren().addAll(tarotsBox, cantidadTarotsText);
+    }
+
+    public static void mostrarDescripcionTemporal(String descripcion) {
+        Label mensajeDescripcion = new Label(descripcion);
+        mensajeDescripcion.setStyle("-fx-background-color: rgba(0, 0, 0, 0.7); -fx-text-fill: white; -fx-padding: 10px; -fx-font-size: 14px;");
+        mensajeDescripcion.setVisible(true);
+
+        StackPane stackPane = (StackPane) mensajeTemporal.getParent();
+        stackPane.getChildren().add(mensajeDescripcion);
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), e -> {
+            mensajeDescripcion.setVisible(false);
+            stackPane.getChildren().remove(mensajeDescripcion);
+        }));
+        timeline.setCycleCount(1);
+        timeline.play();
     }
 
     public BorderPane crearParteDerecha() {

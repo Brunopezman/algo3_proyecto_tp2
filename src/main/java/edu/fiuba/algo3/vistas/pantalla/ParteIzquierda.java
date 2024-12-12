@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.vistas.pantalla;
 
+import edu.fiuba.algo3.modelo.juego.Juego;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -10,16 +11,24 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.util.Locale;
+
 public class ParteIzquierda {
 
     private final VBox parteIzquierda;
+    private StackPane puntajeBox;
+    private StackPane manoConSusCaracteristicasBox;
     private StackPane puntajeAcumuladoBox;
+    private StackPane turnosBox;
+    private StackPane descartesBox;
+    private StackPane rondaBox;
 
-    public ParteIzquierda(String nombreJugador, int puntajeMin, int puntajeRonda, int turnos, int descartes, int rondaActual) {
+    public ParteIzquierda() {
         this.parteIzquierda = new VBox();
         parteIzquierda.setAlignment(Pos.TOP_CENTER);
         parteIzquierda.setSpacing(15);
         parteIzquierda.setPadding(new Insets(10, 10, 10, 5));
+        Juego juego = Juego.getInstance();
 
         // Estilo y colores definidos
         String estiloTextoBlanco = "-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;";
@@ -29,45 +38,48 @@ public class ParteIzquierda {
         puntajeSection.setAlignment(Pos.CENTER);
         puntajeSection.setSpacing(5);
 
-        StackPane puntajeBox = crearCuadroConValor("Puntaje Min", String.valueOf(puntajeMin), 100, 200, "#444444", "#666666");
+        String puntajeMin = String.valueOf(juego.puntajeNecesarioRonda());
+        puntajeBox = crearCuadroConValor("Puntaje para avanzar", puntajeMin, 100, 200, "#444444", "#666666");
 
         puntajeSection.getChildren().add(puntajeBox);
 
         // Puntaje acumulado
-        puntajeAcumuladoBox = crearCuadroConValor("Puntaje Ronda", String.valueOf(puntajeRonda), 100, 200, "#333333", "#555555");
+        String puntajeRonda = String.valueOf(juego.puntajeRonda());
+        puntajeAcumuladoBox = crearCuadroConValor("Puntaje Ronda", puntajeRonda, 100, 200, "#333333", "#555555");
 
         // Marcador de cartas
         VBox marcadorSection = new VBox();
         marcadorSection.setAlignment(Pos.CENTER);
         marcadorSection.setSpacing(5);
 
-        Label pairLabel = new Label("Par");
-        pairLabel.setStyle(estiloTextoBlanco);
-
         HBox valoresCartas = new HBox();
         valoresCartas.setAlignment(Pos.CENTER);
         valoresCartas.setSpacing(10);
 
-        Label valor1 = new Label("10");
+        Label valor1 = new Label("0");
         valor1.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #104ec1;");
 
         Label multiplicador = new Label("x");
         multiplicador.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;");
 
-        Label valor2 = new Label("2");
+        Label valor2 = new Label("0");
         valor2.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #ec1111;");
 
         valoresCartas.getChildren().addAll(valor1, multiplicador, valor2);
-        marcadorSection.getChildren().addAll(pairLabel, valoresCartas);
-        StackPane marcadorBox = crearCuadroConFondo(marcadorSection, 100, 200, "#333333");
+        marcadorSection.getChildren().addAll(valoresCartas);
+        manoConSusCaracteristicasBox = crearCuadroConFondo(marcadorSection, 100, 200, "#333333");
 
         // Turnos y descartes
         HBox turnosDescartes = new HBox();
         turnosDescartes.setAlignment(Pos.CENTER);
         turnosDescartes.setSpacing(10);
 
-        StackPane turnosBox = crearCuadroConValor("Turnos", String.valueOf(turnos), 80, 100, "#444444", "#666666");
-        StackPane descartesBox = crearCuadroConValor("Descartes", String.valueOf(descartes), 80, 100, "#444444", "#666666");
+        String turnoActual = String.valueOf(juego.turnoActual());
+        String turnoTotales = String.valueOf(juego.turnosTotales());
+        String descartesActuales = String.valueOf(juego.descartesActuales());
+        String descartesTotales = String.valueOf(juego.descartesDisponibles());
+        turnosBox = crearCuadroConValor("Turnos", turnoActual + " / " + turnoTotales, 80, 100, "#444444", "#666666");
+        descartesBox = crearCuadroConValor("Descartes", descartesActuales + " / " + descartesTotales, 80, 100, "#444444", "#666666");
 
         turnosDescartes.getChildren().addAll(turnosBox, descartesBox);
 
@@ -76,8 +88,10 @@ public class ParteIzquierda {
         rondaYnombre.setAlignment(Pos.CENTER);
         rondaYnombre.setSpacing(10);
 
+        String nombreJugador = juego.getNombreJugador();
         StackPane nombre = crearCuadroConValor("Nombre", nombreJugador, 70, 100, "#444444", "#666666");
-        StackPane rondaBox = crearCuadroConValor("Round", rondaActual+ " / 8", 70, 100, "#444444", "#666666");
+        String rondaActual = String.valueOf(juego.rondaActual());
+        rondaBox = crearCuadroConValor("Ronda", rondaActual+ " / 8", 70, 100, "#444444", "#666666");
 
         rondaYnombre.getChildren().addAll(nombre, rondaBox);
 
@@ -85,7 +99,7 @@ public class ParteIzquierda {
         parteIzquierda.getChildren().addAll(
                 puntajeSection,
                 puntajeAcumuladoBox,
-                marcadorBox,
+                manoConSusCaracteristicasBox,
                 turnosDescartes,
                 rondaYnombre
         );
@@ -95,7 +109,47 @@ public class ParteIzquierda {
         return parteIzquierda;
     }
 
-    private StackPane crearCuadroConFondo(Node contenido, int alto, int ancho, String colorFondo) {
+    public void cuadroParaManoPorJugar(String nombre, String puntos, String multiplicador){
+        manoConSusCaracteristicasBox.getChildren().clear();
+
+        VBox marcadorSection = new VBox();
+
+        marcadorSection.setAlignment(Pos.CENTER);
+        marcadorSection.setSpacing(5);
+
+        if (!nombre.isEmpty()) {
+            Label manoNombre = new Label(nombre.toUpperCase(Locale.ROOT));
+            manoNombre.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;");
+            marcadorSection.getChildren().addAll(manoNombre);
+        }
+
+        HBox valoresCartas = new HBox();
+        valoresCartas.setAlignment(Pos.CENTER);
+        valoresCartas.setSpacing(10);
+
+        Label valor1 = new Label(puntos);
+        valor1.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #104ec1;");
+        Label medio = null;
+        medio = new Label("x");
+        medio.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;");
+
+        Label valor2 = new Label(multiplicador);
+        valor2.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #ec1111;");
+
+        valoresCartas.getChildren().addAll(valor1, medio, valor2);
+        marcadorSection.getChildren().addAll(valoresCartas);
+
+        Rectangle fondo = new Rectangle(200, 100);
+        fondo.setArcWidth(10);
+        fondo.setArcHeight(10);
+        fondo.setFill(Color.web("#333333"));
+        fondo.setStroke(Color.BLACK);
+        fondo.setStrokeWidth(2);
+
+        manoConSusCaracteristicasBox.getChildren().setAll(fondo, marcadorSection);
+    }
+
+    private static StackPane crearCuadroConFondo(Node contenido, int alto, int ancho, String colorFondo) {
         Rectangle fondo = new Rectangle(ancho, alto);
         fondo.setArcWidth(10);
         fondo.setArcHeight(10);
@@ -142,10 +196,19 @@ public class ParteIzquierda {
 
         return new StackPane(fondoLabel, contenido);
     }
-    public void actualizarPuntajeRonda(int nuevoPuntajeRonda) {
-        // Asumiendo que tienes un Label o un Text para mostrar el puntaje de la ronda
-        this.puntajeAcumuladoBox.getChildren().clear();  // Limpiar contenido anterior
-        this.puntajeAcumuladoBox.getChildren().add(crearCuadroConValor("Puntaje Ronda", String.valueOf(nuevoPuntajeRonda), 100, 200, "#333333", "#555555"));
+
+    public void actualizar() {
+        Juego juego = Juego.getInstance();
+        this.puntajeAcumuladoBox.getChildren().clear();// Limpiar contenido anterior
+        this.puntajeBox.getChildren().clear();
+        this.turnosBox.getChildren().clear();
+        this.descartesBox.getChildren().clear();
+        this.rondaBox.getChildren().clear();
+        this.puntajeAcumuladoBox.getChildren().add(crearCuadroConValor("Puntaje Ronda", String.valueOf(juego.puntajeRonda()), 100, 200, "#333333", "#555555"));
+        this.puntajeBox.getChildren().add(crearCuadroConValor("Puntaje para avanzar", String.valueOf(juego.puntajeNecesarioRonda()), 100, 200, "#444444", "#666666"));
+        this.turnosBox.getChildren().add(crearCuadroConValor("Turnos", juego.turnoActual() + " / " + juego.turnosTotales(), 80, 100, "#444444", "#666666"));
+        this.descartesBox.getChildren().add(crearCuadroConValor("Descartes", juego.descartesActuales() + " / " + juego.descartesDisponibles(), 80, 100, "#444444", "#666666"));
+        this.rondaBox.getChildren().add(crearCuadroConValor("Ronda", juego.rondaActual()+ " / 8", 70, 100, "#444444", "#666666"));
     }
 
 }

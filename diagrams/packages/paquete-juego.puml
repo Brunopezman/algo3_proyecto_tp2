@@ -1,0 +1,18 @@
+@startuml Diagrama Paquetes Juego
+
+package "Juego " {
+    class Juego
+    class Jugador
+    class Mazo
+    class Ronda
+    class Tienda
+    class Turno
+}
+
+Juego -left-> Jugador
+Juego -right-> Mazo
+Juego -down-> Ronda
+Ronda -left-> Tienda
+Ronda -right-> Turno
+
+@enduml
